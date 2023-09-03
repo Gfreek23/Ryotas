@@ -1,0 +1,12 @@
+
+E
+java:S16046"(Make this anonymous inner class a lambda(ã‘Àò8©¨¹Ý¥1
+{	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(ŠÐÛŠÿÿÿÿÿ8ª¨¹Ý¥1
+e
+java:S1659"CDeclare "feeTxt" and all following declarations on a separate line.(ÍçºÍøÿÿÿÿ8Í¨¹Ý¥1
+B
+java:S1659"%Declare "backBtn" on a separate line.(Ç½¹†8Í¨¹Ý¥1
+r
+java:S1450"URemove the "object" field and declare it as a local variable in the relevant methods.(Úç•É8Î¨¹Ý¥1
+^
+java:S1874%"<Remove this use of "getSerializableExtra"; it is deprecated.(‡ïîÏûÿÿÿÿ8Õ¨¹Ý¥1

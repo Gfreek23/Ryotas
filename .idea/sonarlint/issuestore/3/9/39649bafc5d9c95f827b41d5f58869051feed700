@@ -1,0 +1,8 @@
+
+k
+java:S1192$"IDefine a constant instead of duplicating this literal "CartList" 4 times.(ï±ğùÿÿÿÿ8…Ğç¤1
+…
+java:S1319-"hThe type of "listItem" should be an interface such as "List" rather than the implementation "ArrayList".(”¸µ€8†Ğç¤1
+Š
+java:S13197"hThe type of "listItem" should be an interface such as "List" rather than the implementation "ArrayList".(êµï÷øÿÿÿÿ8†Ğç¤1
+v	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(•äû8ˆĞç¤1

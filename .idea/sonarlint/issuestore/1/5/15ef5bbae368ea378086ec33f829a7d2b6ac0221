@@ -1,0 +1,75 @@
+
+u
+java:S2293Ï"YReplace the type specification in this constructor call with the diamond operator ("<>").(û»Åİùÿÿÿÿ
+p
+java:S2293Ğ"YReplace the type specification in this constructor call with the diamond operator ("<>").(àçºÆ
+u
+java:S2293"YReplace the type specification in this constructor call with the diamond operator ("<>").(û»Åİùÿÿÿÿ
+u
+java:S2293‚"YReplace the type specification in this constructor call with the diamond operator ("<>").(ìãµ°ùÿÿÿÿ
+u
+java:S2293‘"YReplace the type specification in this constructor call with the diamond operator ("<>").(û»Åİùÿÿÿÿ
+u
+java:S2293’"YReplace the type specification in this constructor call with the diamond operator ("<>").(ŞÔ‘³üÿÿÿÿ
+u
+java:S2293©"YReplace the type specification in this constructor call with the diamond operator ("<>").(œ¡ÜÃùÿÿÿÿ
+u
+java:S2293¼"YReplace the type specification in this constructor call with the diamond operator ("<>").(Ëÿ¡ïùÿÿÿÿ
+u
+java:S2293Î"YReplace the type specification in this constructor call with the diamond operator ("<>").(ÜáæŸûÿÿÿÿ
+p
+java:S2293Ô"YReplace the type specification in this constructor call with the diamond operator ("<>").(‰«×õ
+p
+java:S2293ï"YReplace the type specification in this constructor call with the diamond operator ("<>").(™ƒ¿ç
+E
+java:S1066"/Merge this if statement with the enclosing one.(ºó¢Š
+K
+java:S1066™"/Merge this if statement with the enclosing one.(Îšôşÿÿÿÿ
+Œ
+java:S1319Í"pThe return type of this method should be an interface such as "List" rather than the implementation "ArrayList".(é»ê·úÿÿÿÿ
+Œ
+java:S1319ÿ"pThe return type of this method should be an interface such as "List" rather than the implementation "ArrayList".(İÜùíøÿÿÿÿ
+‡
+java:S1319"pThe return type of this method should be an interface such as "List" rather than the implementation "ArrayList".(ÓÅº£
+Œ
+java:S1319¨"pThe return type of this method should be an interface such as "List" rather than the implementation "ArrayList".(é¯Šûûÿÿÿÿ
+‡
+java:S1319º"pThe return type of this method should be an interface such as "List" rather than the implementation "ArrayList".(¶ÄÛÀ
+Œ
+java:S1319Ê"pThe return type of this method should be an interface such as "List" rather than the implementation "ArrayList".(ÜğÃéøÿÿÿÿ
+ƒ
+java:S1319ô"gThe type of "intList" should be an interface such as "List" rather than the implementation "ArrayList".(¼Ë¶üÿÿÿÿ
+„
+java:S1319‰"hThe type of "longList" should be an interface such as "List" rather than the implementation "ArrayList".(¨ŒŠ¶úÿÿÿÿ
+†
+java:S1319¨"jThe type of "doubleList" should be an interface such as "List" rather than the implementation "ArrayList".(„Ÿ¤øÿÿÿÿ
+
+java:S1319½"jThe type of "stringList" should be an interface such as "List" rather than the implementation "ArrayList".(â»í·
+
+java:S1319Ò"hThe type of "boolList" should be an interface such as "List" rather than the implementation "ArrayList".(™ƒ¶ß
+
+java:S1319ì"jThe type of "playerList" should be an interface such as "List" rather than the implementation "ArrayList".(«Ş„ç
+?
+java:S5411×"(Use a primitive boolean expression here.(¸è×¨
+o	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(•äû
+Š
+java:S4165ª"nRemove this useless assignment; "bitmapCompressed" already holds the assigned value along all execution paths.(ÖÙûŠüÿÿÿÿ
+	java:S1161"jRename this field "DEFAULT_APP_IMAGEDATA_DIRECTORY" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Şß´Ô
+T
+java:S18745"9Remove this use of "PreferenceManager"; it is deprecated.(£×î²şÿÿÿÿ
+^
+java:S18745"CRemove this use of "getDefaultSharedPreferences"; it is deprecated.(£×î²şÿÿÿÿ
+H
+java:S1135D"2Complete the task associated to this TODO comment.(‡ñÅ¼
+j
+java:S4042™"NUse "java.nio.file.Files#delete" here for better messages on error conditions.(Îšôşÿÿÿÿ
+F
+java:S2093¤"*Change this "try" to a try-with-resources.(¡»¢üùÿÿÿÿ
+Y
+java:S1126¿"BReplace this if-then-else statement by a single method invocation.(¥ŞŠ²
+e
+java:S4042„"NUse "java.nio.file.Files#delete" here for better messages on error conditions.(¥Ç¼Ö
+B
+java:S1452“"&Remove usage of generic wildcard type.(Ç ù™üÿÿÿÿ
+;
+java:S1128#"Remove this duplicated import.(¤ğ8Õ¾¯ä¤1
