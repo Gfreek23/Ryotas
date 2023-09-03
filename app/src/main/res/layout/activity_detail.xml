@@ -20,16 +20,15 @@
                 android:layout_height="wrap_content">
 
                 <ImageView
-                    android:id="@+id/imageView6"
+                    android:id="@+id/backBtn2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="24dp"
                     android:padding="8dp"
-                    android:src="@tools:sample/avatars"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    tools:srcCompat="@drawable/arrow" />
+                    android:src="@drawable/arrow"/>
 
                 <ImageView
                     android:id="@+id/imageView7"
@@ -37,11 +36,11 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="16dp"
                     android:padding="2dp"
-                    android:src="@tools:sample/avatars"
-                    app:layout_constraintBottom_toBottomOf="@+id/imageView6"
+                    app:layout_constraintBottom_toBottomOf="@+id/backBtn2"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/imageView6"
-                    tools:srcCompat="@drawable/bookmark" />
+                    app:layout_constraintTop_toTopOf="@+id/backBtn2"
+                    android:src="@drawable/bookmark"
+                    tools:ignore="ContentDescription" />
 
                 <ImageView
                     android:id="@+id/imageView8"
@@ -49,11 +48,11 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="8dp"
                     android:padding="2dp"
-                    android:src="@tools:sample/avatars"
                     app:layout_constraintBottom_toBottomOf="@+id/imageView7"
                     app:layout_constraintEnd_toStartOf="@+id/imageView7"
                     app:layout_constraintTop_toTopOf="@+id/imageView7"
-                    tools:srcCompat="@drawable/share" />
+                    android:src="@drawable/share"
+                    tools:ignore="ContentDescription" />
 
                 <View
                     android:id="@+id/view"
@@ -63,17 +62,19 @@
                     android:background="@drawable/grey_background"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/imageView6" />
+                    app:layout_constraintTop_toBottomOf="@+id/backBtn2" />
 
                 <ImageView
-                    android:id="@+id/FoodPic"
+                    android:id="@+id/itemPic"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="270dp"
                     android:layout_margin="16dp"
+                    android:contentDescription="TODO"
                     app:layout_constraintBottom_toBottomOf="@+id/view"
                     app:layout_constraintEnd_toEndOf="@+id/view"
                     app:layout_constraintStart_toStartOf="@+id/view"
                     app:layout_constraintTop_toTopOf="@+id/view"
+                    tools:ignore="ContentDescription,HardcodedText"
                     tools:src="@tools:sample/avatars"
                     tools:srcCompat="@mipmap/offers3" />
 
@@ -92,19 +93,19 @@
                         android:id="@+id/imageView10"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-
-                        android:src="@tools:sample/avatars"
-                        tools:srcCompat="@drawable/star" />
+                        android:src="@drawable/star"
+                        tools:ignore="ContentDescription" />
 
                     <TextView
-                        android:id="@+id/rateTxt"
+                        android:id="@+id/scoreTxt"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
 
                         android:layout_marginStart="8dp"
                         android:text="4.5"
                         android:textColor="@color/black"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        tools:ignore="HardcodedText" />
 
                     <TextView
                         android:id="@+id/textView11"
@@ -113,24 +114,26 @@
                         android:layout_marginStart="4dp"
                         android:text="Rating"
                         android:textColor="@color/black"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        tools:ignore="HardcodedText" />
 
                     <ImageView
                         android:id="@+id/imageView11"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
-                        android:src="@tools:sample/avatars"
-                        tools:srcCompat="@drawable/review" />
+                        android:src="@drawable/review"
+                        tools:ignore="ContentDescription" />
 
                     <TextView
-                        android:id="@+id/textView12"
+                        android:id="@+id/reviews1Txt"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
                         android:text="156"
                         android:textColor="@color/black"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        tools:ignore="HardcodedText" />
 
                     <TextView
                         android:id="@+id/textView16"
@@ -139,7 +142,8 @@
                         android:layout_marginStart="8dp"
                         android:text="Reviews"
                         android:textColor="@color/black"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        tools:ignore="HardcodedText" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -161,18 +165,20 @@
                         android:layout_weight="1"
                         android:text="Vegetables"
                         android:textColor="@color/black"
-                        android:textSize="23dp"
-                        android:textStyle="bold" />
+                        android:textSize="23sp"
+                        android:textStyle="bold"
+                        tools:ignore="HardcodedText,InefficientWeight" />
 
                     <TextView
                         android:id="@+id/priceTxt"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
 
-                        android:text="%25 Sale"
+                        android:text="₱ 250"
                         android:textColor="@color/black"
                         android:textSize="22sp"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        tools:ignore="HardcodedText" />
                 </LinearLayout>
 
                 <View
@@ -189,28 +195,29 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <TextView
-                android:id="@+id/textView8"
+                android:id="@+id/descriptionTxt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
+                android:text="Welcome to the vibrant and nourishing world of our vegetable
+                 market! Step into a realm where colors, freshness, and flavors
+                 intertwine to awaken your senses and inspire your culinary
+                 adventures. Discover a bountiful array of seasonal treasures,
+                 as we showcase an abundant selection of wholesome and
+                 locally sourced vegetables, straight from the fields to your
+                 table. From the crisp green vitality of leafy greens to the vibrant
+                 hues of tantalizing root vegetables, we invite you to explore
+                 the natural goodness that Mother Nature has to offer. Whether
+                 you're a seasoned cook or an aspiring food-lover, our vegetable
+                 market is a haven where you can cultivate a healthier lifestyle
+                 and celebrate the veritable symphony of tastes and textures
+                 that only vegetables can provide. So, come and immerse
+                 yourself in the kaleidoscope of flavors, relish the farm-to-fork
+                 experience, and let our vegetable market be your guiding light
+                 towards a more vibrant and nourished you!"
                 android:textColor="@color/black"
                 android:textSize="16dp"
-                android:text="Welcome to the vibrant and nourishing world of our vegetable
-                market! Step into a realm where colors, freshness, and flavors
-                intertwine to awaken your senses and inspire your culinary
-                adventures. Discover a bountiful array of seasonal treasures,
-                as we showcase an abundant selection of wholesome and
-                locally sourced vegetables, straight from the fields to your
-                table. From the crisp green vitality of leafy greens to the vibrant
-                hues of tantalizing root vegetables, we invite you to explore
-                the natural goodness that Mother Nature has to offer. Whether
-                you're a seasoned cook or an aspiring food-lover, our vegetable
-                market is a haven where you can cultivate a healthier lifestyle
-                and celebrate the veritable symphony of tastes and textures
-                that only vegetables can provide. So, come and immerse
-                yourself in the kaleidoscope of flavors, relish the farm-to-fork
-                experience, and let our vegetable market be your guiding light
-                towards a more vibrant and nourished you!"/>
+                tools:ignore="HardcodedText,SpUsage,TextSizeCheck,VisualLintLongText" />
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/addToCartBtn"
@@ -221,7 +228,8 @@
                 android:text="Buy Now"
                 style="@android:style/Widget.Button"
                 android:textSize="18sp"
-                android:textColor="@color/white"/>
+                android:textColor="@color/white"
+                tools:ignore="HardcodedText,VisualLintButtonSize" />
 
         </LinearLayout>
     </ScrollView>

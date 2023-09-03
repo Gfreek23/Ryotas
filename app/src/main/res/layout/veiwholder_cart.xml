@@ -25,12 +25,11 @@
         android:id="@+id/pic2"
         android:layout_width="64dp"
         android:layout_height="64dp"
-        android:src="@tools:sample/avatars"
         app:layout_constraintBottom_toBottomOf="@+id/view7"
         app:layout_constraintEnd_toEndOf="@+id/view7"
         app:layout_constraintStart_toStartOf="@+id/view7"
         app:layout_constraintTop_toTopOf="@+id/view7"
-        tools:srcCompat="@drawable/pic1" />
+        android:src="@drawable/pic1" />
 
     <TextView
         android:id="@+id/title2Txt"

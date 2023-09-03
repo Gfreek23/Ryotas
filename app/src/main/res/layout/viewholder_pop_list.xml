@@ -9,14 +9,13 @@
     android:layout_height="240dp">
 
     <ImageView
-        android:id="@+id/pic"
+        android:id="@+id/pic1"
         android:layout_width="175dp"
         android:layout_height="155dp"
-        android:src="@tools:sample/avatars"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:srcCompat="@drawable/pic1" />
+        android:src="@drawable/pic1" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout2"
@@ -32,14 +31,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
-            android:src="@tools:sample/avatars"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:srcCompat="@drawable/star" />
+            android:src="@drawable/star" />
 
         <TextView
-            android:id="@+id/scoreTxt"
+            android:id="@+id/score1Txt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="0"
@@ -65,14 +63,17 @@
         android:id="@+id/titleTxt2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="title"
         android:layout_margin="8dp"
+        android:singleLine="true"
+        android:text="title"
         android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/view6" />
 
     <TextView
-        android:id="@+id/feeTxt"
+        android:id="@+id/feesTxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="₱123"
@@ -82,7 +83,7 @@
         app:layout_constraintTop_toBottomOf="@+id/titleTxt2" />
 
     <TextView
-        android:id="@+id/reviewTxt"
+        android:id="@+id/reviewsTxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
@@ -96,9 +97,8 @@
         android:id="@+id/imageView9"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@tools:sample/avatars"
-        app:layout_constraintBottom_toBottomOf="@+id/feeTxt"
+        app:layout_constraintBottom_toBottomOf="@+id/feesTxt"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/feeTxt"
-        tools:srcCompat="@drawable/review" />
+        app:layout_constraintTop_toTopOf="@+id/feesTxt"
+        android:src="@drawable/review" />
 </androidx.constraintlayout.widget.ConstraintLayout>

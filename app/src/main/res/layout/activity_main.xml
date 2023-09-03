@@ -19,7 +19,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingBottom="70dp">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -55,22 +56,20 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:layout_marginEnd="16dp"
-                    android:src="@tools:sample/avatars"
+                    android:src="@drawable/bell"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:srcCompat="@drawable/bell" />
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <ImageView
                     android:id="@+id/imageView3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@tools:sample/avatars"
+                    android:src="@drawable/red_circle"
                     app:layout_constraintBottom_toTopOf="@+id/imageView2"
                     app:layout_constraintEnd_toEndOf="@+id/imageView2"
                     app:layout_constraintStart_toEndOf="@+id/imageView2"
-                    app:layout_constraintTop_toTopOf="@+id/imageView2"
-                    tools:srcCompat="@drawable/red_circle" />
+                    app:layout_constraintTop_toTopOf="@+id/imageView2" />
 
                 <TextView
                     android:id="@+id/textView3"
@@ -123,10 +122,9 @@
                         android:id="@+id/imageView4"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@tools:sample/avatars"
+                        android:src="@drawable/girl"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        tools:srcCompat="@drawable/girl" />
+                        app:layout_constraintEnd_toEndOf="parent" />
 
                     <TextView
                         android:id="@+id/textView5"
@@ -190,12 +188,11 @@
                             android:id="@+id/imageView20"
                             android:layout_width="86dp"
                             android:layout_height="85dp"
-                            android:src="@tools:sample/avatars"
+                            android:src="@mipmap/newproducts"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            tools:srcCompat="@mipmap/newproducts" />
+                            app:layout_constraintTop_toTopOf="parent" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <TextView
@@ -204,7 +201,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
                         android:text="Fruits And Vegetables Products"
-                        android:textAlignment="center"/>
+                        android:textAlignment="center" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -222,12 +219,11 @@
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:src="@tools:sample/avatars"
+                            android:src="@drawable/cat1"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            tools:srcCompat="@drawable/cat1" />
+                            app:layout_constraintTop_toTopOf="parent" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <TextView
@@ -255,12 +251,11 @@
                             android:id="@+id/imageView21"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:src="@tools:sample/avatars"
+                            android:src="@drawable/cat1"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            tools:srcCompat="@drawable/cat1" />
+                            app:layout_constraintTop_toTopOf="parent" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <TextView
@@ -288,12 +283,11 @@
                             android:id="@+id/imageView22"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:src="@tools:sample/avatars"
+                            android:src="@drawable/cat1"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            tools:srcCompat="@drawable/cat1" />
+                            app:layout_constraintTop_toTopOf="parent" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <TextView
@@ -320,12 +314,11 @@
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:src="@tools:sample/avatars"
+                            android:src="@drawable/cat1"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            tools:srcCompat="@drawable/cat1" />
+                            app:layout_constraintTop_toTopOf="parent" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <TextView
@@ -369,6 +362,7 @@
                 android:id="@+id/view1"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:clipToPadding="false"
                 android:paddingStart="16dp"
                 android:paddingEnd="16dp" />
 
@@ -393,6 +387,7 @@
                 android:orientation="horizontal">
 
                 <LinearLayout
+                    android:id="@+id/homeBtn"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="0.25"
@@ -405,8 +400,7 @@
                         android:layout_gravity="center"
                         android:layout_margin="4dp"
                         android:layout_weight="1"
-                        android:src="@tools:sample/avatars"
-                        tools:srcCompat="@drawable/btn_1" />
+                        android:src="@drawable/btn_1" />
 
                     <TextView
                         android:id="@+id/textView15"
@@ -418,6 +412,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/wishBtn"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="0.25"
@@ -429,9 +424,8 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_margin="4dp"
-                        android:src="@tools:sample/avatars"
-                        tools:layout_weight="1"
-                        tools:srcCompat="@drawable/btn_2" />
+                        android:src="@drawable/btn_2"
+                        tools:layout_weight="1" />
 
                     <TextView
                         android:id="@+id/textView16"
@@ -443,6 +437,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/cartBtn"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="0.25"
@@ -455,8 +450,7 @@
                         android:layout_gravity="center"
                         android:layout_margin="4dp"
                         android:layout_weight="1"
-                        android:src="@tools:sample/avatars"
-                        tools:srcCompat="@drawable/btn_3" />
+                        android:src="@drawable/btn_3" />
 
                     <TextView
                         android:id="@+id/textView17"
@@ -480,8 +474,7 @@
                         android:layout_gravity="center"
                         android:layout_margin="4dp"
                         android:layout_weight="1"
-                        android:src="@tools:sample/avatars"
-                        tools:srcCompat="@drawable/btn_4" />
+                        android:src="@drawable/btn_4" />
 
                     <TextView
                         android:id="@+id/textView18"

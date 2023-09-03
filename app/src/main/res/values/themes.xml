@@ -3,6 +3,7 @@
     <style name="Base.Theme.TrialProject3" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="colorPrimaryDark">@color/white</item>
     </style>
 
     <style name="Theme.TrialProject3" parent="Base.Theme.TrialProject3" />
