@@ -76,7 +76,7 @@ private RecyclerView recyclerViewPupolar;
                 "                 market! Step into a realm where colors, freshness, and flavors\n" +
                 "                 intertwine to awaken your senses and inspire your culinary\n" +
                 "                 adventures. Discover a bountiful array of seasonal treasures,\n" +
-                "                 as we showcase an abundant selection of wholesome and\n" +
+                "                  as we showcase an abundant selection of wholesome and\n" +
                 "                 locally sourced vegetables, straight from the fields to your\n" +
                 "                 table. From the crisp green vitality of leafy greens to the vibrant\n" +
                 "                 hues of tantalizing root vegetables, we invite you to explore\n" +

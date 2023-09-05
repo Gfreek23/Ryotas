@@ -51,12 +51,7 @@ private ManagementCart managementCart;
             object.setNumberinCart(numberOrder);
             managementCart.insertFood(object);
         });
-        backBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(DetailActivity.this, MainActivity.class));
-            }
-        });
+        backBtn.setOnClickListener(v -> finish());
 
 
     }

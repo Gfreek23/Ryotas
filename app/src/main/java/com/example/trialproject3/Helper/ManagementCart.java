@@ -38,7 +38,7 @@ public class ManagementCart {
     }
 
 
-    private ArrayList<PopularDomain> getListCart() {
+    public ArrayList<PopularDomain> getListCart() {
         return tinyDB.getListObject("CartList");
     }
 
