@@ -107,3 +107,5 @@ Z
 Kapp/src/main/java/com/example/trialproject3/Activity/LoginHomeActivity.java,e\2\e2cd0534fe73eb6fae88430a33485d8745cc5933
 z
 Japp/src/main/java/com/example/trialproject3/Activity/RegisterActivity.java,9\e\9e7e6a3c21c111308ecf071740e4fb732833790f
+{
+Kapp/src/main/java/com/example/trialproject3/Activity/LoginPageActivity.java,a\c\ac2fc73040333da490a856d407a716410071902a
