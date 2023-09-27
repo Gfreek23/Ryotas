@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "233662684646",
+    "project_id": "e-home-c0612",
+    "storage_bucket": "e-home-c0612.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:233662684646:android:7142a000c8f3a7e8980a27",
+        "android_client_info": {
+          "package_name": "com.example.trialproject3"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCtiD7GJpkK74JbweMyFcoghsFi8v61E14"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

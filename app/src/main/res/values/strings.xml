@@ -1,4 +1,11 @@
 <resources>
     <string name="app_name">trial project3</string>
 
+    <string name="first_slide">Choose Your Products</string>
+    <string name="second_slide">Fast Delivery</string>
+    <string name="third_slide">Good Service</string>
+
+    <string name="description">An Online Home Service Assistant \nand \nEssentials Store</string>
+
+
 </resources>

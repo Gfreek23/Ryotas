@@ -3,11 +3,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/blue_background"
+    android:background="@color/white"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".Activity.LoginPageActivity">
 
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/blue_background">
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <TextView
         android:id="@+id/textView12"
@@ -16,7 +22,7 @@
         android:layout_marginTop="16dp"
         android:text="E-Home"
         android:textColor="#fb8b24"
-        android:textSize="50sp"
+        android:textSize="25sp"
         android:textStyle="bold|italic"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -40,7 +46,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Sign In"
-        android:textSize="40sp"
+        android:textSize="25sp"
         android:textStyle="bold"
         android:textColor="@color/black"
         app:layout_constraintVertical_bias="0.2"
@@ -51,7 +57,7 @@
 
     <EditText
         android:background="@drawable/editext_grey_background"
-        android:id="@+id/Email"
+        android:id="@+id/Email1"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
@@ -67,18 +73,19 @@
 
     <EditText
         android:background="@drawable/editext_grey_background"
-        android:id="@+id/Password3"
+        android:id="@+id/Password4"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:drawableLeft="@drawable/ic_baseline_vpn_key_24"
+        android:inputType="textPassword"
         android:hint="Password"
         android:padding="15dp"
         android:drawablePadding="10dp"
         android:elevation="3dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Email"
+        app:layout_constraintTop_toBottomOf="@+id/Email1"
         app:layout_constraintWidth=".8" />
 
     <androidx.appcompat.widget.AppCompatButton
@@ -98,7 +105,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Password3" />
+        app:layout_constraintTop_toBottomOf="@+id/Password4" />
 
     <TextView
         android:id="@+id/textView37"
@@ -109,9 +116,9 @@
         android:textSize="20dp"
         app:layout_constraintVertical_bias=".2"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/Password3"
+        app:layout_constraintEnd_toEndOf="@+id/Password4"
         app:layout_constraintHorizontal_bias="0.32"
-        app:layout_constraintStart_toStartOf="@+id/Password3"
+        app:layout_constraintStart_toStartOf="@+id/Password4"
         app:layout_constraintTop_toBottomOf="@+id/Login1" />
 
     <TextView
