@@ -1,6 +1,7 @@
 package com.example.trialproject3.Activity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -24,6 +25,8 @@ public class RegisterActivity extends AppCompatActivity {
     EditText name,email,password,Repassword;
     private FirebaseAuth auth;
 
+    SharedPreferences sharedPreferences;
+
     protected void onCreate (Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
@@ -40,6 +43,20 @@ public class RegisterActivity extends AppCompatActivity {
         email = findViewById(R.id.Email);
         password = findViewById(R.id.Password3);
         Repassword = findViewById(R.id.RePassword);
+
+        sharedPreferences = getSharedPreferences("onBoardingScreen",MODE_PRIVATE);
+
+        boolean isFirstTIme = sharedPreferences.getBoolean("firstTime",true);
+
+        if (isFirstTIme){
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putBoolean("firstTime",false);
+            editor.commit();
+
+            Intent intent = new Intent(RegisterActivity.this,OnBoardActivity.class);
+            startActivity(intent);
+            finish();
+        }
 
 
     }
