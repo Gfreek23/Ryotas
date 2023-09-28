@@ -35,10 +35,6 @@ public class RegisterActivity extends AppCompatActivity {
 
         auth = FirebaseAuth.getInstance();
 
-        if(auth.getCurrentUser()!=null){
-            startActivity(new Intent(RegisterActivity.this,LoginPageActivity.class));
-            finish();
-        }
 
         name = findViewById(R.id.Name);
         email = findViewById(R.id.Email);
@@ -97,12 +93,6 @@ public class RegisterActivity extends AppCompatActivity {
                 });
 
     }
-
-   public void Signup(View view){
-
-
-        startActivity(new Intent(RegisterActivity.this,MainActivity.class));
-   }
 
     public void Login(View view){
         startActivity(new Intent(RegisterActivity.this,LoginPageActivity.class));

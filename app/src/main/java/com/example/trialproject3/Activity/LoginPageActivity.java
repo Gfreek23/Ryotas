@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -17,11 +18,16 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
+import java.util.Objects;
 
 public class LoginPageActivity extends AppCompatActivity {
 
     EditText email,password;
     private FirebaseAuth auth;
+
+    TextView signup;
 
     protected void onCreate (Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -32,9 +38,11 @@ public class LoginPageActivity extends AppCompatActivity {
             actionBar.hide();
         }
 
+        signup = findViewById(R.id.textView39);
         auth = FirebaseAuth.getInstance();
         email = findViewById(R.id.Email1);
         password = findViewById(R.id.Password4);
+
 
     }
 
@@ -73,8 +81,10 @@ public class LoginPageActivity extends AppCompatActivity {
 
     }
 
-    public void Signup (View view){
-        startActivity(new Intent(LoginPageActivity.this,RegisterActivity.class));
-    }
+
+        public void Register(View view) {
+            startActivity(new Intent(LoginPageActivity.this, RegisterActivity.class));
+        }
+
 
 }

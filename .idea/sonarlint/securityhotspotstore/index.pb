@@ -101,11 +101,15 @@ X
 (app/src/main/res/values-night/themes.xml,8\c\8c3a6b96d9ffba496992e612d58227c19e6b9e65
 R
 "app/src/main/res/values/themes.xml,e\b\eb7f0f821bde169dd21862705b2b042d2cea69a3
-Z
-*app/src/main/res/layout/activity_login.xml,1\f\1f7e901185d74bf05f9fcb38f9ed35ea78cd4c6e
 {
 Kapp/src/main/java/com/example/trialproject3/Activity/LoginHomeActivity.java,e\2\e2cd0534fe73eb6fae88430a33485d8745cc5933
 z
 Japp/src/main/java/com/example/trialproject3/Activity/RegisterActivity.java,9\e\9e7e6a3c21c111308ecf071740e4fb732833790f
 {
 Kapp/src/main/java/com/example/trialproject3/Activity/LoginPageActivity.java,a\c\ac2fc73040333da490a856d407a716410071902a
+H
+app/google-services.json,f\d\fd8d34b142d02ec743a8efefefd2c097961666e9
+y
+Iapp/src/main/java/com/example/trialproject3/Activity/OnBoardActivity.java,3\5\35cdf69b694d478687a51d4a71db227e8b7fcf22
+v
+Fapp/src/main/java/com/example/trialproject3/Adapter/SliderAdapter.java,7\9\791a5728c462e4e221d7753e5c3996f32b2fd5e4

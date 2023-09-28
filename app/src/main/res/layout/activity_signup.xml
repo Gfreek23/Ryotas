@@ -64,7 +64,7 @@
         android:drawableLeft="@drawable/ic_baseline_account_circle"
         android:drawablePadding="10dp"
         android:elevation="3dp"
-        android:hint="Email"
+        android:hint="Name"
         android:padding="15dp"
         android:textColor="@color/black"
         android:textColorHint="@color/black"
