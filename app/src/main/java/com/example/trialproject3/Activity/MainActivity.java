@@ -6,18 +6,25 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.LinearLayout;
 
+import com.example.trialproject3.Adapter.CartListAdapter;
+import com.example.trialproject3.Adapter.CategoryAdapter;
 import com.example.trialproject3.Adapter.PopularListAdapter;
+import com.example.trialproject3.Domain.CategoryDomain;
 import com.example.trialproject3.Domain.PopularDomain;
+import com.example.trialproject3.Models.CategoryModels;
 import com.example.trialproject3.R;
 
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 private RecyclerView.Adapter adapterPupolar;
+
 private RecyclerView recyclerViewPupolar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +36,8 @@ private RecyclerView recyclerViewPupolar;
         
     }
 
+
+
     private void bottom_navigation() {
         LinearLayout homeBtn=findViewById(R.id.homeBtn);
         LinearLayout cartBtn=findViewById(R.id.cartBtn);
@@ -38,6 +47,8 @@ private RecyclerView recyclerViewPupolar;
         cartBtn.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, CartActivity.class)));
         //profileBtn.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, ProfileAtivity.class)));
     }
+
+
 
     private void initRecyclerview() {
 

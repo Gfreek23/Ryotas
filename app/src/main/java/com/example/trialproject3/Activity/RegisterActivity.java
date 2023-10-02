@@ -44,7 +44,7 @@ public class RegisterActivity extends AppCompatActivity {
         password = findViewById(R.id.Password3);
         Repassword = findViewById(R.id.RePassword);
 
-        sharedPreferences = getSharedPreferences("onBoardingScreen",MODE_PRIVATE);
+        sharedPreferences = getSharedPreferences("OnBoardActivity",MODE_PRIVATE);
 
         boolean isFirstTIme = sharedPreferences.getBoolean("firstTime",true);
 

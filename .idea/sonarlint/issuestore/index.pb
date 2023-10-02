@@ -113,3 +113,9 @@ y
 Iapp/src/main/java/com/example/trialproject3/Activity/OnBoardActivity.java,3\5\35cdf69b694d478687a51d4a71db227e8b7fcf22
 v
 Fapp/src/main/java/com/example/trialproject3/Adapter/SliderAdapter.java,7\9\791a5728c462e4e221d7753e5c3996f32b2fd5e4
+v
+Fapp/src/main/java/com/example/trialproject3/Models/CategoryModels.java,3\0\3052b7a2afe629c7dd237b77d643cda1cd371256
+x
+Happ/src/main/java/com/example/trialproject3/Adapter/CategoryAdapter.java,8\5\8576691fbf469f40c15878cec6c7f3d0355ef5e6
+t
+Dapp/src/main/java/com/example/trialproject3/Adapter/ImageSlider.java,5\e\5e788e8f2b5ed7037d57cae0337444877b4bc337

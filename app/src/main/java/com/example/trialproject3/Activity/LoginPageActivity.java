@@ -1,11 +1,13 @@
 package com.example.trialproject3.Activity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.LocusId;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,6 +25,8 @@ import com.google.firebase.auth.FirebaseUser;
 import java.util.Objects;
 
 public class LoginPageActivity extends AppCompatActivity {
+
+
 
     EditText email,password;
     private FirebaseAuth auth;
@@ -72,8 +76,9 @@ public class LoginPageActivity extends AppCompatActivity {
                                 if (task.isSuccessful()){
                                     Toast.makeText(LoginPageActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
                                     startActivity(new Intent(LoginPageActivity.this,MainActivity.class));
+
                                 }else{
-                                    Toast.makeText(LoginPageActivity.this, "Error"+task.getException(), Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(LoginPageActivity.this, "Access Denied!", Toast.LENGTH_SHORT).show();
                                 }
                             }
                         });
