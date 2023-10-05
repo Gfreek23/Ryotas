@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -40,6 +41,8 @@ public class CartActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cart);
 
+
+        backBtn = findViewById(R.id.backBtn);
         btnfinal = findViewById(R.id.Order);
         builder = new AlertDialog.Builder(this);
 
@@ -66,10 +69,33 @@ public class CartActivity extends AppCompatActivity {
             }
         });
 
+        backBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                builder.setTitle("Are you sure?")
+                        .setMessage("Do you want to leave your cart?")
+                        .setCancelable(true)
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.cancel();
+                                startActivity(new Intent(CartActivity.this, MainActivity.class));
+                            }
+                        })
+                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.cancel();
+                            }
+                        })
+                        .show();
+            }
+        });
+
+
         managementCart=new ManagementCart(this);
 
         initView();
-        setVariavle();
         initList();
         calculateCart();
 
@@ -109,10 +135,6 @@ public class CartActivity extends AppCompatActivity {
         totalTxt.setText("₱"+total);
     }
 
-    private void setVariavle() {
-        backBtn.setOnClickListener(v -> finish());
-    }
-
     private void initView() {
         totalFeeTxt=findViewById(R.id.totalFeeTxt);
         taxTxt=findViewById(R.id.taxTxt);
@@ -120,7 +142,6 @@ public class CartActivity extends AppCompatActivity {
         totalTxt=findViewById(R.id.totalTxt);
         recyclerView=findViewById(R.id.view3);
         scrollView=findViewById(R.id.scrollView3);
-        backBtn=findViewById(R.id.backBtn);
         emptyTxt=findViewById(R.id.emptyTxt);
 
     }

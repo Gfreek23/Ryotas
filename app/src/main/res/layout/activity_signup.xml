@@ -61,11 +61,11 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:background="@drawable/editext_grey_background"
-        android:drawableLeft="@drawable/ic_baseline_account_circle"
+        android:drawableLeft="@drawable/ic_name"
         android:drawablePadding="10dp"
         android:elevation="3dp"
-        android:hint="Name"
-        android:padding="15dp"
+        android:hint="Full Name"
+        android:padding="9dp"
         android:textColor="@color/black"
         android:textColorHint="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
@@ -79,11 +79,11 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:background="@drawable/editext_grey_background"
-        android:drawableLeft="@drawable/ic_baseline_vpn_key_24"
+        android:drawableLeft="@drawable/ic_mail"
         android:drawablePadding="10dp"
         android:elevation="3dp"
-        android:hint="Email"
-        android:padding="15dp"
+        android:hint="Email Address"
+        android:padding="9dp"
         android:textColor="@color/black"
         android:textColorHint="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
@@ -92,22 +92,108 @@
         app:layout_constraintWidth=".8" />
 
     <EditText
-        android:id="@+id/Password3"
+        android:id="@+id/Birthday"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:background="@drawable/editext_grey_background"
-        android:drawableLeft="@drawable/ic_baseline_vpn_key_24"
+        android:drawableLeft="@drawable/ic_birthday"
         android:drawablePadding="10dp"
-        android:inputType="textPassword"
+        android:maxLength="10"
         android:elevation="3dp"
-        android:hint="Password"
-        android:padding="15dp"
+        android:hint="Birthdate (dd/mm/yyyy)"
+        android:inputType="date"
+        android:padding="9dp"
         android:textColor="@color/black"
         android:textColorHint="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/Email"
+        app:layout_constraintWidth=".8" />
+    
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@+id/Birthday"
+        android:drawablePadding="10dp"
+        android:background="@drawable/editext_grey_background"
+        android:id="@+id/Gender">
+
+        <TextView
+            android:id="@+id/GenderTxt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:drawableLeft="@drawable/ic_sex"
+            android:text="Gender:"
+            android:textColor="@color/black"
+            android:textSize="22sp" />
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/radio_female"
+            android:text="Female"
+            android:layout_marginLeft="5dp"
+            android:textSize="20sp"
+            android:textColor="@color/black"/>
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/radio_male"
+            android:text="Male"
+            android:layout_marginLeft="5dp"
+            android:textSize="20sp"
+            android:textColor="@color/black"/>
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/radio_others"
+            android:text="Others"
+            android:layout_marginLeft="5dp"
+            android:textSize="20sp"
+            android:textColor="@color/black"/>
+
+    </RadioGroup>
+
+    <EditText
+        android:id="@+id/Phone"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/editext_grey_background"
+        android:drawableLeft="@drawable/ic_telephone"
+        android:drawablePadding="10dp"
+        android:elevation="3dp"
+        android:maxLength="11"
+        android:hint="Mobile Number (without +631)"
+        android:inputType="phone"
+        android:padding="9dp"
+        android:textColor="@color/black"
+        android:textColorHint="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Gender"
+        app:layout_constraintWidth=".8" />
+
+    <EditText
+        android:id="@+id/Password3"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/editext_grey_background"
+        android:drawableLeft="@drawable/ic_password"
+        android:drawablePadding="10dp"
+        android:inputType="textPassword"
+        android:elevation="3dp"
+        android:hint="Password"
+        android:padding="9dp"
+        android:textColor="@color/black"
+        android:textColorHint="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Phone"
         app:layout_constraintWidth=".8" />
 
     <EditText
@@ -116,12 +202,12 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:background="@drawable/editext_grey_background"
-        android:drawableLeft="@drawable/ic_baseline_vpn_key_24"
+        android:drawableLeft="@drawable/ic_password"
         android:drawablePadding="10dp"
         android:inputType="textPassword"
         android:elevation="3dp"
         android:hint="Re-Password"
-        android:padding="15dp"
+        android:padding="9dp"
         android:textColor="@color/black"
         android:textColorHint="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
@@ -136,7 +222,7 @@
         android:layout_width="0dp"
         android:layout_height="50dp"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="124dp"
+        android:layout_marginTop="75dp"
         android:layout_marginEnd="32dp"
         android:background="@drawable/red_banner"
         android:onClick="Signin"
@@ -147,7 +233,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Password3" />
+        app:layout_constraintTop_toBottomOf="@+id/RePassword" />
 
     <TextView
         android:id="@+id/textView37"
@@ -157,11 +243,11 @@
         android:textSize="20dp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/Password3"
+        app:layout_constraintEnd_toEndOf="@+id/RePassword"
         app:layout_constraintHorizontal_bias="0.35"
-        app:layout_constraintStart_toStartOf="@+id/Password3"
+        app:layout_constraintStart_toStartOf="@+id/RePassword"
         app:layout_constraintTop_toBottomOf="@+id/Login1"
-        app:layout_constraintVertical_bias=".2" />
+        app:layout_constraintVertical_bias=".3" />
 
     <TextView
         android:id="@+id/textView38"
@@ -174,4 +260,16 @@
         app:layout_constraintBottom_toBottomOf="@+id/textView37"
         app:layout_constraintStart_toEndOf="@+id/textView37"
         app:layout_constraintTop_toTopOf="@+id/textView37" />
+
+    <ProgressBar
+        android:id="@+id/progressbar"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:elevation="10dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

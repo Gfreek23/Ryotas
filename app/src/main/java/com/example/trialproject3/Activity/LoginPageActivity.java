@@ -1,6 +1,7 @@
 package com.example.trialproject3.Activity;
 
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.LocusId;
 import android.os.Bundle;
@@ -13,10 +14,13 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.trialproject3.R;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -31,7 +35,7 @@ public class LoginPageActivity extends AppCompatActivity {
     EditText email,password;
     private FirebaseAuth auth;
 
-    TextView signup;
+    TextView signup,Forgotlink;
 
     protected void onCreate (Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -46,6 +50,7 @@ public class LoginPageActivity extends AppCompatActivity {
         auth = FirebaseAuth.getInstance();
         email = findViewById(R.id.Email1);
         password = findViewById(R.id.Password4);
+        Forgotlink = findViewById(R.id.ForgotPwd);
 
 
     }
@@ -87,9 +92,50 @@ public class LoginPageActivity extends AppCompatActivity {
     }
 
 
+
+
         public void Register(View view) {
             startActivity(new Intent(LoginPageActivity.this, RegisterActivity.class));
         }
+
+        public void Forgotpass(View view){
+        EditText resetMail = new EditText(view.getContext());
+            AlertDialog.Builder passwordResetDialog = new AlertDialog.Builder(view.getContext());
+            passwordResetDialog.setTitle("Reset Password?");
+            passwordResetDialog.setMessage("Enter your email to received reset link.");
+            passwordResetDialog.setView(resetMail);
+
+            passwordResetDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    //kuhaon ang email niya sa firestore unya mag send og reset password link
+                    String mail = resetMail.getText().toString();
+                    auth.sendPasswordResetEmail(mail).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void unused) {
+                            Toast.makeText(LoginPageActivity.this,"Reset link sent to your email", Toast.LENGTH_SHORT).show();
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(LoginPageActivity.this,"Failed to sent reset password link"+e.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
+            });
+
+            passwordResetDialog.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    //close niya ang message
+
+                }
+            });
+            passwordResetDialog.create().show();
+
+        }
+
+
 
 
 }

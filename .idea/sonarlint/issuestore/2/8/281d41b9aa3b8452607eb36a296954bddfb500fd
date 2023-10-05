@@ -3,4 +3,4 @@
 java:S1319"eThe type of "items" should be an interface such as "List" rather than the implementation "ArrayList".(ÕšÒşÿÿÿÿ8ÉÚÙ¥1
 v	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(„ÏİÚ8ÊÚÙ¥1
 e
-java:S1659B"CDeclare "feeTxt" and all following declarations on a separate line.(–øöîûÿÿÿÿ8‰‘ÚÙ¥1
+java:S1659C"CDeclare "feeTxt" and all following declarations on a separate line.(–øöîûÿÿÿÿ8‰‘ÚÙ¥1

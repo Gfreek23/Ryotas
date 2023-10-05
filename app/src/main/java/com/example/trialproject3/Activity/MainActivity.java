@@ -1,5 +1,6 @@
 package com.example.trialproject3.Activity;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -11,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.example.trialproject3.Adapter.CartListAdapter;
 import com.example.trialproject3.Adapter.CategoryAdapter;
@@ -19,17 +21,45 @@ import com.example.trialproject3.Domain.CategoryDomain;
 import com.example.trialproject3.Domain.PopularDomain;
 import com.example.trialproject3.Models.CategoryModels;
 import com.example.trialproject3.R;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 private RecyclerView.Adapter adapterPupolar;
 
+TextView Fname;
+FirebaseAuth fauth;
+FirebaseFirestore fstore;
+String userId;
+
 private RecyclerView recyclerViewPupolar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        Fname = findViewById(R.id.Fname);
+
+        fauth = FirebaseAuth.getInstance();
+        fstore = FirebaseFirestore.getInstance();
+
+        userId = fauth.getCurrentUser().getUid();
+
+        DocumentReference documentReference = fstore.collection("users").document(userId);
+        documentReference.addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
+                Fname.setText(value.getString("Fname"));
+            }
+        });
+
+
 
         initRecyclerview();
         bottom_navigation();
