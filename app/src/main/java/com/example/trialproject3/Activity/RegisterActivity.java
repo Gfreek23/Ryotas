@@ -1,5 +1,6 @@
 package com.example.trialproject3.Activity;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -7,6 +8,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
@@ -20,12 +22,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.trialproject3.R;
 import com.example.trialproject3.UserDetails.ReadWriteUserDetails;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthEmailException;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
+import com.google.firebase.auth.FirebaseAuthInvalidUserException;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 import com.google.firebase.auth.FirebaseUser;
@@ -34,6 +38,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -50,6 +55,8 @@ public class RegisterActivity extends AppCompatActivity {
 
     FirebaseFirestore fstore;
 
+    private DatePickerDialog picker;
+
     private static final String TAG = "RegisterActivity";
 
     String userID;
@@ -58,7 +65,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_signup);
+        setContentView(R.layout.activity_signup1);
 
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
@@ -79,6 +86,25 @@ public class RegisterActivity extends AppCompatActivity {
         Gender = findViewById(R.id.Gender);
         Gender.clearCheck();
 
+        Bday.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Calendar calendar = Calendar.getInstance();
+                int day = calendar.get(Calendar.DAY_OF_MONTH);
+                int month = calendar.get(Calendar.MONTH);
+                int year = calendar.get(Calendar.YEAR);
+
+                picker = new DatePickerDialog(RegisterActivity.this, new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                        Bday.setText(dayOfMonth + "/" + (month + 1)+ "/" + year);
+                    }
+                },year,month,day);
+                picker.show();
+
+            }
+        });
+
         sharedPreferences = getSharedPreferences("OnBoardActivity", MODE_PRIVATE);
 
         boolean isFirstTIme = sharedPreferences.getBoolean("firstTime", true);
@@ -96,7 +122,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     }
 
-    public void Signin(View view) {
+    public void Register(View view) {
 
         String userName = name.getText().toString();
         String userEmail = email.getText().toString();
@@ -175,15 +201,11 @@ public class RegisterActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
 
                         if (task.isSuccessful()) {
-                            Toast.makeText(RegisterActivity.this, "Successfully Registered. Please verify your email",
+
+
+
+                            Toast.makeText(RegisterActivity.this, "Successfully Registered.",
                                     Toast.LENGTH_SHORT).show();
-
-                            FirebaseUser firebaseUser = auth.getCurrentUser();
-
-                            firebaseUser.sendEmailVerification();
-
-                            ReadWriteUserDetails writeUserDetails = new ReadWriteUserDetails(userName, userBday, userGender, userPhone);
-
                             userID = auth.getCurrentUser().getUid();
                             DocumentReference documentReference = fstore.collection("users").document(userID);
                             Map<String, Object> user = new HashMap<>();
@@ -199,10 +221,26 @@ public class RegisterActivity extends AppCompatActivity {
                             });
                             startActivity(new Intent(getApplicationContext(), LoginPageActivity.class));
                         } else {
+                            try{
+                                throw task.getException();
+                            }catch (FirebaseAuthWeakPasswordException e){
+                                password.setError("Your password is too weak. Kindly use a mix of a alphabets, numbers and special characters");
+                                password.requestFocus();
+                            }catch (FirebaseAuthInvalidCredentialsException e){
+                                email.setError("Your email is invalid or already in use. Kindly re-enter.");
+                                email.requestFocus();
+                            }catch (FirebaseAuthUserCollisionException e){
+                                email.setError("User is already registered with this email. Use another email.");
+                                email.requestFocus();
+                            }catch (Exception e){
+                                Log.e(TAG, e.getMessage());
+                                Toast.makeText(RegisterActivity.this, e.getMessage(),
+                                        Toast.LENGTH_SHORT).show();
+                            }
                             Toast.makeText(RegisterActivity.this, "Registered failed. Please try again",
                                     Toast.LENGTH_SHORT).show();
-                            progressBar.setVisibility(View.GONE);
                         }
+                        progressBar.setVisibility(View.GONE);
                     }
                 });
     }

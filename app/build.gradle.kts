@@ -30,6 +30,9 @@ android {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
+    buildFeatures{
+        viewBinding = true
+    }
 }
 
 dependencies {
@@ -45,6 +48,10 @@ dependencies {
     implementation("junit:junit:4.+")
     implementation("com.google.firebase:firebase-database-ktx:20.2.2")
     implementation("com.google.firebase:firebase-firestore-ktx:24.8.1")
+    implementation("com.intuit.sdp:sdp-android:1.0.6")
+    implementation("com.intuit.ssp:ssp-android:1.0.6")
+    implementation("com.makeramen:roundedimageview:2.3.0")
+    implementation ("com.google.firebase:firebase-auth:16.0.1")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")

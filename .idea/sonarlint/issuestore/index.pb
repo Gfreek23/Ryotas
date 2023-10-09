@@ -121,3 +121,5 @@ t
 Dapp/src/main/java/com/example/trialproject3/Adapter/ImageSlider.java,5\e\5e788e8f2b5ed7037d57cae0337444877b4bc337
 v
 Fapp/src/main/java/com/example/trialproject3/Domain/CategoryDomain.java,8\a\8a4a17dd28dcf931318c9be5dfadf3a3ea25d493
+Å
+Qapp/src/main/java/com/example/trialproject3/UserDetails/ReadWriteUserDetails.java,b\e\be25d2fc21708a4c1e0f16cef0dade8efa0c21bd
