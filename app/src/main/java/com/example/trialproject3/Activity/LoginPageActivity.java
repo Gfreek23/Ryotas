@@ -216,7 +216,7 @@ public class LoginPageActivity extends AppCompatActivity {
         }
     //check niya ang user kung naka login in na para kung naka login na siya kasa diritso na siya sa profile
     @Override
-    protected void onStart() {
+   protected void onStart() {
         super.onStart();
         if (auth.getCurrentUser() != null){
             Toast.makeText(LoginPageActivity.this, "Your already logged in!", Toast.LENGTH_SHORT).show();

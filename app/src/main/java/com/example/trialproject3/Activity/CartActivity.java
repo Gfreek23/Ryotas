@@ -32,6 +32,8 @@ public class CartActivity extends AppCompatActivity {
     private ScrollView scrollView;
     private ImageView backBtn;
 
+    private ImageView addBtn;
+
     Button btnfinal;
     AlertDialog.Builder builder;
 
@@ -42,6 +44,7 @@ public class CartActivity extends AppCompatActivity {
         setContentView(R.layout.activity_cart);
 
 
+        addBtn = findViewById(R.id.imageView13);
         backBtn = findViewById(R.id.backBtn);
         btnfinal = findViewById(R.id.Order);
         builder = new AlertDialog.Builder(this);
@@ -89,6 +92,13 @@ public class CartActivity extends AppCompatActivity {
                             }
                         })
                         .show();
+            }
+        });
+
+        addBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(CartActivity.this,AddressActivity.class));
             }
         });
 

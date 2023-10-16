@@ -433,7 +433,7 @@
                         android:id="@+id/textView16"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Jobs"
+                        android:text="Home Services"
                         android:textAlignment="center"
                         android:textColor="#959595" />
                 </LinearLayout>

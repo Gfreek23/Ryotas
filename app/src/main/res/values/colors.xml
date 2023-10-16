@@ -6,7 +6,8 @@
     <color name="grey">#ababab</color>
     <color name="blue">#0000ff</color>
     <color name="pink">#ffc0cb </color>
-
+    <color name="bright_blue">#107ce8</color>
+    <color name="light_blue">#add8e6</color>
 
 
 </resources>

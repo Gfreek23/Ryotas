@@ -1,28 +1,32 @@
 
 Q
-java:S3740"/Provide the parametrized type for this generic.(ÒõÆÛıÿÿÿÿ8üèßØ¯1
+java:S3740"/Provide the parametrized type for this generic.(ÒõÆÛıÿÿÿÿ8ÍÇ™Ì±1
 J
-java:S16048"(Make this anonymous inner class a lambda(íÍà©şÿÿÿÿ8ıèßØ¯1
+java:S1604;"(Make this anonymous inner class a lambda(íÍà©şÿÿÿÿ8ÎÇ™Ì±1
 E
-java:S1604>"(Make this anonymous inner class a lambda(ìñĞó8ıèßØ¯1
+java:S1604A"(Make this anonymous inner class a lambda(ìñĞó8ÎÇ™Ì±1
 J
-java:S16041"(Make this anonymous inner class a lambda(è¼ıÄüÿÿÿÿ8ıèßØ¯1
+java:S16044"(Make this anonymous inner class a lambda(è¼ıÄüÿÿÿÿ8ÎÇ™Ì±1
 J
-java:S1604N"(Make this anonymous inner class a lambda(íÍà©şÿÿÿÿ8ıèßØ¯1
+java:S1604Q"(Make this anonymous inner class a lambda(íÍà©şÿÿÿÿ8ÎÇ™Ì±1
 E
-java:S1604U"(Make this anonymous inner class a lambda(ìñĞó8ıèßØ¯1
+java:S1604X"(Make this anonymous inner class a lambda(ìñĞó8ÏÇ™Ì±1
 E
-java:S1604H"(Make this anonymous inner class a lambda(ã‘Àò8ıèßØ¯1
+java:S1604K"(Make this anonymous inner class a lambda(ã‘Àò8ÏÇ™Ì±1
+D
+java:S1604b"(Make this anonymous inner class a lambda(¾ñçi8ÏÇ™Ì±1
 J
-java:S1604k"(Make this anonymous inner class a lambda(¦¨Ê¤ùÿÿÿÿ8şèßØ¯1
+java:S1604u"(Make this anonymous inner class a lambda(¦¨Ê¤ùÿÿÿÿ8ÏÇ™Ì±1
 e
-java:S2184‚"BCast one of the operands of this division operation to a "double".(¦‚ÜÈøÿÿÿÿ8ÿèßØ¯1
-{	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(ŠĞÛŠÿÿÿÿÿ8ÿèßØ¯1
+java:S2184Œ"BCast one of the operands of this division operation to a "double".(¦‚ÜÈøÿÿÿÿ8ĞÇ™Ì±1
+{	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(ŠĞÛŠÿÿÿÿÿ8ĞÇ™Ì±1
 e
-java:S1659"CDeclare "taxTxt" and all following declarations on a separate line.(ë½úòÿÿÿÿÿ8µéßØ¯1
+java:S1659"CDeclare "taxTxt" and all following declarations on a separate line.(ë½úòÿÿÿÿÿ8ŸÈ™Ì±1
 x
-java:S1450"VRemove the "adapter" field and declare it as a local variable in the relevant methods.(ÒõÆÛıÿÿÿÿ8¶éßØ¯1
+java:S1450"VRemove the "adapter" field and declare it as a local variable in the relevant methods.(ÒõÆÛıÿÿÿÿ8 È™Ì±1
+w
+java:S1450#"URemove the "addBtn" field and declare it as a local variable in the relevant methods.(¹¹ûóøÿÿÿÿ8¡È™Ì±1
 s
-java:S1450!"VRemove the "backBtn" field and declare it as a local variable in the relevant methods.(°Ò‡´8„éØ¯1
+java:S1450!"VRemove the "backBtn" field and declare it as a local variable in the relevant methods.(°Ò‡´8¡È™Ì±1
 o
-java:S1450"RRemove the "tax" field and declare it as a local variable in the relevant methods.(ÜˆŒò8¶éßØ¯1
+java:S1450"RRemove the "tax" field and declare it as a local variable in the relevant methods.(ÜˆŒò8¡È™Ì±1

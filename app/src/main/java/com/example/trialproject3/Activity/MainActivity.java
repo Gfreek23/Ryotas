@@ -42,6 +42,7 @@ FirebaseFirestore fstore;
 String userId;
 
 private RecyclerView recyclerViewPupolar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,7 +79,7 @@ private RecyclerView recyclerViewPupolar;
 
         homeBtn.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, MainActivity.class)));
         cartBtn.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, CartActivity.class)));
-        //profileBtn.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, ProfileAtivity.class)));
+        profileBtn.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, ProfileActivity.class)));
     }
 
 

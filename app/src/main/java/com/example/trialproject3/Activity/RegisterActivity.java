@@ -213,6 +213,7 @@ public class RegisterActivity extends AppCompatActivity {
                             user.put("email", userEmail);
                             user.put("Bday", userBday);
                             user.put("Phone", userPhone);
+                            user.put("Gender", userGender);
                             documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
                                 public void onSuccess(Void unused) {

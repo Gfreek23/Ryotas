@@ -10,9 +10,11 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
+
     }
+
 }
+
 
 rootProject.name = "trial project3"
 include(":app")
- 
