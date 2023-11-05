@@ -18,4 +18,13 @@
         <item name="android:textStyle">bold</item>
     </style>
 
+    <style name="Widget.AppCompat.SearchView.ActionBar" parent="Base.Widget.AppCompat.SearchView.ActionBar">
+        <!-- Customize the background color -->
+        <item name="android:background">@color/white</item>
+        <!-- Customize the text color -->
+        <item name="android:editTextColor">@color/black</item>
+        <!-- Customize the hint text color -->
+        <item name="android:textColorHint">@color/black</item>
+    </style>
+
 </resources>

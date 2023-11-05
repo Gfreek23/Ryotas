@@ -6,7 +6,7 @@ plugins {
 
 android {
     namespace = "com.example.trialproject3"
-    compileSdk = 33
+    compileSdk = 34
 
     viewBinding {
          enable = true
@@ -15,7 +15,7 @@ android {
 
     defaultConfig {
         applicationId = "com.example.trialproject3"
-        minSdk = 26
+        minSdk = 28
         targetSdk = 33
         versionCode = 1
         versionName = "1.0"
@@ -43,21 +43,23 @@ android {
 
 dependencies {
     implementation("com.google.android.gms:play-services-maps:18.2.0")
+    implementation("com.google.android.gms:play-services-location:21.0.1")
     implementation("androidx.appcompat:appcompat:1.6.1")
-    implementation("com.google.android.material:material:1.9.0")
+    implementation("com.google.android.material:material:1.10.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     implementation("com.github.bumptech.glide:glide:4.12.0")
     implementation("com.github.bumptech.glide:compiler:4.12.0")
     implementation("com.google.code.gson:gson:2.10.1")
     implementation("de.hdodenhof:circleimageview:3.1.0")
-    implementation("com.google.firebase:firebase-auth-ktx:22.1.2")
+    implementation("com.google.firebase:firebase-auth-ktx:22.2.0")
     implementation("junit:junit:4.13.2")
-    implementation("com.google.firebase:firebase-database-ktx:20.2.2")
-    implementation("com.google.firebase:firebase-firestore-ktx:24.8.1")
+    implementation("com.google.firebase:firebase-database-ktx:20.3.0")
+    implementation("com.google.firebase:firebase-firestore-ktx:24.9.0")
     implementation("com.intuit.sdp:sdp-android:1.1.0")
     implementation("com.intuit.ssp:ssp-android:1.1.0")
     implementation("com.makeramen:roundedimageview:2.3.0")
-    implementation ("com.google.firebase:firebase-auth:22.1.2")
+    implementation ("com.google.firebase:firebase-auth:22.2.0")
+    implementation("com.android.car.ui:car-ui-lib:2.5.1")
 
 
 

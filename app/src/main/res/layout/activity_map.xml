@@ -14,4 +14,20 @@
         tools:context=".MapsActivity"
         android:name="com.google.android.gms.maps.SupportMapFragment" />
 
+    <SearchView
+        android:id="@+id/MapSearch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:background="@drawable/background_textsearch"
+        android:elevation="5dp"
+        android:iconifiedByDefault="false"
+        android:queryHint="Search..."
+        android:textColor="@color/common_google_signin_btn_text_dark_focused"
+        android:textColorHint="@color/common_google_signin_btn_text_dark_focused"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
