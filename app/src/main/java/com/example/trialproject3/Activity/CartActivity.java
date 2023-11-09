@@ -49,6 +49,9 @@ public class CartActivity extends AppCompatActivity {
         btnfinal = findViewById(R.id.Order);
         builder = new AlertDialog.Builder(this);
 
+        bottom_navigation();
+
+
         btnfinal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -154,6 +157,15 @@ public class CartActivity extends AppCompatActivity {
         scrollView=findViewById(R.id.scrollView3);
         emptyTxt=findViewById(R.id.emptyTxt);
 
+    }
+
+    private void bottom_navigation() {
+        LinearLayout homeBtn=findViewById(R.id.homeBtn);
+        LinearLayout cartBtn=findViewById(R.id.cartBtn);
+        LinearLayout profileBtn=findViewById(R.id.profileBtn);
+
+        homeBtn.setOnClickListener(v -> startActivity(new Intent(this, MainActivity.class)));
+        profileBtn.setOnClickListener(v -> startActivity(new Intent(this, ProfileActivity.class)));
     }
 
 

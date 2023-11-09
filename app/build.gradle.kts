@@ -60,6 +60,7 @@ dependencies {
     implementation("com.makeramen:roundedimageview:2.3.0")
     implementation ("com.google.firebase:firebase-auth:22.2.0")
     implementation("com.android.car.ui:car-ui-lib:2.5.1")
+    implementation ("androidx.core:core-ktx:1.12.0")
 
 
 

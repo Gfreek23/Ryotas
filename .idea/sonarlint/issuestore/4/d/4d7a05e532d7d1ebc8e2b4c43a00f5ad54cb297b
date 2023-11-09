@@ -1,0 +1,13 @@
+
+k	java:S117<"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Ä¡¶¡ùÿÿÿÿ
+C
+java:S1604R"(Make this anonymous inner class a lambda(Ë ¯Ñüÿÿÿÿ
+>
+java:S16043"(Make this anonymous inner class a lambda(¦«Ñ
+t	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(ŠĞÛŠÿÿÿÿÿ
+Z
+java:S1659"DDeclare "address" and all following declarations on a separate line.(“ú¤
+m
+java:S3776""RRefactor this method to reduce its Cognitive Complexity from 18 to the 15 allowed.(¨Œşÿÿÿÿ
+W
+java:S1874f"5Remove this use of "onBackPressed"; it is deprecated.(ùÃ¦Õøÿÿÿÿ8¶ûÉ¥»1

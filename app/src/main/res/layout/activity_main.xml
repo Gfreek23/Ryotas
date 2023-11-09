@@ -93,6 +93,7 @@
                 android:layout_marginStart="24dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="24dp"
+                android:textColor="@color/black"
                 android:background="@drawable/edittext_background"
                 android:drawableStart="@drawable/search_icon"
                 android:drawablePadding="8dp"
@@ -186,21 +187,23 @@
                         android:background="@drawable/btn_cat_background">
 
                         <ImageView
-                            android:id="@+id/imageView20"
+                            android:id="@+id/FnV1"
                             android:layout_width="86dp"
                             android:layout_height="85dp"
                             android:src="@mipmap/newproducts"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_bias="0.516"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <TextView
-                        android:id="@+id/textView7"
+                        android:id="@+id/FnV"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
+                        android:textColor="@color/black"
                         android:text="Fruits And Vegetables Products"
                         android:textAlignment="center" />
                 </LinearLayout>
@@ -212,6 +215,7 @@
                     android:orientation="vertical">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/DairP1"
                         android:layout_width="55dp"
                         android:layout_height="55dp"
                         android:layout_gravity="center"
@@ -228,10 +232,11 @@
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <TextView
-                        android:id="@+id/textView8"
+                        android:id="@+id/DairP"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
+                        android:textColor="@color/black"
                         android:text="Dairy Products"
                         android:textAlignment="center" />
                 </LinearLayout>
@@ -243,13 +248,14 @@
                     android:orientation="vertical">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/KarneP1"
                         android:layout_width="55dp"
                         android:layout_height="55dp"
                         android:layout_gravity="center"
                         android:background="@drawable/btn_cat_background">
 
                         <ImageView
-                            android:id="@+id/imageView21"
+
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:src="@drawable/cat1"
@@ -260,10 +266,11 @@
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <TextView
-                        android:id="@+id/textView9"
+                        android:id="@+id/KarneP"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
+                        android:textColor="@color/black"
                         android:text="Meat Products"
                         android:textAlignment="center" />
                 </LinearLayout>
@@ -275,13 +282,14 @@
                     android:orientation="vertical">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/HouseP1"
                         android:layout_width="55dp"
                         android:layout_height="55dp"
                         android:layout_gravity="center"
                         android:background="@drawable/btn_cat_background">
 
                         <ImageView
-                            android:id="@+id/imageView22"
+
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:src="@drawable/cat1"
@@ -292,10 +300,11 @@
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <TextView
-                        android:id="@+id/textView11"
+                        android:id="@+id/HouseP"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
+                        android:textColor="@color/black"
                         android:text="Household Products"
                         android:textAlignment="center" />
                 </LinearLayout>
@@ -307,12 +316,14 @@
                     android:orientation="vertical">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/HnBP1"
                         android:layout_width="55dp"
                         android:layout_height="55dp"
                         android:layout_gravity="center"
                         android:background="@drawable/btn_cat_background">
 
                         <ImageView
+
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:src="@drawable/cat1"
@@ -323,10 +334,11 @@
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <TextView
-                        android:id="@+id/textView10"
+                        android:id="@+id/HnBP"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
+                        android:textColor="@color/black"
                         android:text="Health And Beauty Essentials"
                         android:textAlignment="center" />
                 </LinearLayout>
@@ -360,7 +372,7 @@
             </LinearLayout>
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/view1"
+                android:id="@+id/view9"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:clipToPadding="false"
@@ -434,8 +446,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Home Services"
-                        android:textAlignment="center"
-                        android:textColor="#959595" />
+                        android:textColor="@color/black"
+                        android:textAlignment="center" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -460,7 +472,7 @@
                         android:layout_height="wrap_content"
                         android:text="Cart"
                         android:textAlignment="center"
-                        android:textColor="#959595" />
+                        android:textColor="@color/black" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -485,7 +497,7 @@
                         android:layout_height="wrap_content"
                         android:text="Profile"
                         android:textAlignment="center"
-                        android:textColor="#959595" />
+                        android:textColor="@color/black" />
                 </LinearLayout>
             </LinearLayout>
 

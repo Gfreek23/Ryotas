@@ -1,0 +1,28 @@
+
+s	java:S117‡"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¯ÊØÖùÿÿÿÿ8½¿®öº1
+J
+java:S1604a"(Make this anonymous inner class a lambda(óƒÄËÿÿÿÿÿ8½¿®öº1
+J
+java:S1604Y"(Make this anonymous inner class a lambda(—ÍŞ«ùÿÿÿÿ8¾¿®öº1
+F
+java:S1604Ù"(Make this anonymous inner class a lambda(¸„¦Á8¾¿®öº1
+F
+java:S1604Ç"(Make this anonymous inner class a lambda(êù ¤8õÀ½Â²1
+t	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(ŠĞÛŠÿÿÿÿÿ
+p	java:S1160"URename this field "Repassword" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÌÕ½g8”À®öº1
+j	java:S1160"ORename this field "Bday" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÌÕ½g8”À®öº1
+k	java:S1160"PRename this field "Phone" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÌÕ½g8”À®öº1
+m	java:S1165"QRename this field "Gender" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Ú‘’”8”À®öº1
+s	java:S1166"WRename this field "GenderSelect" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Ñâ†8”À®öº1
+^
+java:S16590"BDeclare "email" and all following declarations on a separate line.(ÌÕ½g8œÀ®öº1
+x
+java:S14506"[Remove the "GenderSelect" field and declare it as a local variable in the relevant methods.(Ñâ†8À®öº1
+\
+java:S1161B":Add the "@Override" annotation above this method signature(¨Œşÿÿÿÿ8ÆÃ½Â²1
+o	java:S100}"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¥ ‹ßşÿÿÿÿ8²À®öº1
+M
+java:S1172}"+Remove this unused method parameter "view".(¥ ‹ßşÿÿÿÿ8´À®öº1
+k	java:S100ú"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Î¶¥¥8ûÃ½Â²1
+I
+java:S1172ú"+Remove this unused method parameter "view".(Î¶¥¥8ûÃ½Â²1

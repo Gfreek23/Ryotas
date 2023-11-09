@@ -2,23 +2,23 @@
 Q
 java:S3740"/Provide the parametrized type for this generic.(ÒõÆÛıÿÿÿÿ8ÍÇ™Ì±1
 J
-java:S1604;"(Make this anonymous inner class a lambda(íÍà©şÿÿÿÿ8ÎÇ™Ì±1
+java:S1604>"(Make this anonymous inner class a lambda(íÍà©şÿÿÿÿ8ÎÇ™Ì±1
 E
-java:S1604A"(Make this anonymous inner class a lambda(ìñĞó8ÎÇ™Ì±1
+java:S1604D"(Make this anonymous inner class a lambda(ìñĞó8ÎÇ™Ì±1
 J
-java:S16044"(Make this anonymous inner class a lambda(è¼ıÄüÿÿÿÿ8ÎÇ™Ì±1
+java:S16047"(Make this anonymous inner class a lambda(è¼ıÄüÿÿÿÿ8ÎÇ™Ì±1
 J
-java:S1604Q"(Make this anonymous inner class a lambda(íÍà©şÿÿÿÿ8ÎÇ™Ì±1
+java:S1604T"(Make this anonymous inner class a lambda(íÍà©şÿÿÿÿ8ÎÇ™Ì±1
 E
-java:S1604X"(Make this anonymous inner class a lambda(ìñĞó8ÏÇ™Ì±1
+java:S1604["(Make this anonymous inner class a lambda(ìñĞó8ÏÇ™Ì±1
 E
-java:S1604K"(Make this anonymous inner class a lambda(ã‘Àò8ÏÇ™Ì±1
+java:S1604N"(Make this anonymous inner class a lambda(ã‘Àò8ÏÇ™Ì±1
 D
-java:S1604b"(Make this anonymous inner class a lambda(¾ñçi8ÏÇ™Ì±1
+java:S1604e"(Make this anonymous inner class a lambda(¾ñçi8ÏÇ™Ì±1
 J
-java:S1604u"(Make this anonymous inner class a lambda(¦¨Ê¤ùÿÿÿÿ8ÏÇ™Ì±1
+java:S1604x"(Make this anonymous inner class a lambda(¦¨Ê¤ùÿÿÿÿ8ÏÇ™Ì±1
 e
-java:S2184Œ"BCast one of the operands of this division operation to a "double".(¦‚ÜÈøÿÿÿÿ8ĞÇ™Ì±1
+java:S2184"BCast one of the operands of this division operation to a "double".(¦‚ÜÈøÿÿÿÿ8ĞÇ™Ì±1
 {	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(ŠĞÛŠÿÿÿÿÿ8ĞÇ™Ì±1
 e
 java:S1659"CDeclare "taxTxt" and all following declarations on a separate line.(ë½úòÿÿÿÿÿ8ŸÈ™Ì±1
@@ -30,3 +30,8 @@ s
 java:S1450!"VRemove the "backBtn" field and declare it as a local variable in the relevant methods.(°Ò‡´8¡È™Ì±1
 o
 java:S1450"RRemove the "tax" field and declare it as a local variable in the relevant methods.(ÜˆŒò8¡È™Ì±1
+p	java:S100¢"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(³½÷œıÿÿÿÿ8Ğ¥½¥»1
+^
+java:S1854¤";Remove this useless assignment to local variable "cartBtn".(ã®Ùûÿÿÿÿ8¬Â¥»1
+O
+java:S1481¤",Remove this unused "cartBtn" local variable.(ã®Ùûÿÿÿÿ8­Â¥»1

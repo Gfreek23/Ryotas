@@ -7,36 +7,28 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AbsListView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.example.trialproject3.Adapter.CartListAdapter;
-import com.example.trialproject3.Adapter.CategoryAdapter;
 import com.example.trialproject3.Adapter.PopularListAdapter;
-import com.example.trialproject3.Domain.CategoryDomain;
 import com.example.trialproject3.Domain.PopularDomain;
-import com.example.trialproject3.Models.CategoryModels;
 import com.example.trialproject3.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
-import com.google.firebase.auth.FirebaseAuthInvalidUserException;
 import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 private RecyclerView.Adapter adapterPupolar;
+TextView Fname,Fruits,Dairy,Karne,House,HnB;
 
-TextView Fname;
+ImageView Fname1,Fruits1,Dairy1,Karne1,House1,HnB1;
 FirebaseAuth fauth;
 FirebaseFirestore fstore;
 String userId;
@@ -54,6 +46,58 @@ private RecyclerView recyclerViewPupolar;
         fstore = FirebaseFirestore.getInstance();
 
         userId = fauth.getCurrentUser().getUid();
+
+        Fruits = findViewById(R.id.FnV);
+        Dairy = findViewById(R.id.DairP);
+        Karne = findViewById(R.id.KarneP);
+        House = findViewById(R.id.HouseP);
+        HnB = findViewById(R.id.HnBP);
+
+
+        Fruits.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, MapActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
+        Dairy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, MapActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
+        Karne.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, MapActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
+        House.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, MapActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
+        HnB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, MapActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
 
         DocumentReference documentReference = fstore.collection("users").document(userId);
         documentReference.addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
@@ -136,7 +180,7 @@ private RecyclerView recyclerViewPupolar;
                 "                 experience, and let our vegetable market be your guiding light\n" +
                 "                 towards a more vibrant and nourished you!", "pic3", 187,4.9, 1000));
 
-        recyclerViewPupolar=findViewById(R.id.view1);
+        recyclerViewPupolar=findViewById(R.id.view9);
         recyclerViewPupolar.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
 
         adapterPupolar=new PopularListAdapter(items);

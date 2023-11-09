@@ -1,0 +1,21 @@
+
+p
+java:S1192…"RDefine a constant instead of duplicating this literal "Tindahan sa Gulay" 3 times.(¯Ì–Ø8æ¶ëóº1
+E
+java:S1604l"(Make this anonymous inner class a lambda(ìë¤²8ç¶ëóº1
+{	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(ŠĞÛŠÿÿÿÿÿ8é¶ëóº1
+k
+java:S2259S"IA "NullPointerException" could be thrown; "addressList" is nullable here.(ÏÛ”Ïùÿÿÿÿ8 ·ëóº1
+€	java:S1160"_Rename this field "FINE_PERMISSION_CODE" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ªê»ùÿÿÿÿ8¡·ëóº1
+C
+java:S11700"!Make this final field static too.(ªê»ùÿÿÿÿ8¦·ëóº1
+]
+java:S1874N";Remove this use of "getFromLocationName"; it is deprecated.(º°ø»şÿÿÿÿ8°·ëóº1
+t
+java:S3252g"WUse static access with "androidx.core.content.ContextCompat" for "checkSelfPermission".(¥êêí8³·ëóº1
+t
+java:S3252g"WUse static access with "androidx.core.content.ContextCompat" for "checkSelfPermission".(¥êêí8³·ëóº1
+m
+java:S1874³"JDon't override a deprecated method or explicitly mark it as "@Deprecated".(Ó»×¶şÿÿÿÿ8Ã·ëóº1
+L
+java:S10684"*Remove this unused "marker" private field.(€ÂŒúÿÿÿÿÿ8Å·ëóº1

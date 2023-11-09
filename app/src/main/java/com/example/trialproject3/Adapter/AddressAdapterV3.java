@@ -52,17 +52,27 @@ public class AddressAdapterV3 extends RecyclerView.Adapter<AddressAdapterV3.Addr
 
         holder.radioButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v)
+            {
                 for (AddressModel address : addressModelList) {
-                    address.setSelected(true);
+                    address.setSelected(false);
                 }
-                addressModelList.get(clickedPosition).setSelected(false);
+                addressModelList.get(clickedPosition).setSelected(true);
 
-                if (selectedAddress != null) {
-                    selectedRadioBtn.setChecked(false);
+                if (selectedAddress == null) {
+                    selectedAddress = new SelectedAddress() {
+                        @Override
+                        public void setAddress(String address) {
+                            selectedAddress.setAddress(addressModelList.get(clickedPosition).getUserAddress());
+                        }
+                    }; // Initialize selectedAddress if it's null
                 }
+
+                selectedRadioBtn.setChecked(false);
                 selectedRadioBtn = (RadioButton) v;
                 selectedRadioBtn.setChecked(true);
+
+                // Now that selectedAddress is initialized, you can set the address
                 selectedAddress.setAddress(addressModelList.get(clickedPosition).getUserAddress());
             }
         });

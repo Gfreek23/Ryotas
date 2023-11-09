@@ -130,14 +130,14 @@
                 android:drawableLeft="@drawable/ic_sex"
                 android:text="Gender:"
                 android:textColor="@color/black"
-                android:textSize="22sp" />
+                android:textSize="18sp" />
             <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/radio_female"
                 android:text="Female"
                 android:layout_marginLeft="5dp"
-                android:textSize="20sp"
+                android:textSize="18sp"
                 android:textColor="@color/black"/>
             <RadioButton
                 android:layout_width="wrap_content"
@@ -145,7 +145,7 @@
                 android:id="@+id/radio_male"
                 android:text="Male"
                 android:layout_marginLeft="5dp"
-                android:textSize="20sp"
+                android:textSize="18sp"
                 android:textColor="@color/black"/>
             <RadioButton
                 android:layout_width="wrap_content"
@@ -153,7 +153,7 @@
                 android:id="@+id/radio_others"
                 android:text="Others"
                 android:layout_marginLeft="5dp"
-                android:textSize="20sp"
+                android:textSize="18sp"
                 android:textColor="@color/black"/>
 
         </RadioGroup>

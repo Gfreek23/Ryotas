@@ -3,11 +3,17 @@ package com.example.trialproject3.Activity;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.drawable.Drawable;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -16,8 +22,10 @@ import android.widget.Toast;
 import android.widget.SearchView;
 
 
+import com.example.trialproject3.Stores.Vegetables_Store1;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -25,6 +33,7 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import com.example.trialproject3.R;
@@ -34,11 +43,13 @@ import com.google.android.gms.tasks.Task;
 import java.io.IOException;
 import java.util.List;
 
-public class MapActivity extends AppCompatActivity implements OnMapReadyCallback {
+public class MapActivity extends AppCompatActivity implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
 
     private final int FINE_PERMISSION_CODE = 1;
     private GoogleMap mMap;
     private SearchView mapSearchView;
+
+    private Marker marker;
     Location currentLocation;
     FusedLocationProviderClient fusedLocationProviderClient;
 
@@ -117,8 +128,51 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         options.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
         mMap.addMarker(options);
 
+
+        LatLng tindahan4 = new LatLng(7.120952781542856, 125.64528472219986);
+        mMap.addMarker(new MarkerOptions().position(tindahan4).title("Tindahan sa Gulay")
+                .icon(bitmapDescriptor(getApplicationContext(),R.drawable.vegetables)));
+        mMap.setOnMarkerClickListener(this);
+
+
+
+        LatLng tindahan2 = new LatLng(7.121976721489662, 125.64905935449492);
+        mMap.addMarker(new MarkerOptions().position(tindahan2).title("Tindahan sa Gulay")
+                .icon(bitmapDescriptor(getApplicationContext(),R.drawable.vegetables)));
+        mMap.setOnMarkerClickListener(this);
+
+        LatLng tindahan3 = new LatLng(7.120976484911648, 125.64939183514572);
+        mMap.addMarker(new MarkerOptions().position(tindahan3).title("Tindahan sa Gulay")
+                .icon(bitmapDescriptor(getApplicationContext(),R.drawable.vegetables)));
+        mMap.setOnMarkerClickListener(this);
+
+
+        CameraUpdate center = CameraUpdateFactory.newLatLng(davao);
+        CameraUpdate zoom = CameraUpdateFactory.zoomTo(16);
+        mMap.moveCamera(center);
+        mMap.moveCamera(zoom);
+
         mMap.getUiSettings().setZoomControlsEnabled(true);
         mMap.getUiSettings().setCompassEnabled(true);
+    }
+
+    @Override
+    public boolean onMarkerClick(@NonNull Marker marker) {
+
+        Intent intent = new Intent(this, Vegetables_Store1.class);
+        startActivity(intent);
+
+        return false;
+    }
+
+    private BitmapDescriptor bitmapDescriptor(Context applicationContext, int vegetables) {
+        Drawable vectorDrawable = ContextCompat.getDrawable(applicationContext, vegetables);
+        vectorDrawable.setBounds(0,0,vectorDrawable.getIntrinsicWidth(),vectorDrawable.getIntrinsicHeight());
+        Bitmap bitmap = Bitmap.createBitmap(vectorDrawable.getIntrinsicWidth(),vectorDrawable.getIntrinsicHeight(),Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bitmap);
+        vectorDrawable.draw(canvas);
+        return BitmapDescriptorFactory.fromBitmap(bitmap);
+
     }
 
     @Override
@@ -132,4 +186,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             }
         }
     }
+
+
+
 }
