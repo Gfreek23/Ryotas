@@ -51,6 +51,14 @@ public class CartActivity extends AppCompatActivity {
 
         bottom_navigation();
 
+        Intent intent = getIntent();
+        if (intent != null && intent.hasExtra("selectedAddress")) {
+            String selectedAddress = intent.getStringExtra("selectedAddress");
+            // Set the selected address to the appropriate TextView in CartActivity
+            // For example, if you have a TextView with id addressTextView, you can do:
+            TextView addressTextView = findViewById(R.id.textView30); // Replace with your actual TextView id
+            addressTextView.setText(selectedAddress);
+        }
 
         btnfinal.setOnClickListener(new View.OnClickListener() {
             @Override

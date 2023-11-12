@@ -2,6 +2,7 @@ package com.example.trialproject3.Activity;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -14,7 +15,6 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.trialproject3.Adapter.AddressAdapter;
 import com.example.trialproject3.Adapter.AddressAdapterV3;
 import com.example.trialproject3.Helper.SelectListener;
 import com.example.trialproject3.Models.AddressModel;
@@ -35,7 +35,7 @@ public class AddressActivity extends AppCompatActivity implements SelectListener
     Button addAddress;
     RecyclerView recyclerView;
     private List<AddressModel> addressModelList;
-    private AddressAdapter addressAdapter;
+    private AddressAdapterV3 addressAdapterV3;
     FirebaseFirestore firestore;
     FirebaseAuth auth;
     Button paymentBtn;
@@ -58,13 +58,9 @@ public class AddressActivity extends AppCompatActivity implements SelectListener
         paymentBtn = findViewById(R.id.payment_btn);
         addAddress = findViewById(R.id.add_address_btn);
 
-//        List<AddressModelV2>  addressModelV2List = new ArrayList<>();
         List<AddressModel> addressModelList = new ArrayList<>();
-        CollectionReference addressReference = FirebaseFirestore.getInstance()
-                .collection("Address");
+        addressAdapterV3 = new AddressAdapterV3(this, addressModelList, this);
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-//         addressAdapter = new AddressAdapter(getApplicationContext(),addressModelList,this);
-        AddressAdapterV3 addressAdapterV3 = new AddressAdapterV3(this, addressModelList,this);
         recyclerView.setAdapter(addressAdapterV3);
 
         firestore.collection("usersAddress").document(auth.getCurrentUser().getUid())
@@ -72,59 +68,56 @@ public class AddressActivity extends AppCompatActivity implements SelectListener
                     @SuppressLint("NotifyDataSetChanged")
                     @Override
                     public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
-                        if (value != null){
+                        if (value != null) {
                             addressModelList.clear();
-                            for (QueryDocumentSnapshot addressSnapshot : value){
+                            for (QueryDocumentSnapshot addressSnapshot : value) {
                                 AddressModel addressModel = addressSnapshot.toObject(AddressModel.class);
                                 addressModelList.add(addressModel);
-
                                 Log.i(TAG, "onEvent: " + addressModelList);
-
                             }
                             addressAdapterV3.notifyDataSetChanged();
-                        }else {
+                        } else {
                             Log.e(TAG, "onEvent: " + error.getMessage());
                         }
                     }
                 });
 
-//                    @Override
-//                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-//                        if (task.isSuccessful()){
-//                            for (DocumentSnapshot doc : task.getResult().getDocuments()){
-//                                AddressModel addressModel = doc.toObject(AddressModel.class);
-//                                addressModelList.add(addressModel);
-//                                addressAdapter.notifyDataSetChanged();
-//                            }
-//                        }
-//                    }
-//                });
-
         paymentBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(AddressActivity.this,CartActivity.class));
+                startActivity(new Intent(AddressActivity.this, CartActivity.class));
+
+                // Save the selected address permanently using SharedPreferences
+                SharedPreferences preferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
+                SharedPreferences.Editor editor = preferences.edit();
+                editor.putString("selectedAddress", mAddress);
+                editor.apply();
             }
         });
 
         addAddress.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(AddressActivity.this,AddAddressActivity.class));
+                startActivity(new Intent(AddressActivity.this, AddAddressActivity.class));
             }
         });
     }
 
-
     @Override
     public void setAddress(String address) {
-
         mAddress = address;
-
     }
 
     @Override
     public void onItemClicked(AddressModel addressModel) {
-        Toast.makeText(this,addressModel.getUserAddress(),Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, addressModel.getUserAddress(), Toast.LENGTH_SHORT).show();
+
+        // Set the selected address in the CartActivity
+        setAddress(addressModel.getUserAddress());
+
+        // Pass the selected address to CartActivity
+        Intent cartIntent = new Intent(AddressActivity.this, CartActivity.class);
+        cartIntent.putExtra("selectedAddress", addressModel.getUserAddress());
+        startActivity(cartIntent);
     }
 }
