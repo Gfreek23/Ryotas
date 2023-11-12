@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,7 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.trialproject3.Adapter.AddressAdapter;
 import com.example.trialproject3.Adapter.AddressAdapterV3;
-import com.example.trialproject3.Adapter.AddressAdapterV3;
+import com.example.trialproject3.Helper.SelectListener;
 import com.example.trialproject3.Models.AddressModel;
 import com.example.trialproject3.R;
 import com.google.firebase.auth.FirebaseAuth;
@@ -29,11 +30,11 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AddressActivity extends AppCompatActivity implements AddressAdapter.SelectedAddress {
+public class AddressActivity extends AppCompatActivity implements SelectListener {
     private final String TAG = "AddressActivity";
     Button addAddress;
     RecyclerView recyclerView;
-    //    private List<AddressModel> addressModelList;
+    private List<AddressModel> addressModelList;
     private AddressAdapter addressAdapter;
     FirebaseFirestore firestore;
     FirebaseAuth auth;
@@ -63,7 +64,7 @@ public class AddressActivity extends AppCompatActivity implements AddressAdapter
                 .collection("Address");
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
 //         addressAdapter = new AddressAdapter(getApplicationContext(),addressModelList,this);
-        AddressAdapterV3 addressAdapterV3 = new AddressAdapterV3(this, addressModelList);
+        AddressAdapterV3 addressAdapterV3 = new AddressAdapterV3(this, addressModelList,this);
         recyclerView.setAdapter(addressAdapterV3);
 
         firestore.collection("usersAddress").document(auth.getCurrentUser().getUid())
@@ -102,7 +103,7 @@ public class AddressActivity extends AppCompatActivity implements AddressAdapter
         paymentBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(AddressActivity.this,AddAddressActivity.class));
+                startActivity(new Intent(AddressActivity.this,CartActivity.class));
             }
         });
 
@@ -120,5 +121,10 @@ public class AddressActivity extends AppCompatActivity implements AddressAdapter
 
         mAddress = address;
 
+    }
+
+    @Override
+    public void onItemClicked(AddressModel addressModel) {
+        Toast.makeText(this,addressModel.getUserAddress(),Toast.LENGTH_SHORT).show();
     }
 }

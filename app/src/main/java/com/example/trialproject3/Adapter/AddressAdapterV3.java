@@ -10,6 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.trialproject3.Helper.SelectListener;
 import com.example.trialproject3.Models.AddressModel;
 
 import com.example.trialproject3.R;
@@ -19,17 +20,14 @@ import java.util.List;
 public class AddressAdapterV3 extends RecyclerView.Adapter<AddressAdapterV3.AddressAdapterViewHolder> {
     Context context;
     private List<AddressModel> addressModelList;
-    RadioButton selectedRadioBtn;
-    SelectedAddress selectedAddress;
-    private int defaultCheckedPosition;
+    private SelectListener listener;
+    private int checkedPosition = RecyclerView.NO_POSITION; // Initially, no position is checked
 
-    public AddressAdapterV3(Context context, List<AddressModel> addressModelList) {
+    public AddressAdapterV3(Context context, List<AddressModel> addressModelList, SelectListener listener) {
         this.context = context;
         this.addressModelList = addressModelList;
-        this.selectedAddress = selectedAddress;
+        this.listener = listener;
     }
-
-
 
     @NonNull
     @Override
@@ -44,36 +42,21 @@ public class AddressAdapterV3 extends RecyclerView.Adapter<AddressAdapterV3.Addr
         final int clickedPosition = position;
 
         holder.addressTextView.setText(addressModels.getUserAddress());
-
-        // Check if the current position is the default position you want to be checked
-        boolean isChecked = (position == defaultCheckedPosition);
-
-        holder.radioButton.setChecked(isChecked); // Set radio button checked status
+        holder.radioButton.setChecked(checkedPosition == position); // Set radio button checked status
 
         holder.radioButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v)
-            {
-                for (AddressModel address : addressModelList) {
-                    address.setSelected(false);
-                }
-                addressModelList.get(clickedPosition).setSelected(true);
+            public void onClick(View v) {
+                // Update checked position
+                checkedPosition = clickedPosition;
 
-                if (selectedAddress == null) {
-                    selectedAddress = new SelectedAddress() {
-                        @Override
-                        public void setAddress(String address) {
-                            selectedAddress.setAddress(addressModelList.get(clickedPosition).getUserAddress());
-                        }
-                    }; // Initialize selectedAddress if it's null
+                // Notify adapter about the click event
+                if (listener != null) {
+                    listener.onItemClicked(addressModelList.get(clickedPosition));
                 }
 
-                selectedRadioBtn.setChecked(false);
-                selectedRadioBtn = (RadioButton) v;
-                selectedRadioBtn.setChecked(true);
-
-                // Now that selectedAddress is initialized, you can set the address
-                selectedAddress.setAddress(addressModelList.get(clickedPosition).getUserAddress());
+                // Notify adapter to update the UI
+                notifyDataSetChanged();
             }
         });
     }
@@ -85,16 +68,12 @@ public class AddressAdapterV3 extends RecyclerView.Adapter<AddressAdapterV3.Addr
 
     public class AddressAdapterViewHolder extends RecyclerView.ViewHolder {
         private TextView addressTextView;
-
         private RadioButton radioButton;
+
         public AddressAdapterViewHolder(@NonNull View itemView) {
             super(itemView);
-
             addressTextView = itemView.findViewById(R.id.address_add);
             radioButton = itemView.findViewById(R.id.select_address);
         }
-    }
-    public interface SelectedAddress {
-        void setAddress(String address);
     }
 }
