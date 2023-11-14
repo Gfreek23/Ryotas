@@ -199,3 +199,9 @@ v
 Fapp/src/main/java/com/example/trialproject3/Helper/SelectListener.java,6\c\6c1e5154a913b2d006e826a313d79144a4864ebe
 ‚
 Rapp/src/main/java/com/example/trialproject3/Adapter/OnAddressSelectedListener.java,2\f\2f37f82665de7bbe913f6eeac11fb33746a53932
+|
+Lapp/src/main/java/com/example/trialproject3/Adapter/OrderedItemsAdapter.java,2\a\2adc557788605e2773d22bdb1561a61423b7f2ae
+p
+@app/src/main/java/com/example/trialproject3/Models/CartItem.java,1\7\17d79bdcdbaadff334f6c65d896bef42a6f9aefd
+m
+=app/src/main/java/com/example/trialproject3/Helper/Utils.java,5\1\51d0a67a6baf17dea2dae500122dd723aa46ce91

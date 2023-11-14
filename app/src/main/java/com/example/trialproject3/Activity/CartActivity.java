@@ -19,6 +19,7 @@ import com.example.trialproject3.Adapter.CartListAdapter;
 import com.example.trialproject3.Helper.ChangeNumberItemsListener;
 import com.example.trialproject3.Helper.ManagementCart;
 import com.example.trialproject3.R;
+import com.google.android.material.bottomappbar.BottomAppBar;
 
 import org.w3c.dom.Text;
 
@@ -63,13 +64,26 @@ public class CartActivity extends AppCompatActivity {
         btnfinal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 builder.setTitle("Are you sure?")
-                        .setMessage("Do you want to purchase this items?")
+                        .setMessage("Do you want to purchase these items?")
                         .setCancelable(true)
                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
+                                // Retrieve the selected address
+                                Intent intent = getIntent();
+                                String selectedAddress = "";
+                                if (intent != null && intent.hasExtra("selectedAddress")) {
+                                    selectedAddress = intent.getStringExtra("selectedAddress");
+                                }
+
+                                // Transfer the cart items and selected address to ToShipActivity
+                                Intent toShipIntent = new Intent(CartActivity.this, ToShipActivity.class);
+                                toShipIntent.putExtra("selectedAddress", selectedAddress);
+                                toShipIntent.putExtra("cartItems", managementCart.getListCart());
+                                startActivity(toShipIntent);
+
+                                // Finish the CartActivity
                                 finish();
                             }
                         })
@@ -157,14 +171,29 @@ public class CartActivity extends AppCompatActivity {
     }
 
     private void initView() {
-        totalFeeTxt=findViewById(R.id.totalFeeTxt);
-        taxTxt=findViewById(R.id.taxTxt);
-        deliveryTxt=findViewById(R.id.deliveryTxt);
-        totalTxt=findViewById(R.id.totalTxt);
-        recyclerView=findViewById(R.id.view3);
-        scrollView=findViewById(R.id.scrollView3);
-        emptyTxt=findViewById(R.id.emptyTxt);
+        totalFeeTxt = findViewById(R.id.totalFeeTxt);
+        taxTxt = findViewById(R.id.taxTxt);
+        deliveryTxt = findViewById(R.id.deliveryTxt);
+        totalTxt = findViewById(R.id.totalTxt);
+        recyclerView = findViewById(R.id.view3);
+        scrollView = findViewById(R.id.scrollView3);
+        emptyTxt = findViewById(R.id.emptyTxt);
 
+        // Get reference to the Back button
+        ImageView backBtn = findViewById(R.id.backBtn);
+
+        // Get reference to the BottomAppBar
+        BottomAppBar bottomAppBar = findViewById(R.id.Appbar);
+
+        if (managementCart.getListCart().isEmpty()) {
+            // Cart is empty, hide the Back button and BottomAppBar
+            backBtn.setVisibility(View.VISIBLE);
+            bottomAppBar.setVisibility(View.GONE);
+        } else {
+            // Cart has items, show the Back button and BottomAppBar
+            backBtn.setVisibility(View.VISIBLE);
+            bottomAppBar.setVisibility(View.VISIBLE);
+        }
     }
 
     private void bottom_navigation() {

@@ -1,37 +1,41 @@
 
 Q
-java:S3740"/Provide the parametrized type for this generic.(ÒõÆÛıÿÿÿÿ8·éŒš¼1
+java:S3740"/Provide the parametrized type for this generic.(ÒõÆÛıÿÿÿÿ8ô³ö¼1
+m
+java:S11928"PDefine a constant instead of duplicating this literal "selectedAddress" 5 times.(ø€“á8÷³ö¼1
 J
-java:S1604F"(Make this anonymous inner class a lambda(íÍà©şÿÿÿÿ8¸éŒš¼1
+java:S1604F"(Make this anonymous inner class a lambda(íÍà©şÿÿÿÿ8÷³ö¼1
 E
-java:S1604L"(Make this anonymous inner class a lambda(ìñĞó8¸éŒš¼1
+java:S1604Z"(Make this anonymous inner class a lambda(ìñĞó8÷³ö¼1
 J
-java:S1604?"(Make this anonymous inner class a lambda(è¼ıÄüÿÿÿÿ8¹éŒš¼1
+java:S1604@"(Make this anonymous inner class a lambda(è¼ıÄüÿÿÿÿ8ø³ö¼1
 J
-java:S1604\"(Make this anonymous inner class a lambda(íÍà©şÿÿÿÿ8¹éŒš¼1
+java:S1604j"(Make this anonymous inner class a lambda(íÍà©şÿÿÿÿ8ø³ö¼1
 E
-java:S1604c"(Make this anonymous inner class a lambda(ìñĞó8¹éŒš¼1
+java:S1604q"(Make this anonymous inner class a lambda(ìñĞó8ø³ö¼1
 E
-java:S1604V"(Make this anonymous inner class a lambda(ã‘Àò8ºéŒš¼1
+java:S1604d"(Make this anonymous inner class a lambda(ã‘Àò8ø³ö¼1
 D
-java:S1604m"(Make this anonymous inner class a lambda(¾ñçi8ºéŒš¼1
+java:S1604{"(Make this anonymous inner class a lambda(¾ñçi8ø³ö¼1
 K
-java:S1604€"(Make this anonymous inner class a lambda(¦¨Ê¤ùÿÿÿÿ8ºéŒš¼1
+java:S1604"(Make this anonymous inner class a lambda(¦¨Ê¤ùÿÿÿÿ8ø³ö¼1
 e
-java:S2184—"BCast one of the operands of this division operation to a "double".(¦‚ÜÈøÿÿÿÿ8»éŒš¼1
-{	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(ŠĞÛŠÿÿÿÿÿ8ĞÇ™Ì±1
+java:S2184¥"BCast one of the operands of this division operation to a "double".(¦‚ÜÈøÿÿÿÿ8ú³ö¼1
+{	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(ŠĞÛŠÿÿÿÿÿ8œ¯²ö¼1
 e
-java:S1659"CDeclare "taxTxt" and all following declarations on a separate line.(ë½úòÿÿÿÿÿ8ôéŒš¼1
+java:S1659"CDeclare "taxTxt" and all following declarations on a separate line.(ë½úòÿÿÿÿÿ8Ä‘³ö¼1
 x
-java:S1450"VRemove the "adapter" field and declare it as a local variable in the relevant methods.(ÒõÆÛıÿÿÿÿ8õéŒš¼1
+java:S1450"VRemove the "adapter" field and declare it as a local variable in the relevant methods.(ÒõÆÛıÿÿÿÿ8Å‘³ö¼1
 w
-java:S1450#"URemove the "addBtn" field and declare it as a local variable in the relevant methods.(¹¹ûóøÿÿÿÿ8õéŒš¼1
+java:S1450$"URemove the "addBtn" field and declare it as a local variable in the relevant methods.(¹¹ûóøÿÿÿÿ8Å‘³ö¼1
 s
-java:S1450!"VRemove the "backBtn" field and declare it as a local variable in the relevant methods.(°Ò‡´8öéŒš¼1
+java:S1450""VRemove the "backBtn" field and declare it as a local variable in the relevant methods.(°Ò‡´8Å‘³ö¼1
 o
-java:S1450"RRemove the "tax" field and declare it as a local variable in the relevant methods.(ÜˆŒò8öéŒš¼1
-p	java:S100ª"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(³½÷œıÿÿÿÿ8•êŒš¼1
+java:S1450 "RRemove the "tax" field and declare it as a local variable in the relevant methods.(ÜˆŒò8Æ‘³ö¼1
+Y
+java:S1117·";Rename "backBtn" which hides the field declared at line 34.(™æ›¦8­²Îù¼1
+p	java:S100Ç"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(³½÷œıÿÿÿÿ8ì‘³ö¼1
 ^
-java:S1854¬";Remove this useless assignment to local variable "cartBtn".(ã®Ùûÿÿÿÿ8•êŒš¼1
+java:S1854É";Remove this useless assignment to local variable "cartBtn".(ã®Ùûÿÿÿÿ8í‘³ö¼1
 O
-java:S1481¬",Remove this unused "cartBtn" local variable.(ã®Ùûÿÿÿÿ8–êŒš¼1
+java:S1481É",Remove this unused "cartBtn" local variable.(ã®Ùûÿÿÿÿ8î‘³ö¼1
