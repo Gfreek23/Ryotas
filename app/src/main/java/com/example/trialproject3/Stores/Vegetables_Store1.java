@@ -63,17 +63,24 @@ public class Vegetables_Store1 extends AppCompatActivity {
 
         initRecyclerview();
         bottom_navigation();
+
+
     }
 
+
     private void bottom_navigation() {
-        LinearLayout homeBtn=findViewById(R.id.homeBtn);
-        LinearLayout cartBtn=findViewById(R.id.cartBtn);
-        LinearLayout profileBtn=findViewById(R.id.profileBtn);
+        LinearLayout homeBtn = findViewById(R.id.homeBtn);
+        LinearLayout cartBtn = findViewById(R.id.cartBtn);
+        LinearLayout profileBtn = findViewById(R.id.profileBtn);
 
         homeBtn.setOnClickListener(v -> startActivity(new Intent(this, MainActivity.class)));
         cartBtn.setOnClickListener(v -> startActivity(new Intent(this, CartActivityBackBtn1.class)));
-        profileBtn.setOnClickListener(v -> startActivity(new Intent(this, ProfileActivity.class)));
 
+        // Update the profileBtn click listener
+        profileBtn.setOnClickListener(v -> {
+            Intent profileIntent = new Intent(this, ProfileActivity.class);
+            startActivity(profileIntent);
+        });
     }
 
     private void initRecyclerview() {

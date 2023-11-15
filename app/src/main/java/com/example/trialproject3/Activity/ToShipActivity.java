@@ -1,6 +1,8 @@
 package com.example.trialproject3.Activity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -12,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.trialproject3.Adapter.OrderedItemsAdapter;
 import com.example.trialproject3.Models.CartItem;
-import com.example.trialproject3.Helper.Utils; // Import Utils
+import com.example.trialproject3.Helper.Utils;
 import com.example.trialproject3.Domain.PopularDomain;
 import com.example.trialproject3.databinding.ActivityToShipBinding;
 import com.example.trialproject3.R;
@@ -21,6 +23,7 @@ import java.util.List;
 
 public class ToShipActivity extends AppCompatActivity {
     private ActivityToShipBinding binding;
+    private SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +34,7 @@ public class ToShipActivity extends AppCompatActivity {
         RecyclerView orderedItemsRecyclerView = findViewById(R.id.orderedItemsRecyclerView);
         Button btnBackToCart = findViewById(R.id.button);
         TextView totalPriceTextView = findViewById(R.id.totalPriceTextView);
-        TextView totalCostTextView = findViewById(R.id.totalPriceTextView); // Added TextView
+        TextView totalCostTextView = findViewById(R.id.totalPriceTextView);
 
         // Retrieve the ordered items, user address, and total price from the intent
         Intent intent = getIntent();
@@ -48,19 +51,34 @@ public class ToShipActivity extends AppCompatActivity {
 
             // Display user address, total price, and total cost
             totalPriceTextView.setText("Total Price: ₱" + totalPrice);
-            totalCostTextView.setText("Total Cost: ₱" + totalCost); // Set total cost TextView
+            totalCostTextView.setText("Total Cost: ₱" + totalCost);
 
             // Set up the RecyclerView
             LinearLayoutManager layoutManager = new LinearLayoutManager(this);
             orderedItemsRecyclerView.setLayoutManager(layoutManager);
             OrderedItemsAdapter adapter = new OrderedItemsAdapter(orderedItems, selectedAddress, totalPrice);
             orderedItemsRecyclerView.setAdapter(adapter);
+
+            // Save ordered items
+            saveOrderedItems(orderedItems, selectedAddress, totalCost);
         }
 
         btnBackToCart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // Start the CartActivity when the button is clicked
+                startActivity(new Intent(ToShipActivity.this, CartActivity.class));
+            }
+        });
+
+        // Add Cancel Order functionality
+        Button btnCancelOrder = findViewById(R.id.btnCancelOrder);
+        btnCancelOrder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Clear saved ordered items
+                clearOrderedItems();
+                // Return to CartActivity
                 startActivity(new Intent(ToShipActivity.this, CartActivity.class));
             }
         });
@@ -73,5 +91,34 @@ public class ToShipActivity extends AppCompatActivity {
             totalCost += item.getPrice() * item.getQuantity();
         }
         return totalCost;
+    }
+
+    // Save ordered items using SharedPreferences
+    private void saveOrderedItems(List<CartItem> orderedItems, String address, double totalCost) {
+        sharedPreferences = getSharedPreferences("OrderedItems", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        // Serialize ordered items to JSON using Gson
+        String orderedItemsJson = CartItem.listToJson(orderedItems);
+
+        editor.putString("orderedItems", orderedItemsJson);
+        editor.putString("address", address);
+        editor.putFloat("totalCost", (float) totalCost);
+        editor.apply();
+    }
+
+    // Retrieve ordered items from SharedPreferences
+    private List<CartItem> getOrderedItems() {
+        sharedPreferences = getSharedPreferences("OrderedItems", Context.MODE_PRIVATE);
+        String orderedItemsJson = sharedPreferences.getString("orderedItems", "");
+        return CartItem.listFromJson(orderedItemsJson);
+    }
+
+    // Clear saved ordered items
+    private void clearOrderedItems() {
+        sharedPreferences = getSharedPreferences("OrderedItems", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.clear();
+        editor.apply();
     }
 }

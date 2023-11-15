@@ -8,6 +8,10 @@ import java.util.List;
 
 public class Utils {
     public static CartItem convertToCartItem(PopularDomain popularDomain, String address, int quantity) {
+        if (popularDomain == null) {
+            return null;
+        }
+
         String productName = popularDomain.getTitle();
         double price = popularDomain.getPrice();
 
@@ -17,13 +21,15 @@ public class Utils {
     public static List<CartItem> filterCartItems(List<PopularDomain> popularDomains, String address) {
         List<CartItem> cartItemList = new ArrayList<>();
 
-        for (PopularDomain popularDomain : popularDomains) {
-            // Assume you have a method to get the quantity for each PopularDomain item
-            int quantity = popularDomain.getNumberinCart();
+        if (popularDomains != null) {
+            for (PopularDomain popularDomain : popularDomains) {
+                // Assume you have a method to get the quantity for each PopularDomain item
+                int quantity = popularDomain.getNumberinCart();
 
-            CartItem cartItem = convertToCartItem(popularDomain, address, quantity);
-            if (cartItem != null) {
-                cartItemList.add(cartItem);
+                CartItem cartItem = convertToCartItem(popularDomain, address, quantity);
+                if (cartItem != null) {
+                    cartItemList.add(cartItem);
+                }
             }
         }
 

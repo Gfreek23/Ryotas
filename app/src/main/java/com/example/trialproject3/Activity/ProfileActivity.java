@@ -8,11 +8,15 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.trialproject3.Domain.PopularDomain;
 import com.example.trialproject3.R;
 import com.example.trialproject3.databinding.ActivityProfile2Binding;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.io.Serializable;
+import java.util.List;
 
 public class ProfileActivity extends AppCompatActivity {
     private ActivityProfile2Binding binding;
@@ -53,10 +57,14 @@ public class ProfileActivity extends AppCompatActivity {
         binding.shipBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // Retrieve the cart items from the intent
+                List<PopularDomain> cartItems = (List<PopularDomain>) getIntent().getSerializableExtra("cartItems");
+
+                // Start ToShipActivity and pass the cart items
                 Intent intent = new Intent(ProfileActivity.this, ToShipActivity.class);
+                intent.putExtra("cartItems", (Serializable) cartItems);
                 startActivity(intent);
                 finish();
-
             }
         });
         binding.payBtn.setOnClickListener(new View.OnClickListener() {

@@ -38,7 +38,7 @@ public class OrderedItemsAdapter extends RecyclerView.Adapter<OrderedItemsAdapte
         // Set the data to the views
         holder.productNameTextView.setText(cartItem.getProductName());
         holder.quantityTextView.setText("Quantity: " + cartItem.getQuantity());
-        holder.priceTextView.setText("Price: $" + cartItem.getPrice());
+        holder.priceTextView.setText("Price: ₱" + cartItem.getPrice());
         holder.addressTextView.setText("Shipping Address: " + selectedAddress);
     }
 

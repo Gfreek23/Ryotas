@@ -1,41 +1,47 @@
 
 Q
-java:S3740"/Provide the parametrized type for this generic.(ÒõÆÛıÿÿÿÿ8ô³ö¼1
+java:S3740"/Provide the parametrized type for this generic.(ÒõÆÛıÿÿÿÿ8ï£¡½1
 m
-java:S11928"PDefine a constant instead of duplicating this literal "selectedAddress" 5 times.(ø€“á8÷³ö¼1
+java:S11927"PDefine a constant instead of duplicating this literal "selectedAddress" 5 times.(ø€“á8 ï£¡½1
 J
-java:S1604F"(Make this anonymous inner class a lambda(íÍà©şÿÿÿÿ8÷³ö¼1
+java:S1604C"(Make this anonymous inner class a lambda(íÍà©şÿÿÿÿ8 ï£¡½1
 E
-java:S1604Z"(Make this anonymous inner class a lambda(ìñĞó8÷³ö¼1
+java:S1604T"(Make this anonymous inner class a lambda(ìñĞó8 ï£¡½1
 J
-java:S1604@"(Make this anonymous inner class a lambda(è¼ıÄüÿÿÿÿ8ø³ö¼1
+java:S1604="(Make this anonymous inner class a lambda(è¼ıÄüÿÿÿÿ8 ï£¡½1
 J
-java:S1604j"(Make this anonymous inner class a lambda(íÍà©şÿÿÿÿ8ø³ö¼1
+java:S1604_"(Make this anonymous inner class a lambda(íÀäÀúÿÿÿÿ8¡ï£¡½1
+J
+java:S1604o"(Make this anonymous inner class a lambda(íÍà©şÿÿÿÿ8¡ï£¡½1
 E
-java:S1604q"(Make this anonymous inner class a lambda(ìñĞó8ø³ö¼1
+java:S1604v"(Make this anonymous inner class a lambda(ìñĞó8¡ï£¡½1
 E
-java:S1604d"(Make this anonymous inner class a lambda(ã‘Àò8ø³ö¼1
-D
-java:S1604{"(Make this anonymous inner class a lambda(¾ñçi8ø³ö¼1
+java:S1604i"(Make this anonymous inner class a lambda(ã‘Àò8¡ï£¡½1
+E
+java:S1604€"(Make this anonymous inner class a lambda(¾ñçi8¡ï£¡½1
 K
-java:S1604"(Make this anonymous inner class a lambda(¦¨Ê¤ùÿÿÿÿ8ø³ö¼1
+java:S1604‘"(Make this anonymous inner class a lambda(¦¨Ê¤ùÿÿÿÿ8¡ï£¡½1
 e
-java:S2184¥"BCast one of the operands of this division operation to a "double".(¦‚ÜÈøÿÿÿÿ8ú³ö¼1
-{	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(ŠĞÛŠÿÿÿÿÿ8œ¯²ö¼1
+java:S2184¨"BCast one of the operands of this division operation to a "double".(¦‚ÜÈøÿÿÿÿ8£ï£¡½1
+{	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(ŠĞÛŠÿÿÿÿÿ8£ï£¡½1
 e
-java:S1659"CDeclare "taxTxt" and all following declarations on a separate line.(ë½úòÿÿÿÿÿ8Ä‘³ö¼1
+java:S1659!"CDeclare "taxTxt" and all following declarations on a separate line.(ë½úòÿÿÿÿÿ8êï£¡½1
 x
-java:S1450"VRemove the "adapter" field and declare it as a local variable in the relevant methods.(ÒõÆÛıÿÿÿÿ8Å‘³ö¼1
+java:S1450"VRemove the "adapter" field and declare it as a local variable in the relevant methods.(ÒõÆÛıÿÿÿÿ8ëï£¡½1
 w
-java:S1450$"URemove the "addBtn" field and declare it as a local variable in the relevant methods.(¹¹ûóøÿÿÿÿ8Å‘³ö¼1
+java:S1450&"URemove the "addBtn" field and declare it as a local variable in the relevant methods.(¹¹ûóøÿÿÿÿ8ëï£¡½1
 s
-java:S1450""VRemove the "backBtn" field and declare it as a local variable in the relevant methods.(°Ò‡´8Å‘³ö¼1
+java:S1450$"VRemove the "backBtn" field and declare it as a local variable in the relevant methods.(°Ò‡´8ëï£¡½1
+t
+java:S1450'"WRemove the "btnfinal" field and declare it as a local variable in the relevant methods.(º×÷ 8ìï£¡½1
 o
-java:S1450 "RRemove the "tax" field and declare it as a local variable in the relevant methods.(ÜˆŒò8Æ‘³ö¼1
+java:S1450""RRemove the "tax" field and declare it as a local variable in the relevant methods.(ÜˆŒò8ìï£¡½1
+L
+java:S1905N"/Remove this unnecessary cast to "Serializable".(Ú‘ÌÌ8Ùğ£¡½1
 Y
-java:S1117·";Rename "backBtn" which hides the field declared at line 34.(™æ›¦8­²Îù¼1
-p	java:S100Ç"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(³½÷œıÿÿÿÿ8ì‘³ö¼1
+java:S1117¹";Rename "backBtn" which hides the field declared at line 36.(™æ›¦8êğ£¡½1
+p	java:S100Å"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(³½÷œıÿÿÿÿ8ëğ£¡½1
 ^
-java:S1854É";Remove this useless assignment to local variable "cartBtn".(ã®Ùûÿÿÿÿ8í‘³ö¼1
+java:S1854Ç";Remove this useless assignment to local variable "cartBtn".(ã®Ùûÿÿÿÿ8ìğ£¡½1
 O
-java:S1481É",Remove this unused "cartBtn" local variable.(ã®Ùûÿÿÿÿ8î‘³ö¼1
+java:S1481Ç",Remove this unused "cartBtn" local variable.(ã®Ùûÿÿÿÿ8ìğ£¡½1
