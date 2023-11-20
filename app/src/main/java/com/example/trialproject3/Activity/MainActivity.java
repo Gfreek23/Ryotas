@@ -1,16 +1,19 @@
 package com.example.trialproject3.Activity;
 
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.KeyEvent;
+import android.view.View;
+import android.view.inputmethod.EditorInfo;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.View;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.example.trialproject3.Adapter.PopularListAdapter;
 import com.example.trialproject3.Domain.PopularDomain;
@@ -32,6 +35,7 @@ ImageView Fname1,Fruits1,Dairy1,Karne1,House1,HnB1;
 FirebaseAuth fauth;
 FirebaseFirestore fstore;
 String userId;
+private EditText searchEditText;
 
 private RecyclerView recyclerViewPupolar;
 
@@ -52,6 +56,24 @@ private RecyclerView recyclerViewPupolar;
         Karne = findViewById(R.id.KarneP);
         House = findViewById(R.id.HouseP);
         HnB = findViewById(R.id.HnBP);
+
+        searchEditText = findViewById(R.id.editTextText);
+
+        searchEditText.setOnEditorActionListener((v, actionId, event) -> {
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                performSearch();
+                return true;
+            }
+            return false;
+        });
+
+        searchEditText.setOnKeyListener((v, keyCode, event) -> {
+            if (event.getAction() == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_ENTER) {
+                performSearch();
+                return true;
+            }
+            return false;
+        });
 
 
         Fruits.setOnClickListener(new View.OnClickListener() {
@@ -112,6 +134,15 @@ private RecyclerView recyclerViewPupolar;
         initRecyclerview();
         bottom_navigation();
         
+    }
+
+    private void performSearch() {
+        String searchQuery = searchEditText.getText().toString().trim();
+        if (!searchQuery.isEmpty()) {
+            Intent intent = new Intent(MainActivity.this, MapActivity.class);
+            intent.putExtra("searchQuery", searchQuery);
+            startActivity(intent);
+        }
     }
 
 

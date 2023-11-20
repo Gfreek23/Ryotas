@@ -19,6 +19,12 @@
         android:theme="@style/Theme.TrialProject3"
         tools:targetApi="33">
         <activity
+            android:name=".Activity.RegisterActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activity.MapActivity2"
+            android:exported="false" />
+        <activity
             android:name=".CartActivityBackBtn.CartActivityBackBtn1"
             android:exported="false" />
         <activity
@@ -67,7 +73,7 @@
             android:name=".Activity.LoginPageActivity"
             android:exported="false" />
         <activity
-            android:name=".Activity.RegisterActivity"
+            android:name=".Activity.MapSearch"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

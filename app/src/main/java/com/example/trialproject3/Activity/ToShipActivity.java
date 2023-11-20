@@ -1,6 +1,7 @@
 package com.example.trialproject3.Activity;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -8,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -76,10 +78,28 @@ public class ToShipActivity extends AppCompatActivity {
         btnCancelOrder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Clear saved ordered items
-                clearOrderedItems();
-                // Return to CartActivity
-                startActivity(new Intent(ToShipActivity.this, CartActivity.class));
+                // Create confirmation dialog
+                AlertDialog.Builder builder = new AlertDialog.Builder(ToShipActivity.this);
+                builder.setTitle("Cancel Order");
+                builder.setMessage("Are you sure you want to cancel this order?");
+                builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Clear saved ordered items
+                        clearOrderedItems();
+                        // Return to CartActivity
+                        startActivity(new Intent(ToShipActivity.this, CartActivity.class));
+                    }
+                });
+                builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Dismiss the dialog if "No" is clicked
+                        dialog.dismiss();
+                    }
+                });
+                AlertDialog dialog = builder.create();
+                dialog.show();
             }
         });
     }
