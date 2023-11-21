@@ -54,7 +54,7 @@ public class MapSearch extends AppCompatActivity implements OnMapReadyCallback {
     private GoogleMap mMap;
     private ActivityMapBinding binding2;
     private FusedLocationProviderClient fusedLocationProviderClient;
-    private static final int  Request_code = 101;
+    private static final int Request_code = 101;
     private double lat, lng;
     ImageButton atm, store, hosp, res;
 
@@ -64,10 +64,10 @@ public class MapSearch extends AppCompatActivity implements OnMapReadyCallback {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map_search);
 
-        atm=findViewById(R.id.BANK);
-        store=findViewById(R.id.store);
-        hosp=findViewById(R.id.hospital);
-        res=findViewById(R.id.Res);
+        atm = findViewById(R.id.BANK);
+        store = findViewById(R.id.store);
+        hosp = findViewById(R.id.hospital);
+        res = findViewById(R.id.Res);
 
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this.getApplicationContext());
 
@@ -79,80 +79,52 @@ public class MapSearch extends AppCompatActivity implements OnMapReadyCallback {
         atm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                StringBuilder stringBuilder= new StringBuilder("http://maps.googleapis.com/maps/api/place/nearbysearch/json?");
-                stringBuilder.append("location" + lat + "," + lng);
-                stringBuilder.append("&radius=1000");
-                stringBuilder.append("&type=atm");
-                stringBuilder.append("&sensor=true");
-                stringBuilder.append("&key=" + getResources().getString(R.string.google_map_key));
+                String url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?" +
+                        "location=" + lat + "," + lng +
+                        "&radius=1000" +
+                        "&type=atm" +
+                        "&key=" + getResources().getString(R.string.google_map_key);
 
-                String url = stringBuilder.toString();
-                Object dataFetch[]=new Object[2];
-                dataFetch[0]=mMap;
-                dataFetch[1]=url;
-
-                FetchData fetchData=new FetchData();
-                fetchData.execute(dataFetch);
+                new FetchData(mMap).execute(url);
             }
         });
+
         hosp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                StringBuilder stringBuilder= new StringBuilder("http://maps.googleapis.com/maps/api/place/nearbysearch/json?");
-                stringBuilder.append("location" + lat + "," + lng);
-                stringBuilder.append("&radius=1000");
-                stringBuilder.append("&type=hospital");
-                stringBuilder.append("&sensor=true");
-                stringBuilder.append("&key=" + getResources().getString(R.string.google_map_key));
+                String url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?" +
+                        "location=" + lat + "," + lng +
+                        "&radius=1000" +
+                        "&type=hospital" +
+                        "&key=" + getResources().getString(R.string.google_map_key);
 
-                String url = stringBuilder.toString();
-                Object dataFetch[]=new Object[2];
-                dataFetch[0]=mMap;
-                dataFetch[1]=url;
-
-                FetchData fetchData=new FetchData();
-                fetchData.execute(dataFetch);
+                new FetchData(mMap).execute(url);
             }
         });
 
         store.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                StringBuilder stringBuilder= new StringBuilder("http://maps.googleapis.com/maps/api/place/nearbysearch/json?");
-                stringBuilder.append("location" + lat + "," + lng);
-                stringBuilder.append("&radius=1000");
-                stringBuilder.append("&type=store");
-                stringBuilder.append("&sensor=true");
-                stringBuilder.append("&key=" + getResources().getString(R.string.google_map_key));
+                String url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?" +
+                        "location=" + lat + "," + lng +
+                        "&radius=1000" +
+                        "&type=store" +
+                        "&key=" + getResources().getString(R.string.google_map_key);
 
-                String url = stringBuilder.toString();
-                Object dataFetch[]=new Object[2];
-                dataFetch[0]=mMap;
-                dataFetch[1]=url;
-
-                FetchData fetchData=new FetchData();
-                fetchData.execute(dataFetch);
-
+                new FetchData(mMap).execute(url);
             }
         });
 
         res.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                StringBuilder stringBuilder= new StringBuilder("http://maps.googleapis.com/maps/api/place/nearbysearch/json?");
-                stringBuilder.append("location" + lat + "," + lng);
-                stringBuilder.append("&radius=1000");
-                stringBuilder.append("&type=restaurant");
-                stringBuilder.append("&sensor=true");
-                stringBuilder.append("&key=" + getResources().getString(R.string.google_map_key));
+                String url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?" +
+                        "location=" + lat + "," + lng +
+                        "&radius=1000" +
+                        "&type=restaurant" +
+                        "&key=" + getResources().getString(R.string.google_map_key);
 
-                String url = stringBuilder.toString();
-                Object dataFetch[]=new Object[2];
-                dataFetch[0]=mMap;
-                dataFetch[1]=url;
-
-                FetchData fetchData=new FetchData();
-                fetchData.execute(dataFetch);
+                new FetchData(mMap).execute(url);
             }
         });
     }
@@ -164,12 +136,12 @@ public class MapSearch extends AppCompatActivity implements OnMapReadyCallback {
         getCurrentLocation();
     }
 
-    private void getCurrentLocation(){
+    private void getCurrentLocation() {
         if (ActivityCompat.checkSelfPermission(
-        this, Manifest.permission.ACCESS_FINE_LOCATION)!= PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission
-                (this,Manifest.permission.ACCESS_COARSE_LOCATION)!= PackageManager.PERMISSION_GRANTED){
-        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION},Request_code);
-         return;
+                this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission
+                (this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, Request_code);
+            return;
         }
 
         LocationRequest locationRequest = LocationRequest.create();
@@ -179,50 +151,51 @@ public class MapSearch extends AppCompatActivity implements OnMapReadyCallback {
         LocationCallback locationCallback = new LocationCallback() {
             @Override
             public void onLocationResult(@NonNull LocationResult locationResult) {
-                Toast.makeText(getApplicationContext(),"location result is=" + locationResult
-                        ,Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "location result is=" + locationResult
+                        , Toast.LENGTH_SHORT).show();
 
-                if (locationResult== null){
-                    Toast.makeText(getApplicationContext(),"Current location is null",Toast.LENGTH_LONG).show();
+                if (locationResult == null) {
+                    Toast.makeText(getApplicationContext(), "Current location is null", Toast.LENGTH_LONG).show();
 
                     return;
                 }
-                for (Location location:locationResult.getLocations()){
-                    if(location!=null){
-                        Toast.makeText(getApplicationContext(),"Current location is=" + location.getLongitude()
-                                ,Toast.LENGTH_LONG).show();
+                for (Location location : locationResult.getLocations()) {
+                    if (location != null) {
+                        Toast.makeText(getApplicationContext(), "Current location is=" + location.getLongitude()
+                                , Toast.LENGTH_LONG).show();
                     }
                 }
             }
         };
 
-        fusedLocationProviderClient.requestLocationUpdates(locationRequest,locationCallback,null);
+        fusedLocationProviderClient.requestLocationUpdates(locationRequest, locationCallback, null);
 
         Task<Location> task = fusedLocationProviderClient.getLastLocation();
         task.addOnSuccessListener(new OnSuccessListener<Location>() {
             @Override
             public void onSuccess(Location location) {
-                if (location!=null){
+                if (location != null) {
                     lat = location.getLatitude();
                     lng = location.getLongitude();
 
-                    LatLng latLng = new LatLng(lat,lng);
+                    LatLng latLng = new LatLng(lat, lng);
                     mMap.addMarker(new MarkerOptions().position(latLng).title("Current location"));
                     mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng,15));
+                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));
                 }
             }
         });
     }
+
     @SuppressLint("MissingSuperCall")
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        switch (Request_code){
-
+        switch (requestCode) { // Change Request_code to requestCode
             case Request_code:
-                if(grantResults.length>0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     getCurrentLocation();
                 }
+                break; // Add a break statement here
         }
     }
 }

@@ -13,57 +13,56 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 
-public class FetchData extends AsyncTask<Object,String,String> {
+public class FetchData extends AsyncTask<String, Void, String> {
+    private GoogleMap googleMap;
 
-    String googleNearByPlacesData;
-    GoogleMap googleMap;
-    String url;
-
-
-    @Override
-    protected void onPostExecute(String s) {
-        try{
-            JSONObject jsonObject = new JSONObject(s);
-            JSONArray jsonArray = jsonObject.getJSONArray("results");
-
-            for (int i=0; i<jsonArray.length();i++){
-
-                JSONObject jsonObject1= jsonArray.getJSONObject(i);
-                JSONObject getLocation= jsonObject1.getJSONObject("geometry")
-                        .getJSONObject("location");
-
-                String lat = getLocation.getString("lat");
-                String lng = getLocation.getString("lng");
-
-                JSONObject getName = jsonArray.getJSONObject(i);
-                String name = getName.getString("name");
-
-                LatLng latLng = new LatLng(Double.parseDouble(lat), Double.parseDouble(lng));
-                MarkerOptions markerOptions=new MarkerOptions();
-                markerOptions.title(name);
-                googleMap.addMarker(markerOptions);
-                googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));
-
-            }
-
-        }catch (JSONException e){
-            e.printStackTrace();
-        }
+    public FetchData(GoogleMap googleMap) {
+        this.googleMap = googleMap;
     }
 
     @Override
-    protected String doInBackground(Object... objects) {
+    protected String doInBackground(String... strings) {
+        String googleNearByPlacesData = "";
 
         try {
-            googleMap=(GoogleMap) objects[0];
-            url=(String) objects[1];
-            DownloadUrl downloadUrl=new DownloadUrl();
-            googleNearByPlacesData=downloadUrl.retireveUrl(url);
-
-        }catch (IOException e){
+            String url = strings[0];
+            DownloadUrl downloadUrl = new DownloadUrl();
+            googleNearByPlacesData = downloadUrl.retireveUrl(url);
+        } catch (IOException e) {
             e.printStackTrace();
         }
 
         return googleNearByPlacesData;
+    }
+
+    @Override
+    protected void onPostExecute(String s) {
+        if (s != null && !s.isEmpty()) {
+            try {
+                JSONObject jsonObject = new JSONObject(s);
+                JSONArray jsonArray = jsonObject.getJSONArray("results");
+
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    JSONObject placeObject = jsonArray.getJSONObject(i);
+                    JSONObject locationObject = placeObject.getJSONObject("geometry")
+                            .getJSONObject("location");
+
+                    double lat = locationObject.getDouble("lat");
+                    double lng = locationObject.getDouble("lng");
+                    String name = placeObject.getString("name");
+
+                    LatLng latLng = new LatLng(lat, lng);
+                    MarkerOptions markerOptions = new MarkerOptions();
+                    markerOptions.title(name);
+                    markerOptions.position(latLng);
+                    googleMap.addMarker(markerOptions);
+                    googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        } else {
+            // Handle empty or null data here
+        }
     }
 }
