@@ -2,10 +2,8 @@ package com.example.trialproject3.Activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.telephony.ims.RegistrationManager;
 import android.view.View;
 
-import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.trialproject3.R;
@@ -17,7 +15,7 @@ import com.example.trialproject3.R;
 
         }
         public void login(View view){
-          startActivity(new Intent(LoginHomeActivity.this,LoginPageActivity.class));
+          startActivity(new Intent(LoginHomeActivity.this, LoginActivity.class));
         }
 
 

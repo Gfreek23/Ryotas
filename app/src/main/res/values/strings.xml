@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">trial project3</string>
+    <string name="app_name">E-Home</string>
 
     <string name="first_slide">Choose Your Products</string>
     <string name="second_slide">Fast Delivery</string>
@@ -7,6 +7,5 @@
 
     <string name="description">An Online Home Service Assistant \nand \nEssentials Store</string>
     <string name="google_map_key">AIzaSyDla9Tad9VFXFFR5vlR7ZI7AJdUR822fds</string>
-
 
 </resources>

@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -14,43 +12,44 @@
         android:orientation="horizontal"
         android:padding="10dp">
 
-        <ImageButton
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/hospitalBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/hospital"
             android:padding="30dp"
-            android:src="@drawable/baseline_local_hospital_24"/>
-        <ImageButton
+            android:src="@drawable/baseline_local_hospital_24" />
+
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/bankBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/BANK"
             android:padding="30dp"
-            android:src="@drawable/baseline_local_atm_24"/>
-        <ImageButton
+            android:src="@drawable/baseline_local_atm_24" />
+
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/res"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/Res"
             android:padding="30dp"
-            android:src="@drawable/baseline_food_bank_24"/>
-        <ImageButton
+            android:src="@drawable/baseline_food_bank_24" />
+
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/storeBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/store"
             android:padding="30dp"
-            android:src="@drawable/baseline_local_convenience_store_24"/>
+            android:src="@drawable/baseline_local_convenience_store_24" />
 
 
     </LinearLayout>
 
-
-
-    <fragment
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/map2"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".MapSearch"
-        android:id="@+id/map2"
         android:layout_below="@id/linearLayout"
-        android:name="com.google.android.gms.maps.SupportMapFragment"
+        tools:context=".MapSearch"
         tools:layout="@layout/activity_map_search" />
 
 </RelativeLayout>

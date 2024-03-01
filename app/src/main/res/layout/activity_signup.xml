@@ -139,7 +139,7 @@
         android:layout_marginTop="124dp"
         android:layout_marginEnd="32dp"
         android:background="@drawable/red_banner"
-        android:onClick="Signin"
+        android:onClick="signInUser"
         android:text="Register"
         android:textColor="#ffffff"
         android:textSize="20sp"

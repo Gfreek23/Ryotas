@@ -18,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.trialproject3.R;
+import com.example.trialproject3.databinding.ActivityMapSearchBinding;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
@@ -46,11 +47,12 @@ import java.net.URL;
 import java.util.HashMap;
 
 public class MapSearch extends AppCompatActivity implements OnMapReadyCallback {
+    private final String TAG = "MapSearch";
+    private ActivityMapSearchBinding binding;
     private GoogleMap mMap;
     private FusedLocationProviderClient fusedLocationProviderClient;
     private static final int Request_code = 101;
     private double lat, lng;
-    ImageButton atm, store, hosp, res;
     private HashMap<String, Marker> markerMap = new HashMap<>();
 
     private void clearMarkers() {
@@ -60,12 +62,8 @@ public class MapSearch extends AppCompatActivity implements OnMapReadyCallback {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_map_search);
-
-        atm = findViewById(R.id.BANK);
-        store = findViewById(R.id.store);
-        hosp = findViewById(R.id.hospital);
-        res = findViewById(R.id.Res);
+        binding = ActivityMapSearchBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this.getApplicationContext());
 
@@ -74,60 +72,48 @@ public class MapSearch extends AppCompatActivity implements OnMapReadyCallback {
         mapFragment.getMapAsync(this);
 
 
-        atm.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                clearMarkers();
-                String url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?" +
-                        "location=" + lat + "," + lng +
-                        "&radius=1000" +
-                        "&type=pharmacy" +
-                        "&key=" + getResources().getString(R.string.google_map_key);
+        binding.bankBtn.setOnClickListener(v -> {
+            clearMarkers();
+            String url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?" +
+                    "location=" + lat + "," + lng +
+                    "&radius=1000" +
+                    "&type=pharmacy" +
+                    "&key=" + getResources().getString(R.string.google_map_key);
 
-                new FetchData(mMap).execute(url);
-            }
+            new FetchData(mMap).execute(url);
         });
 
-        hosp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                clearMarkers();
-                String url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?" +
-                        "location=" + lat + "," + lng +
-                        "&radius=1000" +
-                        "&type=wet_market" +
-                        "&key=" + getResources().getString(R.string.google_map_key);
+        binding.hospitalBtn.setOnClickListener(v -> {
+            clearMarkers();
+            String url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?" +
+                    "location=" + lat + "," + lng +
+                    "&radius=1000" +
+                    "&type=wet_market" +
+                    "&key=" + getResources().getString(R.string.google_map_key);
 
-                new FetchData(mMap).execute(url);
-            }
+            new FetchData(mMap).execute(url);
         });
 
-        store.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                clearMarkers();
-                String url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?" +
-                        "location=" + lat + "," + lng +
-                        "&radius=1000" +
-                        "&type=convenience store" +
-                        "&key=" + getResources().getString(R.string.google_map_key);
+        binding.storeBtn.setOnClickListener(v -> {
+            clearMarkers();
+            String url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?" +
+                    "location=" + lat + "," + lng +
+                    "&radius=1000" +
+                    "&type=convenience store" +
+                    "&key=" + getResources().getString(R.string.google_map_key);
 
-                new FetchData(mMap).execute(url);
-            }
+            new FetchData(mMap).execute(url);
         });
 
-        res.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                clearMarkers();
-                String url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?" +
-                        "location=" + lat + "," + lng +
-                        "&radius=1000" +
-                        "&type=hardware_store" +
-                        "&key=" + getResources().getString(R.string.google_map_key);
+        binding.res.setOnClickListener(v -> {
+            clearMarkers();
+            String url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?" +
+                    "location=" + lat + "," + lng +
+                    "&radius=1000" +
+                    "&type=hardware_store" +
+                    "&key=" + getResources().getString(R.string.google_map_key);
 
-                new FetchData(mMap).execute(url);
-            }
+            new FetchData(mMap).execute(url);
         });
     }
 

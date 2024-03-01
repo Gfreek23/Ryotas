@@ -3,12 +3,7 @@ package com.example.trialproject3.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
-import android.view.View;
 import android.view.inputmethod.EditorInfo;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,7 +12,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.trialproject3.Adapter.PopularListAdapter;
 import com.example.trialproject3.Domain.PopularDomain;
-import com.example.trialproject3.R;
+import com.example.trialproject3.FirebaseMain.FirebaseHelper;
+import com.example.trialproject3.databinding.ActivityMainBinding;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -28,38 +24,30 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
-private RecyclerView.Adapter adapterPupolar;
-TextView Fname,Fruits,Dairy,Karne,House,HnB;
-
-ImageView Fname1,Fruits1,Dairy1,Karne1,House1,HnB1;
-FirebaseAuth fauth;
-FirebaseFirestore fstore;
-String userId;
-private EditText searchEditText;
-
-private RecyclerView recyclerViewPupolar;
+    private final String TAG = "MainActivity";
+    private ActivityMainBinding binding;
+    private Intent intent;
+    private RecyclerView.Adapter popularRecyclerViewAdapter;
+    private FirebaseAuth auth;
+    private FirebaseFirestore fStore;
+    private String userID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
-        Fname = findViewById(R.id.Fname);
+        auth = FirebaseAuth.getInstance();
+        fStore = FirebaseFirestore.getInstance();
 
-        fauth = FirebaseAuth.getInstance();
-        fstore = FirebaseFirestore.getInstance();
+        if (FirebaseHelper.getUser() == null){
+            intent = new Intent(this, LoginActivity.class);
+            startActivity(intent);
+            finish();
+        }
 
-        userId = fauth.getCurrentUser().getUid();
-
-        Fruits = findViewById(R.id.FnV);
-        Dairy = findViewById(R.id.DairP);
-        Karne = findViewById(R.id.KarneP);
-        House = findViewById(R.id.HouseP);
-        HnB = findViewById(R.id.HnBP);
-
-        searchEditText = findViewById(R.id.editTextText);
-
-        searchEditText.setOnEditorActionListener((v, actionId, event) -> {
+        binding.searchEditText.setOnEditorActionListener((v, actionId, event) -> {
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                 performSearch();
                 return true;
@@ -67,7 +55,7 @@ private RecyclerView recyclerViewPupolar;
             return false;
         });
 
-        searchEditText.setOnKeyListener((v, keyCode, event) -> {
+        binding.searchEditText.setOnKeyListener((v, keyCode, event) -> {
             if (event.getAction() == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_ENTER) {
                 performSearch();
                 return true;
@@ -76,68 +64,60 @@ private RecyclerView recyclerViewPupolar;
         });
 
 
-        Fruits.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, MapActivity.class);
-                startActivity(intent);
-                finish();
-            }
+        binding.fruitsAndVegBtn.setOnClickListener(v -> {
+            intent = new Intent(MainActivity.this, MapActivity.class);
+            startActivity(intent);
+            finish();
         });
 
-        Dairy.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, MapActivity.class);
-                startActivity(intent);
-                finish();
-            }
+        binding.dairyProductsBtn.setOnClickListener(v -> {
+            intent = new Intent(MainActivity.this, MapActivity.class);
+            startActivity(intent);
+            finish();
         });
 
-        Karne.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, MapActivity.class);
-                startActivity(intent);
-                finish();
-            }
+        binding.meatProductsBtn.setOnClickListener(v -> {
+            intent = new Intent(MainActivity.this, MapActivity.class);
+            startActivity(intent);
+            finish();
         });
 
-        House.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, MapActivity.class);
-                startActivity(intent);
-                finish();
-            }
-        });
+//        House.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                intent = new Intent(MainActivity.this, MapActivity.class);
+//                startActivity(intent);
+//                finish();
+//            }
+//        });
+//
+//        HnB.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                intent = new Intent(MainActivity.this, MapActivity.class);
+//                startActivity(intent);
+//                finish();
+//            }
+//        });
 
-        HnB.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, MapActivity.class);
-                startActivity(intent);
-                finish();
-            }
-        });
-
-        DocumentReference documentReference = fstore.collection("users").document(userId);
-        documentReference.addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
-            @Override
-            public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
-                Fname.setText(value.getString("Fname"));
-            }
-        });
-
+        if (userID != null) {
+            DocumentReference documentReference = fStore.collection("users").document(userID);
+            documentReference.addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
+                @Override
+                public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
+                    binding.firstNameTextView.setText(value.getString("Fname"));
+                }
+            });
+        }
 
 
         initRecyclerview();
         bottom_navigation();
-        
+
     }
 
     private void performSearch() {
-        String searchQuery = searchEditText.getText().toString().trim();
+        String searchQuery = binding.searchEditText.getText().toString().trim();
         if (!searchQuery.isEmpty()) {
             Intent intent = new Intent(MainActivity.this, MapActivity.class);
             intent.putExtra("searchQuery", searchQuery);
@@ -146,23 +126,17 @@ private RecyclerView recyclerViewPupolar;
     }
 
 
-
     private void bottom_navigation() {
-        LinearLayout homeBtn=findViewById(R.id.homeBtn);
-        LinearLayout cartBtn=findViewById(R.id.cartBtn);
-        LinearLayout profileBtn=findViewById(R.id.profileBtn);
-
-        homeBtn.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, MainActivity.class)));
-        cartBtn.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, CartActivity.class)));
-        profileBtn.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, ProfileActivity.class)));
+        binding.exploreBtn.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, MainActivity.class)));
+        binding.cartBtn.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, CartActivity.class)));
+        binding.profileBtn.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, ProfileActivity.class)));
     }
-
 
 
     private void initRecyclerview() {
 
-        ArrayList<PopularDomain> items=new ArrayList<>();
-        items.add(new PopularDomain("Vegetables","Welcome to the vibrant and nourishing world of our vegetable\n" +
+        ArrayList<PopularDomain> items = new ArrayList<>();
+        items.add(new PopularDomain("Vegetables", "Welcome to the vibrant and nourishing world of our vegetable\n" +
                 "                 market! Step into a realm where colors, freshness, and flavors\n" +
                 "                 intertwine to awaken your senses and inspire your culinary\n" +
                 "                 adventures. Discover a bountiful array of seasonal treasures,\n" +
@@ -177,7 +151,7 @@ private RecyclerView recyclerViewPupolar;
                 "                 that only vegetables can provide. So, come and immerse\n" +
                 "                 yourself in the kaleidoscope of flavors, relish the farm-to-fork\n" +
                 "                 experience, and let our vegetable market be your guiding light\n" +
-                "                 towards a more vibrant and nourished you!","pic1", 156,4.5,  100));
+                "                 towards a more vibrant and nourished you!", "pic1", 156, 4.5, 100));
         items.add(new PopularDomain("Meat", "Welcome to the vibrant and nourishing world of our vegetable\n" +
                 "                 market! Step into a realm where colors, freshness, and flavors\n" +
                 "                 intertwine to awaken your senses and inspire your culinary\n" +
@@ -209,12 +183,12 @@ private RecyclerView recyclerViewPupolar;
                 "                 that only vegetables can provide. So, come and immerse\n" +
                 "                 yourself in the kaleidoscope of flavors, relish the farm-to-fork\n" +
                 "                 experience, and let our vegetable market be your guiding light\n" +
-                "                 towards a more vibrant and nourished you!", "pic3", 187,4.9, 1000));
+                "                 towards a more vibrant and nourished you!", "pic3", 187, 4.9, 1000));
 
-        recyclerViewPupolar=findViewById(R.id.view9);
-        recyclerViewPupolar.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
 
-        adapterPupolar=new PopularListAdapter(items);
-        recyclerViewPupolar.setAdapter(adapterPupolar);
+        binding.popularRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+
+        popularRecyclerViewAdapter = new PopularListAdapter(items);
+        binding.popularRecyclerView.setAdapter(popularRecyclerViewAdapter);
     }
 }
