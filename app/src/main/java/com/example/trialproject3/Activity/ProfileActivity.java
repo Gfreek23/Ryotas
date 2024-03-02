@@ -8,7 +8,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 
 import com.example.trialproject3.Domain.PopularDomain;
-import com.example.trialproject3.FirebaseMain.FirebaseHelper;
+import com.example.trialproject3.Firebase.FirebaseHelper;
 import com.example.trialproject3.R;
 import com.example.trialproject3.databinding.ActivityProfile2Binding;
 import com.google.firebase.firestore.DocumentReference;
@@ -47,7 +47,7 @@ public class ProfileActivity extends AppCompatActivity {
 
         bottom_navigation();
 
-        binding.shipBtn.setOnClickListener(v -> {
+        binding.toShipBtn.setOnClickListener(v -> {
             // Retrieve the cart items from the intent
             List<PopularDomain> cartItems = (List<PopularDomain>) getIntent().getSerializableExtra("cartItems");
 
@@ -57,16 +57,13 @@ public class ProfileActivity extends AppCompatActivity {
             startActivity(intent);
             finish();
         });
-        binding.payBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent1 = new Intent(ProfileActivity.this, ToShipActivity.class);
-                startActivity(intent1);
-                finish();
-            }
+        binding.toPayBtn.setOnClickListener(v -> {
+            Intent intent1 = new Intent(ProfileActivity.this, ToShipActivity.class);
+            startActivity(intent1);
+            finish();
         });
 
-        binding.recieveBtn.setOnClickListener(v -> {
+        binding.toReceiveBtn.setOnClickListener(v -> {
             Intent intent2 = new Intent(ProfileActivity.this, ToReceiveActivity.class);
             startActivity(intent2);
             finish();
@@ -78,9 +75,9 @@ public class ProfileActivity extends AppCompatActivity {
             finish();
         });
 
-        binding.backBtn.setOnClickListener((View.OnClickListener) v -> startActivity(new Intent(ProfileActivity.this, MainActivity.class)));
+        binding.backBtn.setOnClickListener(v -> startActivity(new Intent(ProfileActivity.this, MainActivity.class)));
 
-        binding.Logout.setOnClickListener(v -> signOutUser());
+        binding.logoutBtn.setOnClickListener(v -> signOutUser());
     }
 
     private void signOutUser() {

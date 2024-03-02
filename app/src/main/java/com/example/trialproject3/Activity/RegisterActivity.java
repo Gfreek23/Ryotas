@@ -9,7 +9,6 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
-import android.widget.DatePicker;
 import android.widget.RadioButton;
 import android.widget.Toast;
 
@@ -17,13 +16,9 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.trialproject3.FirebaseMain.FirebaseHelper;
+import com.example.trialproject3.Firebase.FirebaseHelper;
 import com.example.trialproject3.databinding.ActivityRegisterBinding;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
@@ -91,32 +86,35 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     public void checkFields() {
-        String userName = binding.fullNameEditText.getText().toString().trim();
-        String userEmail = binding.emailEditText.getText().toString().trim();
-        String userBirthday = binding.birthdayEditText.getText().toString();
+        String firstName = binding.firstNameEditText.getText().toString().trim();
+        String lastName = binding.lastNameEditText.getText().toString().trim();
+        final String userEmail = binding.emailEditText.getText().toString().trim();
+        final String userBirthday = binding.birthdayEditText.getText().toString();
         String userGender;
-        String userPhone = binding.phoneEditText.getText().toString().trim();
-        String userPassword = binding.passwordEditText.getText().toString();
-        String userConfirmPassword = binding.confirmPasswordEditText.getText().toString();
+        final String userPhone = binding.phoneEditText.getText().toString().trim();
+        final String userPassword = binding.passwordEditText.getText().toString();
+        final String userConfirmPassword = binding.confirmPasswordEditText.getText().toString();
 
         int selectedRadioBtnID = binding.genderRadioGroup.getCheckedRadioButtonId();
+        final String fullName = firstName + " " + lastName;
 
-
-        if (TextUtils.isEmpty(userName)) {
-            Toast.makeText(this, "Please enter your full name!", Toast.LENGTH_SHORT).show();
-            binding.fullNameEditText.setError("Full Name is required");
-            binding.fullNameEditText.requestFocus();
+        if (TextUtils.isEmpty(fullName)) {
+            Toast.makeText(this, "Please enter your full name", Toast.LENGTH_SHORT).show();
+            binding.firstNameEditText.setError("Full Name is required");
+            binding.firstNameEditText.requestFocus();
+            binding.lastNameEditText.setError("Full Name is required");
+            binding.lastNameEditText.requestFocus();
 
         } else if (TextUtils.isEmpty(userEmail)) {
-            Toast.makeText(this, "Please enter email address!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Please enter email address", Toast.LENGTH_SHORT).show();
             binding.emailEditText.setError("Email is required");
             binding.emailEditText.requestFocus();
         } else if (!Patterns.EMAIL_ADDRESS.matcher(userEmail).matches()) {
-            Toast.makeText(this, "Please Re-Enter your email address!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Please Re-Enter your email address", Toast.LENGTH_SHORT).show();
             binding.emailEditText.setError("Valid email is required");
             binding.emailEditText.requestFocus();
         } else if (TextUtils.isEmpty(userBirthday)) {
-            Toast.makeText(this, "Please enter Date of Birth!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Please enter Date of Birt!", Toast.LENGTH_SHORT).show();
             binding.birthdayEditText.setError("Date of birth is required");
             binding.birthdayEditText.requestFocus();
         } else if (binding.genderRadioGroup.getCheckedRadioButtonId() == -1) {
@@ -124,11 +122,11 @@ public class RegisterActivity extends AppCompatActivity {
 //            genderSelected.setError("Gender is required");
 //            genderSelected.requestFocus();
         } else if (TextUtils.isEmpty(userPhone)) {
-            Toast.makeText(this, "Please enter your mobile number!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Please enter your mobile number", Toast.LENGTH_SHORT).show();
             binding.phoneEditText.setError("Mobile No. is required");
             binding.phoneEditText.requestFocus();
         } else if (userPhone.length() < 11) {
-            Toast.makeText(this, "Please Re-enter your mobile no.!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Please Re-enter your mobile number", Toast.LENGTH_SHORT).show();
             binding.phoneEditText.setError("Mobile No. should be 11 digits");
             binding.phoneEditText.requestFocus();
         } else if (TextUtils.isEmpty(userPassword)) {
@@ -136,15 +134,15 @@ public class RegisterActivity extends AppCompatActivity {
             binding.passwordEditText.setError("Password is required");
             binding.passwordEditText.requestFocus();
         } else if (userPassword.length() < 6) {
-            Toast.makeText(this, "Password should be at least 6 digits!", Toast.LENGTH_SHORT).show();
-            binding.phoneEditText.setError("Password is too weak!");
+            Toast.makeText(this, "Password should be at least 6 digits", Toast.LENGTH_SHORT).show();
+            binding.phoneEditText.setError("Password is too weak");
             binding.passwordEditText.requestFocus();
         } else if (TextUtils.isEmpty(userConfirmPassword)) {
-            Toast.makeText(this, "Please confirm your password!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Please confirm your password", Toast.LENGTH_SHORT).show();
             binding.confirmPasswordEditText.setError("Password confirmation is required");
             binding.confirmPasswordEditText.requestFocus();
         } else if (!userConfirmPassword.equals(userPassword)) {
-            Toast.makeText(this, "Please enter same password!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Please enter same password", Toast.LENGTH_SHORT).show();
             binding.confirmPasswordEditText.setError("Password confirmation is required");
             binding.confirmPasswordEditText.requestFocus();
 
@@ -155,7 +153,7 @@ public class RegisterActivity extends AppCompatActivity {
             userGender = selectedGender.getText().toString();
             binding.progressbar.setVisibility(View.VISIBLE);
 
-            registerUser(userName,
+            registerUser(fullName,
                     userEmail,
                     userBirthday,
                     userGender,

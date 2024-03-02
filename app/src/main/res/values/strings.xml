@@ -7,5 +7,7 @@
 
     <string name="description">An Online Home Service Assistant \nand \nEssentials Store</string>
     <string name="google_map_key">AIzaSyDla9Tad9VFXFFR5vlR7ZI7AJdUR822fds</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

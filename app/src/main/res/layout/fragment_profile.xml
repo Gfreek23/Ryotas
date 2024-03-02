@@ -1,12 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ECF2F4"
-    tools:context=".Activity.ProfileActivity">
+    tools:context=".Fragment.ProfileFragment">
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -208,129 +205,6 @@
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
             </androidx.appcompat.widget.LinearLayoutCompat>
-
-
-            <androidx.coordinatorlayout.widget.CoordinatorLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <com.google.android.material.bottomappbar.BottomAppBar
-                    android:layout_width="match_parent"
-                    android:layout_height="60dp"
-                    android:layout_gravity="bottom"
-                    android:layout_marginLeft="-17dp">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="horizontal">
-
-                        <LinearLayout
-                            android:id="@+id/homeBtn"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="0.25"
-                            android:orientation="vertical">
-
-                            <ImageView
-                                android:id="@+id/imageView51"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:layout_margin="4dp"
-                                android:layout_weight="1"
-                                android:src="@drawable/btn_1" />
-
-                            <TextView
-                                android:id="@+id/textView15"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:text="Explore"
-                                android:textAlignment="center"
-                                android:textColor="@color/black" />
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:id="@+id/wishBtn"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="0.25"
-                            android:orientation="vertical">
-
-                            <ImageView
-                                android:id="@+id/imageView61"
-                                android:layout_width="65dp"
-                                android:layout_height="32dp"
-                                android:layout_gravity="center"
-                                android:layout_margin="4dp"
-                                android:src="@drawable/search"
-                                tools:layout_weight="1"
-                                tools:srcCompat="@drawable/search" />
-
-                            <TextView
-                                android:id="@+id/textView16"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:text="Home Services"
-                                android:textAlignment="center"
-                                android:textColor="@color/black" />
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:id="@+id/cartBtn"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="0.25"
-                            android:orientation="vertical">
-
-                            <ImageView
-                                android:id="@+id/imageView78"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:layout_margin="4dp"
-                                android:layout_weight="1"
-                                android:src="@drawable/btn_3" />
-
-                            <TextView
-                                android:id="@+id/textView17"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:text="Cart"
-                                android:textAlignment="center"
-                                android:textColor="@color/black" />
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:id="@+id/profileBtn"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="0.25"
-                            android:orientation="vertical">
-
-                            <ImageView
-                                android:id="@+id/imageView81"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:layout_margin="4dp"
-                                android:layout_weight="1"
-                                android:src="@drawable/btn_4" />
-
-                            <TextView
-                                android:id="@+id/textView50"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:text="Profile"
-                                android:textAlignment="center"
-                                android:textColor="@color/red" />
-                        </LinearLayout>
-
-                    </LinearLayout>
-
-                </com.google.android.material.bottomappbar.BottomAppBar>
-
-            </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 

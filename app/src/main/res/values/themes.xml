@@ -2,8 +2,8 @@
     <!-- Base application theme. -->
     <style name="Base.Theme.TrialProject3" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
-         <item name="colorPrimary">@color/black</item>
-<!--        <item name="colorPrimaryDark">@color/white</item>-->
+         <item name="colorPrimary">@color/blue</item>
+        <item name="colorPrimaryDark">@color/bright_blue</item>
     </style>
 
     <style name="Theme.TrialProject3" parent="Base.Theme.TrialProject3" />

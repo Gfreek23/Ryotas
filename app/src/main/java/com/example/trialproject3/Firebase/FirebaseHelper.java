@@ -1,4 +1,4 @@
-package com.example.trialproject3.FirebaseMain;
+package com.example.trialproject3.Firebase;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
