@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools" >
 
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
@@ -17,12 +17,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.TrialProject3"
-        tools:targetApi="33">
+        tools:targetApi="33" >
+        <activity
+            android:name=".Map.MapboxMapActivity"
+            android:exported="false" />
         <activity
             android:name=".Activity.RegisterActivity"
             android:exported="false" />
         <activity
-            android:name=".Activity.MapActivity2"
+            android:name=".Map.MapActivity2"
             android:exported="false" />
         <activity
             android:name=".CartActivityBackBtn.CartActivityBackBtn1"
@@ -73,14 +76,14 @@
             android:name=".Activity.DetailActivity"
             android:exported="false" />
         <activity
-            android:name=".Activity.MapActivity"
+            android:name=".Map.MapActivity"
             android:exported="false" />
         <activity
             android:name=".Activity.LoginActivity"
             android:exported="false" />
         <activity
             android:name=".Activity.MapSearch"
-            android:exported="false">
+            android:exported="false" >
         </activity>
 
         <meta-data

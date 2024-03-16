@@ -41,7 +41,7 @@ public class ProfileFragment extends Fragment implements MainActivity.OnBackPres
     private AlertDialogHelper alertDialogHelper;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentProfileBinding.inflate(inflater, container, false);
 
@@ -64,6 +64,8 @@ public class ProfileFragment extends Fragment implements MainActivity.OnBackPres
                 }
             });
         }
+
+        binding.backBtn.setOnClickListener(v -> backToHomeFragment());
 
         binding.toShipBtn.setOnClickListener(v -> {
             // Retrieve the cart items from the intent
@@ -93,13 +95,10 @@ public class ProfileFragment extends Fragment implements MainActivity.OnBackPres
             requireActivity().finish();
         });
 
-        binding.backBtn.setOnClickListener(v -> startActivity(new Intent(context, MainActivity.class)));
-
-        binding.logoutBtn.setOnClickListener(v -> {
-            alertDialogHelper.showAlertDialog("Logout", "Are you sure you want to Logout?",
-                    "Logout", (dialog, which) -> FirebaseHelper.signOutUser(),
-                    "Cancel", (dialog, which) -> alertDialogHelper.dismissDialog());
-        });
+        binding.logoutBtn.setOnClickListener(v ->
+                alertDialogHelper.showAlertDialog("Logout", "Are you sure you want to Logout?",
+                "Logout", (dialog, which) -> FirebaseHelper.signOutUser(),
+                "Cancel", (dialog, which) -> alertDialogHelper.dismissDialog()));
 
         return binding.getRoot();
     }

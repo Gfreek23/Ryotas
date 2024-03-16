@@ -12,6 +12,7 @@ import com.example.trialproject3.Fragment.CartFragment;
 import com.example.trialproject3.Fragment.HomeFragment;
 import com.example.trialproject3.Fragment.ProfileFragment;
 import com.example.trialproject3.Helper.AlertDialogHelper;
+import com.example.trialproject3.Map.MapboxMapActivity;
 import com.example.trialproject3.R;
 import com.example.trialproject3.databinding.ActivityMainBinding;
 import com.google.firebase.auth.FirebaseAuth;
@@ -82,8 +83,10 @@ public class MainActivity extends AppCompatActivity {
 
             if (item.getItemId() == R.id.homeServices) {
                 showFragment(new HomeFragment());
-            } else if (item.getItemId() == R.id.profile) {
-                showFragment(new ProfileFragment());
+            } else if (item.getItemId() == R.id.explore) {
+               Intent intent = new Intent(MainActivity.this, MapboxMapActivity.class);
+               startActivity(intent);
+               finish();
             }else if (item.getItemId() == R.id.cart) {
                 showFragment(new CartFragment());
             }else if (item.getItemId() == R.id.profile) {

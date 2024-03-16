@@ -105,8 +105,6 @@ R
 Kapp/src/main/java/com/example/trialproject3/Activity/LoginHomeActivity.java,e\2\e2cd0534fe73eb6fae88430a33485d8745cc5933
 z
 Japp/src/main/java/com/example/trialproject3/Activity/RegisterActivity.java,9\e\9e7e6a3c21c111308ecf071740e4fb732833790f
-{
-Kapp/src/main/java/com/example/trialproject3/Activity/LoginPageActivity.java,a\c\ac2fc73040333da490a856d407a716410071902a
 H
 app/google-services.json,f\d\fd8d34b142d02ec743a8efefefd2c097961666e9
 y
@@ -151,8 +149,6 @@ A
 gradle.properties,2\a\2afbb999f001938c88fa43fc2ef52abf0f8213e4
 9
 	README.md,8\e\8ec9a00bfd09b3190ac6b22251dbb1aa95a0579d
-u
-Eapp/src/main/java/com/example/trialproject3/Activity/MapActivity.java,e\b\eb0e2e7c655aceb19d577806539ccb1044a83864
 w
 G.idea/sonarlint/issuestore/8/e/8ec9a00bfd09b3190ac6b22251dbb1aa95a0579d,b\4\b4a0b63ce8560bbc5de0f9995c20cc861dc2adb3
 Å
@@ -197,8 +193,6 @@ Q.idea/sonarlint/securityhotspotstore/b/4/b4a0b63ce8560bbc5de0f9995c20cc861dc2ad
 Q.idea/sonarlint/securityhotspotstore/f/b/fbe448ebfc3eb2d4e308f6b8b043666f5b57235e,2\a\2a357145b04aeee0545d8bc616c6d89a975ff771
 v
 Fapp/src/main/java/com/example/trialproject3/Helper/SelectListener.java,6\c\6c1e5154a913b2d006e826a313d79144a4864ebe
-Ç
-Rapp/src/main/java/com/example/trialproject3/Adapter/OnAddressSelectedListener.java,2\f\2f37f82665de7bbe913f6eeac11fb33746a53932
 |
 Lapp/src/main/java/com/example/trialproject3/Adapter/OrderedItemsAdapter.java,2\a\2adc557788605e2773d22bdb1561a61423b7f2ae
 p
@@ -209,9 +203,11 @@ s
 Capp/src/main/java/com/example/trialproject3/Activity/MapSearch.java,0\3\03e1fede7663469778736b8ed1ffe6f696d23b6b
 t
 Dapp/src/main/java/com/example/trialproject3/Activity/JsonParser.java,4\0\4027ec718848a73c4428789424e663feea6d2e24
-v
-Fapp/src/main/java/com/example/trialproject3/Activity/MapActivity2.java,5\d\5dc6706abbc3d3287c175fc6c4846c2ae68ec043
 u
 Eapp/src/main/java/com/example/trialproject3/Activity/DownloadUrl.java,c\d\cd4f6153abc106716731cb0fa81325a86c472ed7
 s
 Capp/src/main/java/com/example/trialproject3/Activity/FetchData.java,8\9\89a58503afb1403d66cbb63627530c33bb152b62
+t
+Dapp/src/main/java/com/example/trialproject3/Map/MapboxMapActivity.kt,a\1\a1585d0af3e4956ae7cf6c13381e3e7e7f0e8d78
+v
+Fapp/src/main/java/com/example/trialproject3/Fragment/HomeFragment.java,e\8\e8d209cf36b93970970d8b15bf9a508af337d168

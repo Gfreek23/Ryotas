@@ -2,6 +2,7 @@ plugins {
     id("com.android.application")
     id("com.google.gms.google-services")
     id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
+    id("org.jetbrains.kotlin.android")
 }
 
 android {
@@ -36,6 +37,10 @@ android {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
+
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
     buildFeatures{
         viewBinding = true
     }
@@ -49,21 +54,36 @@ dependencies {
     implementation("com.android.volley:volley:1.2.1")
     implementation("com.google.android.material:material:1.11.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
-    implementation("com.github.bumptech.glide:glide:4.15.1")
-    implementation("com.github.bumptech.glide:compiler:4.12.0")
+
     implementation("com.google.code.gson:gson:2.10.1")
-    implementation("de.hdodenhof:circleimageview:3.1.0")
-    implementation("com.google.firebase:firebase-auth-ktx:22.3.1")
     implementation("junit:junit:4.13.2")
-    implementation("com.google.firebase:firebase-database-ktx:20.3.0")
-    implementation("com.google.firebase:firebase-firestore-ktx:24.10.2")
+
     implementation("com.intuit.sdp:sdp-android:1.1.0")
     implementation("com.intuit.ssp:ssp-android:1.1.0")
-    implementation("com.makeramen:roundedimageview:2.3.0")
-    implementation ("com.google.firebase:firebase-auth:22.3.1")
     implementation("com.android.car.ui:car-ui-lib:2.6.0")
     implementation ("androidx.core:core-ktx:1.12.0")
 
+    //firebase
+    implementation ("com.google.firebase:firebase-auth:22.3.1")
+    implementation("com.google.firebase:firebase-database-ktx:20.3.0")
+    implementation("com.google.firebase:firebase-firestore-ktx:24.10.2")
+    implementation("com.google.firebase:firebase-auth-ktx:22.3.1")
+
+    //others
+    implementation("com.github.bumptech.glide:glide:4.15.1")
+    implementation("com.github.bumptech.glide:compiler:4.12.0")
+    implementation("de.hdodenhof:circleimageview:3.1.0")
+    implementation("com.makeramen:roundedimageview:2.3.0")
+
+    //mapbox
+    implementation ("com.mapbox.search:place-autocomplete:1.0.0-rc.6")
+    implementation("com.mapbox.search:mapbox-search-android-ui:1.0.0-rc.6")
+    implementation("com.google.android.gms:play-services-location:21.1.0")
+    implementation ("com.mapbox.maps:android:10.16.0")
+//    implementation("com.mapbox.maps:android:10.16.0")
+//    { exclude group: 'group_name', module: 'module_name' }
+    implementation ("com.mapbox.navigation:android:2.10.3")
+    implementation( "com.mapbox.navigation:ui-dropin:2.10.3")
 
 
     testImplementation("junit:junit:4.13.2")

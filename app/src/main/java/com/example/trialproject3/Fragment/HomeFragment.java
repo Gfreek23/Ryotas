@@ -1,7 +1,6 @@
 package com.example.trialproject3.Fragment;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -20,16 +19,13 @@ import android.view.inputmethod.EditorInfo;
 
 import com.example.trialproject3.Activity.LoginActivity;
 import com.example.trialproject3.Activity.MainActivity;
-import com.example.trialproject3.Activity.MapActivity;
+import com.example.trialproject3.Map.MapActivity;
 import com.example.trialproject3.Adapter.PopularListAdapter;
 import com.example.trialproject3.Domain.PopularDomain;
 import com.example.trialproject3.Firebase.FirebaseHelper;
 import com.example.trialproject3.Helper.AlertDialogHelper;
 import com.example.trialproject3.databinding.FragmentHomeBinding;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 
 import java.util.ArrayList;
 

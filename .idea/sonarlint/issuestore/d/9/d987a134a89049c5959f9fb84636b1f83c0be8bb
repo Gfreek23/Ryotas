@@ -1,83 +1,12 @@
 
-Q
-java:S3740"/Provide the parametrized type for this generic.(–›Íâÿÿÿÿÿ8í¬„Æ½1
-¡
-java:S1192¥"~Define a constant instead of duplicating this literal "Welcome to the vibrant and nourishing world of our vegetable
-" 3 times.(ÍÃàüÿÿÿÿ8øÌÉ™º1
-­
-java:S1192±"‰Define a constant instead of duplicating this literal "                 that only vegetables can provide. So, come and immerse
-" 3 times.(ùçñãÿÿÿÿÿ8øÌÉ™º1
-°
-java:S1192¦"‘Define a constant instead of duplicating this literal "                 market! Step into a realm where colors, freshness, and flavors
-" 3 times.(¼Ë·Ã8øÌÉ™º1
-¯
-java:S1192³"‘Define a constant instead of duplicating this literal "                 experience, and let our vegetable market be your guiding light
-" 3 times.(ù™D8øÌÉ™º1
-™
-java:S1192´"{Define a constant instead of duplicating this literal "                 towards a more vibrant and nourished you!" 3 times.(€½¢Û8ğ¬„Æ½1
-º
-java:S1192«"–Define a constant instead of duplicating this literal "                 table. From the crisp green vitality of leafy greens to the vibrant
-" 3 times.(ı¦÷ãûÿÿÿÿ8ùÌÉ™º1
-®
-java:S1192ª"Define a constant instead of duplicating this literal "                 locally sourced vegetables, straight from the fields to your
-" 3 times.(Ã®ëÎ8ùÌÉ™º1
-¶
-java:S1192¯"’Define a constant instead of duplicating this literal "                 market is a haven where you can cultivate a healthier lifestyle
-" 3 times.(¥şéüÿÿÿÿ8ùÌÉ™º1
-²
-java:S1192²"“Define a constant instead of duplicating this literal "                 yourself in the kaleidoscope of flavors, relish the farm-to-fork
-" 3 times.(Ä‚ø8ùÌÉ™º1
-´
-java:S1192¨"Define a constant instead of duplicating this literal "                 adventures. Discover a bountiful array of seasonal treasures,
-" 3 times.(Ö† øÿÿÿÿ8ñ¬„Æ½1
-­
-java:S1192°"Define a constant instead of duplicating this literal "                 and celebrate the veritable symphony of tastes and textures
-" 3 times.(ÕÑª×8ùÌÉ™º1
-±
-java:S1192®"’Define a constant instead of duplicating this literal "                 you're a seasoned cook or an aspiring food-lover, our vegetable
-" 3 times.(²µüÇ8ùÌÉ™º1
-´
-java:S1192¬"Define a constant instead of duplicating this literal "                 hues of tantalizing root vegetables, we invite you to explore
-" 3 times.(£ªÒ—øÿÿÿÿ8ùÌÉ™º1
-´
-java:S1192­"Define a constant instead of duplicating this literal "                 the natural goodness that Mother Nature has to offer. Whether
-" 3 times.(ìúõùıÿÿÿÿ8ùÌÉ™º1
-«
-java:S1192§"Define a constant instead of duplicating this literal "                 intertwine to awaken your senses and inspire your culinary
-" 3 times.(‰·å8ùÌÉ™º1
-J
-java:S1604O"(Make this anonymous inner class a lambda(Ö¾°Óÿÿÿÿÿ8ó¬„Æ½1
-J
-java:S1604X"(Make this anonymous inner class a lambda(¸ÕşŸÿÿÿÿÿ8ó¬„Æ½1
-E
-java:S1604a"(Make this anonymous inner class a lambda(üÏ÷8ó¬„Æ½1
-J
-java:S1604j"(Make this anonymous inner class a lambda(¾á’Ôøÿÿÿÿ8ô¬„Æ½1
-E
-java:S1604s"(Make this anonymous inner class a lambda(­ß8ô¬„Æ½1
-J
-java:S1604}"(Make this anonymous inner class a lambda(¯Â’˜ıÿÿÿÿ8ô¬„Æ½1
 {	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(ŠĞÛŠÿÿÿÿÿ8üÌÉ™º1
-f
-java:S2259€"CA "NullPointerException" could be thrown; "value" is nullable here.(™ˆŒÎÿÿÿÿÿ8¢­„Æ½1
-l	java:S116 "PRename this field "Fname" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(òË»ü8¤­„Æ½1
-m	java:S116 "QRename this field "Fruits" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(òË»ü8¤­„Æ½1
-l	java:S116 "PRename this field "Dairy" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(òË»ü8¤­„Æ½1
-l	java:S116 "PRename this field "Karne" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(òË»ü8¤­„Æ½1
-l	java:S116 "PRename this field "House" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(òË»ü8¤­„Æ½1
-j	java:S116 "NRename this field "HnB" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(òË»ü8¥­„Æ½1
-m	java:S116""QRename this field "Fname1" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¡‹ãŞ8¥­„Æ½1
-n	java:S116""RRename this field "Fruits1" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¡‹ãŞ8¥­„Æ½1
-m	java:S116""QRename this field "Dairy1" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¡‹ãŞ8¥­„Æ½1
-m	java:S116""QRename this field "Karne1" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¡‹ãŞ8¥­„Æ½1
-m	java:S116""QRename this field "House1" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¡‹ãŞ8¥­„Æ½1
-k	java:S116""ORename this field "HnB1" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¡‹ãŞ8¥­„Æ½1
-`
-java:S1659 "CDeclare "Fruits" and all following declarations on a separate line.(òË»ü8¼­„Æ½1
-a
-java:S1659""DDeclare "Fruits1" and all following declarations on a separate line.(¡‹ãŞ8¼­„Æ½1
-
-java:S1450"]Remove the "adapterPupolar" field and declare it as a local variable in the relevant methods.(–›Íâÿÿÿÿÿ8½­„Æ½1
-„
-java:S1450("bRemove the "recyclerViewPupolar" field and declare it as a local variable in the relevant methods.(²™™Èüÿÿÿÿ8½­„Æ½1
-p	java:S100–"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(³½÷œıÿÿÿÿ8ä­„Æ½1
+j	java:S116"NRename this field "TAG" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¸·µù8à—ğÌä1
+>
+java:S1170"!Make this final field static too.(¸·µù8ğ—ğÌä1
+X	java:S125&"<This block of commented-out lines of code should be removed.(ÑÃ“ù8˜ğÌä1
+l
+java:S1874;"JDon't override a deprecated method or explicitly mark it as "@Deprecated".(œƒƒ©ùÿÿÿÿ8¤˜ğÌä1
+W
+java:S1874E"5Remove this use of "onBackPressed"; it is deprecated.(‘Ñàÿÿÿÿÿ8¶˜ğÌä1
+D
+java:S1068"'Remove this unused "TAG" private field.(¸·µù8ç˜ğÌä1

@@ -2,6 +2,9 @@
 <resources>
     <color name="black">#000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <color name="stained_white">#F5F5F5</color>
+
     <color name="red">#E76160</color>
     <color name="orange">#fb8b24</color>fb8b24
     <color name="grey">#ababab</color>
@@ -9,6 +12,6 @@
     <color name="pink">#ffc0cb </color>
     <color name="bright_blue">#107ce8</color>
     <color name="light_blue">#add8e6</color>
-
+    <color name="light_blue_2">#2a8ff5</color>
 
 </resources>
