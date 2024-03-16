@@ -1,12 +1,12 @@
 
 {	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(ŠĞÛŠÿÿÿÿÿ8üÌÉ™º1
-j	java:S116"NRename this field "TAG" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¸·µù8à—ğÌä1
+j	java:S116"NRename this field "TAG" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¸·µù8ß†ñÌä1
 >
-java:S1170"!Make this final field static too.(¸·µù8ğ—ğÌä1
-X	java:S125&"<This block of commented-out lines of code should be removed.(ÑÃ“ù8˜ğÌä1
+java:S1170"!Make this final field static too.(¸·µù8ò†ñÌä1
+X	java:S125&"<This block of commented-out lines of code should be removed.(ÑÃ“ù8’‡ñÌä1
 l
-java:S1874;"JDon't override a deprecated method or explicitly mark it as "@Deprecated".(œƒƒ©ùÿÿÿÿ8¤˜ğÌä1
+java:S1874;"JDon't override a deprecated method or explicitly mark it as "@Deprecated".(œƒƒ©ùÿÿÿÿ8˜‡ñÌä1
 W
-java:S1874E"5Remove this use of "onBackPressed"; it is deprecated.(‘Ñàÿÿÿÿÿ8¶˜ğÌä1
+java:S1874E"5Remove this use of "onBackPressed"; it is deprecated.(‘Ñàÿÿÿÿÿ8¬‡ñÌä1
 D
-java:S1068"'Remove this unused "TAG" private field.(¸·µù8ç˜ğÌä1
+java:S1068"'Remove this unused "TAG" private field.(¸·µù8Ö‡ñÌä1
