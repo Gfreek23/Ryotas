@@ -178,9 +178,9 @@ public class RegisterActivity extends AppCompatActivity {
 
                         Toast.makeText(RegisterActivity.this, "Successfully Registered.",
                                 Toast.LENGTH_SHORT).show();
-                        userID = FirebaseHelper.getUser().getUid();
                         DocumentReference documentReference = FirebaseHelper.getFireStoreInstance()
-                                .collection("users").document(userID);
+                                .collection("users")
+                                .document(task.getResult().getUser().getUid());
 
                         Map<String, Object> user = new HashMap<>();
                         user.put("Fname", userName);

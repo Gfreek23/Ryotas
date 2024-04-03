@@ -19,19 +19,16 @@ import java.util.List;
 public class ProfileActivity extends AppCompatActivity {
     private ActivityProfile2Binding binding;
 
-    private String userID;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         binding = ActivityProfile2Binding.inflate(getLayoutInflater());
         super.onCreate(savedInstanceState);
         setContentView(binding.getRoot());
 
-        if (FirebaseHelper.getUser() != null){
-            userID = FirebaseHelper.getUser().getUid();
+        if (FirebaseHelper.currentUser() != null){
 
             DocumentReference documentReference = FirebaseHelper.getFireStoreInstance()
-                    .collection("users").document(userID);
+                    .collection("users").document(FirebaseHelper.currentUserID());
 
             documentReference.get().addOnSuccessListener(documentSnapshot -> {
                 if (documentSnapshot != null && documentSnapshot.exists()) {

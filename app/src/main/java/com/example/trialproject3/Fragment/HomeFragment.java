@@ -44,7 +44,7 @@ public class HomeFragment extends Fragment implements MainActivity.OnBackPressed
         context = getContext();
         alertDialogHelper = new AlertDialogHelper(context);
 
-        if (FirebaseHelper.getUser() == null) {
+        if (FirebaseHelper.currentUser() == null) {
             intent = new Intent(context, LoginActivity.class);
             startActivity(intent);
             requireActivity().finish();
@@ -109,9 +109,10 @@ public class HomeFragment extends Fragment implements MainActivity.OnBackPressed
     }
 
     private void displayUsername() {
-        if (FirebaseHelper.getUser() != null) {
+        if (FirebaseHelper.currentUser() != null) {
             DocumentReference documentReference = FirebaseHelper.getFireStoreInstance()
-                    .collection("users").document(FirebaseHelper.getUser().getUid());
+                    .collection("users")
+                    .document(FirebaseHelper.currentUserID());
 
             documentReference.get()
                     .addOnSuccessListener(documentSnapshot -> {

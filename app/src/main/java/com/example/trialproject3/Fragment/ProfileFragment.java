@@ -48,11 +48,11 @@ public class ProfileFragment extends Fragment implements MainActivity.OnBackPres
         context = getContext();
         alertDialogHelper = new AlertDialogHelper(context);
 
-        if (FirebaseHelper.getUser() != null) {
-            final String userID = FirebaseHelper.getUser().getUid();
+        if (FirebaseHelper.currentUser() != null) {
 
             DocumentReference documentReference = FirebaseHelper.getFireStoreInstance()
-                    .collection("users").document(userID);
+                    .collection("users")
+                    .document(FirebaseHelper.currentUserID());
 
             documentReference.get().addOnSuccessListener(documentSnapshot -> {
                 if (documentSnapshot != null && documentSnapshot.exists()) {
@@ -118,11 +118,11 @@ public class ProfileFragment extends Fragment implements MainActivity.OnBackPres
         return true;
     }
     private void loadUserProfile() {
-        if (FirebaseHelper.getUser() != null) {
-            String userID = FirebaseHelper.getUser().getUid();
+        if (FirebaseHelper.currentUser() != null) {
 
             DocumentReference documentReference = FirebaseHelper.getFireStoreInstance()
-                    .collection("users").document(userID);
+                    .collection("users")
+                    .document(FirebaseHelper.currentUserID());
 
             documentReference.get().addOnSuccessListener(documentSnapshot -> {
                 if (documentSnapshot != null && documentSnapshot.exists()) {

@@ -49,7 +49,7 @@ android {
 dependencies {
     implementation("com.google.android.gms:play-services-maps:18.2.0")
     implementation("com.google.code.gson:gson:2.10.1")
-    implementation("com.google.android.gms:play-services-location:21.1.0")
+    implementation("com.google.android.gms:play-services-location:21.2.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.android.volley:volley:1.2.1")
     implementation("com.google.android.material:material:1.11.0")
@@ -65,8 +65,8 @@ dependencies {
 
     //firebase
     implementation ("com.google.firebase:firebase-auth:22.3.1")
-    implementation("com.google.firebase:firebase-database-ktx:20.3.0")
-    implementation("com.google.firebase:firebase-firestore-ktx:24.10.2")
+    implementation("com.google.firebase:firebase-database-ktx:20.3.1")
+    implementation("com.google.firebase:firebase-firestore-ktx:24.10.3")
     implementation("com.google.firebase:firebase-auth-ktx:22.3.1")
 
     //others
@@ -78,12 +78,12 @@ dependencies {
     //mapbox
     implementation ("com.mapbox.search:place-autocomplete:1.0.0-rc.6")
     implementation("com.mapbox.search:mapbox-search-android-ui:1.0.0-rc.6")
-    implementation("com.google.android.gms:play-services-location:21.1.0")
-    implementation ("com.mapbox.maps:android:10.16.0")
+    implementation("com.google.android.gms:play-services-location:21.2.0")
+    implementation ("com.mapbox.maps:android:10.16.1")
 //    implementation("com.mapbox.maps:android:10.16.0")
 //    { exclude group: 'group_name', module: 'module_name' }
-    implementation ("com.mapbox.navigation:android:2.10.3")
-    implementation( "com.mapbox.navigation:ui-dropin:2.10.3")
+    implementation ("com.mapbox.navigation:android:2.17.1")
+    implementation( "com.mapbox.navigation:ui-dropin:2.17.1")
 
 
     testImplementation("junit:junit:4.13.2")
