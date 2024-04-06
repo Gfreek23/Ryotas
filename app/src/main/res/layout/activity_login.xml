@@ -129,7 +129,6 @@
                     android:id="@+id/signUpTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:onClick="Signup"
                     android:text="Sign Up"
                     android:textColor="@color/red"
                     android:textSize="17sp" />
@@ -137,21 +136,19 @@
             </androidx.appcompat.widget.LinearLayoutCompat>
 
             <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/forgotPasswordTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:onClick="Forgotpass"
                 android:text="Forgot Password?"
                 android:textColor="@color/white"
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
-
             <ProgressBar
                 android:id="@+id/progressbarLog"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:elevation="10dp"
-                android:visibility="gone" />
+                android:elevation="10dp" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 

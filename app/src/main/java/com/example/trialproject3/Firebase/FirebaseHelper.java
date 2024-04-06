@@ -15,6 +15,7 @@ public class FirebaseHelper {
 	public static final String KEY_COLLECTION_BOOKINGS = "bookings";
 	public static final String KEY_COLLECTION_TRIPS = "trips";
 	public static final String KEY_COLLECTION_CHATS = "chats";
+	public static final String KEY_COLLECTION_POSTS = "posts";
 	public static final String KEY_COLLECTION_FEEDBACKS = "feedbacks";
 	public static final String KEY_COLLECTION_TRIP_FEEDBACKS = "tripFeedbacks";
 	public static final String KEY_COLLECTION_FAVORITES = "favorites";

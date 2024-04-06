@@ -19,6 +19,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.trialproject3.Firebase.FirebaseHelper;
 import com.example.trialproject3.R;
 import com.example.trialproject3.databinding.ActivityLoginBinding;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -35,16 +36,14 @@ public class LoginActivity extends AppCompatActivity {
 
     private static final String TAG = "LoginActivity";
     private ActivityLoginBinding binding;
-    private FirebaseAuth auth;
-    AlertDialog.Builder builder;
-    private String userID;
-    ProgressBar progressBar;
+    private AlertDialog.Builder builder;
+    private Intent intent;
 
     //check niya ang user kung naka login in na para kung naka login na siya kasa diritso na siya sa profile
     @Override
     protected void onStart() {
         super.onStart();
-        if (auth.getCurrentUser() != null) {
+        if (FirebaseHelper.currentUser() != null) {
             Toast.makeText(LoginActivity.this, "Your already logged in!", Toast.LENGTH_SHORT).show();
             startActivity(new Intent(LoginActivity.this, MainActivity.class));
         } else {
@@ -57,6 +56,9 @@ public class LoginActivity extends AppCompatActivity {
         binding = ActivityLoginBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        binding.progressbarLog.setVisibility(View.GONE);
+        builder = new AlertDialog.Builder(this);
+
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.hide();
@@ -64,25 +66,27 @@ public class LoginActivity extends AppCompatActivity {
 
         ImageView imageViewShowHide = findViewById(R.id.imageview_show_hide);
         imageViewShowHide.setImageResource(R.drawable.ic_hide_pwd);
-        imageViewShowHide.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (binding.passwordEditText.getTransformationMethod().equals(HideReturnsTransformationMethod.getInstance())) {
-                    binding.passwordEditText.setTransformationMethod(PasswordTransformationMethod.getInstance());
+        imageViewShowHide.setOnClickListener(v -> {
+            if (binding.passwordEditText.getTransformationMethod().equals(HideReturnsTransformationMethod.getInstance())) {
+                binding.passwordEditText.setTransformationMethod(PasswordTransformationMethod.getInstance());
 
-                    imageViewShowHide.setImageResource(R.drawable.ic_hide_pwd);
-                } else {
-                    binding.passwordEditText.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
-                    imageViewShowHide.setImageResource(R.drawable.ic_show_pwd);
-                }
+                imageViewShowHide.setImageResource(R.drawable.ic_hide_pwd);
+            } else {
+                binding.passwordEditText.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                imageViewShowHide.setImageResource(R.drawable.ic_show_pwd);
             }
         });
 
-        auth = FirebaseAuth.getInstance();
-        progressBar = findViewById(R.id.progressbarLog);
-        builder = new AlertDialog.Builder(this);
 
         binding.loginBtn.setOnClickListener(v -> signInUser());
+
+        binding.signUpTextView.setOnClickListener(v -> {
+            intent = new Intent(LoginActivity.this, RegisterActivity.class);
+            startActivity(intent);
+            finish();
+        });
+
+        binding.forgotPasswordTextView.setOnClickListener(v -> forgotPassword());
 
     }
 
@@ -104,58 +108,54 @@ public class LoginActivity extends AppCompatActivity {
             binding.passwordEditText.setError("Password is required");
             binding.passwordEditText.requestFocus();
         } else {
-            progressBar.setVisibility(View.VISIBLE);
+            binding.progressbarLog.setVisibility(View.VISIBLE);
             loginUser(userEmail, userPassword);
         }
     }
 
     private void loginUser(String userEmail, String userPassword) {
-        auth.signInWithEmailAndPassword(userEmail, userPassword).addOnCompleteListener(LoginActivity.this, task -> {
+        FirebaseHelper.getAuth()
+                .signInWithEmailAndPassword(userEmail, userPassword)
+                .addOnCompleteListener(LoginActivity.this, task -> {
+                    binding.progressbarLog.setVisibility(View.GONE);
 
-            if (task.isSuccessful()) {
-                FirebaseUser firebaseUser = auth.getCurrentUser();
+                    if (task.isSuccessful()) {
+                        if (task.getResult().getUser().isEmailVerified()) {
+                            Toast.makeText(LoginActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
+                            startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                        } else {
+                            task.getResult().getUser().sendEmailVerification();
+                            showAlertDialog();
+                        }
 
-                if (firebaseUser.isEmailVerified()) {
-                    Toast.makeText(LoginActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                } else {
-                    firebaseUser.sendEmailVerification();
-                    showAlertDialog();
-                }
+                    } else {
+                        try {
+                            throw task.getException();
+                        } catch (FirebaseAuthInvalidCredentialsException e) {
+                            binding.emailEditText.setError("Invalid credentials, Kindly check and re-enter.");
+                            binding.emailEditText.requestFocus();
+                        } catch (FirebaseAuthInvalidUserException e) {
+                            binding.emailEditText.setError("User does not exist or is no longer valid, Please ");
+                            binding.emailEditText.requestFocus();
+                        } catch (Exception e) {
+                            Log.e(TAG, e.getMessage());
+                            Toast.makeText(LoginActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
 
-            } else {
-                try {
-                    throw task.getException();
-                } catch (FirebaseAuthInvalidCredentialsException e) {
-                    binding.emailEditText.setError("Invalid credentials, Kindly check and re-enter.");
-                    binding.emailEditText.requestFocus();
-                } catch (FirebaseAuthInvalidUserException e) {
-                    binding.emailEditText.setError("User does not exist or is no longer valid, Please ");
-                    binding.emailEditText.requestFocus();
-                } catch (Exception e) {
-                    Log.e(TAG, "" + e.getMessage());
-                    Toast.makeText(LoginActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-
-                }
-            }
-            progressBar.setVisibility(View.GONE);
-        });
+                        }
+                    }
+                });
     }
-
 
     private void showAlertDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
         builder.setTitle("Email not verified");
         builder.setMessage("Please verify your email now. You cannot login without email verification.");
 
-        builder.setPositiveButton("Continue", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                Intent intent = new Intent(Intent.ACTION_MAIN);
-                intent.addCategory(Intent.CATEGORY_APP_EMAIL);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);  //sa email app ni siya mo diritso dili sa atoang app mag open
-                startActivity(intent);
-            }
+        builder.setPositiveButton("Continue", (dialog, which) -> {
+            Intent intent = new Intent(Intent.ACTION_MAIN);
+            intent.addCategory(Intent.CATEGORY_APP_EMAIL);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);  //sa email app ni siya mo diritso dili sa atoang app mag open
+            startActivity(intent);
         });
 
         AlertDialog alertDialog = builder.create();
@@ -163,43 +163,31 @@ public class LoginActivity extends AppCompatActivity {
     }
 
 
-    public void Signup(View view) {
-        startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
-    }
-
-    public void Forgotpass(View view) {
-        EditText resetMail = new EditText(view.getContext());
-        AlertDialog.Builder passwordResetDialog = new AlertDialog.Builder(view.getContext());
+    private void forgotPassword() {
+        EditText resetMail = new EditText(LoginActivity.this);
+        AlertDialog.Builder passwordResetDialog = new AlertDialog.Builder(LoginActivity.this);
         passwordResetDialog.setTitle("Reset Password?");
         passwordResetDialog.setMessage("Enter your email to received reset link.");
         passwordResetDialog.setView(resetMail);
 
-        passwordResetDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                //kuhaon ang email niya sa firestore unya mag send og reset password link
-                String mail = resetMail.getText().toString();
-                auth.sendPasswordResetEmail(mail).addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void unused) {
-                        Toast.makeText(LoginActivity.this, "Reset link sent to your email", Toast.LENGTH_SHORT).show();
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(LoginActivity.this, "Failed to sent reset password link" + e.getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                });
-            }
+        passwordResetDialog.setPositiveButton("Yes", (dialog, which) -> {
+            //kuhaon ang email niya sa firestore unya mag send og reset password link
+            String mail = resetMail.getText().toString();
+            FirebaseHelper.getAuth()
+                    .sendPasswordResetEmail(mail).addOnCompleteListener(task -> {
+                        if (task.isSuccessful()) {
+                            Toast.makeText(LoginActivity.this, "Reset link sent to your email", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(LoginActivity.this, "Failed to sent reset password link" + task.getResult(), Toast.LENGTH_SHORT).show();
+                        }
+                    });
+
         });
 
         passwordResetDialog.setNegativeButton("No", (dialog, which) -> {
-            //close niya ang message
+
 
         });
         passwordResetDialog.create().show();
-
     }
-
-
 }

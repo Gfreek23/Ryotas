@@ -10,6 +10,7 @@ import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -29,12 +30,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class RegisterActivity extends AppCompatActivity {
-
-    private static final String TAG = "RegisterActivity";
+    private final String TAG = "RegisterActivity";
     private ActivityRegisterBinding binding;
     private DatePickerDialog picker;
     private Intent intent;
-    private String userID;
     private SharedPreferences sharedPreferences;
 
     @SuppressLint("SetTextI18n")
@@ -47,7 +46,7 @@ public class RegisterActivity extends AppCompatActivity {
         if (actionBar != null) {
             actionBar.hide();
         }
-
+        binding.progressbar.setVisibility(View.GONE);
         binding.registerBtn.setOnClickListener(v -> checkFields());
 
         binding.signInTextView.setOnClickListener(v -> {
@@ -77,7 +76,7 @@ public class RegisterActivity extends AppCompatActivity {
             editor.putBoolean("firstTime", false);
             editor.apply();
 
-            Intent intent = new Intent(RegisterActivity.this, OnBoardActivity.class);
+            intent = new Intent(RegisterActivity.this, OnBoardActivity.class);
             startActivity(intent);
             finish();
         }
@@ -90,12 +89,12 @@ public class RegisterActivity extends AppCompatActivity {
         String lastName = binding.lastNameEditText.getText().toString().trim();
         final String userEmail = binding.emailEditText.getText().toString().trim();
         final String userBirthday = binding.birthdayEditText.getText().toString();
-        String userGender;
         final String userPhone = binding.phoneEditText.getText().toString().trim();
         final String userPassword = binding.passwordEditText.getText().toString();
         final String userConfirmPassword = binding.confirmPasswordEditText.getText().toString();
 
         int selectedRadioBtnID = binding.genderRadioGroup.getCheckedRadioButtonId();
+        int selectedUserTypeBtnID = binding.userTypeRadioGroup.getCheckedRadioButtonId();
         final String fullName = firstName + " " + lastName;
 
         if (TextUtils.isEmpty(fullName)) {
@@ -149,19 +148,21 @@ public class RegisterActivity extends AppCompatActivity {
             binding.passwordEditText.clearComposingText();
             binding.confirmPasswordEditText.clearComposingText();
         } else {
-            RadioButton selectedGender = findViewById(selectedRadioBtnID);
-            userGender = selectedGender.getText().toString();
             binding.progressbar.setVisibility(View.VISIBLE);
+            binding.registerBtn.setVisibility(View.GONE);
+            RadioButton selectedGender = findViewById(selectedRadioBtnID);
+            RadioButton selectedUserType = findViewById(selectedUserTypeBtnID);
+            String userGender = selectedGender.getText().toString();
+            String userType = selectedUserType.getText().toString();
 
             registerUser(fullName,
                     userEmail,
                     userBirthday,
                     userGender,
                     userPhone,
-                    userPassword);
+                    userPassword,
+                    userType);
         }
-
-
     }
 
     private void registerUser(String userName,
@@ -169,17 +170,21 @@ public class RegisterActivity extends AppCompatActivity {
                               String userBday,
                               String userGender,
                               String userPhone,
-                              String userPassword) {
+                              String userPassword,
+                              String userType) {
 
         FirebaseHelper.getAuth()
                 .createUserWithEmailAndPassword(userEmail, userPassword)
                 .addOnCompleteListener(RegisterActivity.this, task -> {
+                    binding.progressbar.setVisibility(View.GONE);
+                    binding.registerBtn.setVisibility(View.VISIBLE);
+
                     if (task.isSuccessful()) {
 
                         Toast.makeText(RegisterActivity.this, "Successfully Registered.",
                                 Toast.LENGTH_SHORT).show();
                         DocumentReference documentReference = FirebaseHelper.getFireStoreInstance()
-                                .collection("users")
+                                .collection(FirebaseHelper.KEY_COLLECTION_USERS)
                                 .document(task.getResult().getUser().getUid());
 
                         Map<String, Object> user = new HashMap<>();
@@ -188,20 +193,16 @@ public class RegisterActivity extends AppCompatActivity {
                         user.put("Bday", userBday);
                         user.put("Phone", userPhone);
                         user.put("Gender", userGender);
+                        user.put("UserType", userType);
 
                         documentReference.set(user)
                                 .addOnSuccessListener(unused -> {
-                                    Log.d(TAG, "onSuccess: user profile is created for " + userID);
+                                    Log.d(TAG, "onSuccess: user profile is created for " + FirebaseHelper.currentUserID());
                                     intent = new Intent(RegisterActivity.this, LoginActivity.class);
                                     startActivity(intent);
                                     finish();
                                 })
-                                .addOnFailureListener(new OnFailureListener() {
-                                    @Override
-                                    public void onFailure(@NonNull Exception e) {
-                                        Log.e(TAG, "onFailure: " + e.getMessage());
-                                    }
-                                });
+                                .addOnFailureListener(e -> Log.e(TAG, "onFailure: " + e.getMessage()));
 
                     } else {
                         try {

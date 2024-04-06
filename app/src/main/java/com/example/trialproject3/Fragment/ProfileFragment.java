@@ -18,6 +18,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.trialproject3.Activity.LoginActivity;
 import com.example.trialproject3.Activity.MainActivity;
 import com.example.trialproject3.Activity.ProfileActivity;
 import com.example.trialproject3.Activity.ToCancelActivity;
@@ -33,7 +34,7 @@ import com.google.firebase.firestore.DocumentReference;
 import java.io.Serializable;
 import java.util.List;
 
-public class ProfileFragment extends Fragment implements MainActivity.OnBackPressedListener{
+public class ProfileFragment extends Fragment implements MainActivity.OnBackPressedListener {
     private final String TAG = "ProfileFragment";
     private Context context;
     private FragmentProfileBinding binding;
@@ -47,23 +48,6 @@ public class ProfileFragment extends Fragment implements MainActivity.OnBackPres
 
         context = getContext();
         alertDialogHelper = new AlertDialogHelper(context);
-
-        if (FirebaseHelper.currentUser() != null) {
-
-            DocumentReference documentReference = FirebaseHelper.getFireStoreInstance()
-                    .collection("users")
-                    .document(FirebaseHelper.currentUserID());
-
-            documentReference.get().addOnSuccessListener(documentSnapshot -> {
-                if (documentSnapshot != null && documentSnapshot.exists()) {
-                    String getFirstName = documentSnapshot.getString("Fname");
-                    String getEmail = documentSnapshot.getString("email");
-
-                    binding.fullNameTextView.setText(getFirstName);
-                    binding.emailTextView.setText(getEmail);
-                }
-            });
-        }
 
         binding.backBtn.setOnClickListener(v -> backToHomeFragment());
 
@@ -97,8 +81,8 @@ public class ProfileFragment extends Fragment implements MainActivity.OnBackPres
 
         binding.logoutBtn.setOnClickListener(v ->
                 alertDialogHelper.showAlertDialog("Logout", "Are you sure you want to Logout?",
-                "Logout", (dialog, which) -> FirebaseHelper.signOutUser(),
-                "Cancel", (dialog, which) -> alertDialogHelper.dismissDialog()));
+                        "Cancel", (dialog, which) -> alertDialogHelper.dismissDialog(),
+                        "Logout", (dialog, which) -> logoutUser()));
 
         return binding.getRoot();
     }
@@ -117,6 +101,14 @@ public class ProfileFragment extends Fragment implements MainActivity.OnBackPres
         backToHomeFragment();
         return true;
     }
+
+    private void logoutUser(){
+        FirebaseHelper.signOutUser();
+        intent = new Intent(context, LoginActivity.class);
+        startActivity(intent);
+        requireActivity().finish();
+    }
+
     private void loadUserProfile() {
         if (FirebaseHelper.currentUser() != null) {
 
@@ -127,15 +119,13 @@ public class ProfileFragment extends Fragment implements MainActivity.OnBackPres
             documentReference.get().addOnSuccessListener(documentSnapshot -> {
                 if (documentSnapshot != null && documentSnapshot.exists()) {
                     String getFirstName = documentSnapshot.getString("Fname");
-                    String getEmail = documentSnapshot.getString("email");
 
                     binding.fullNameTextView.setText(getFirstName);
-                    binding.emailTextView.setText(getEmail);
+                    binding.emailTextView.setText(FirebaseHelper.currentUser().getEmail());
                 }
             });
         }
     }
-
 
 
     private void backToHomeFragment() {
@@ -145,6 +135,4 @@ public class ProfileFragment extends Fragment implements MainActivity.OnBackPres
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
     }
-
-
 }

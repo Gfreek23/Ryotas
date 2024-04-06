@@ -2,6 +2,8 @@ package com.example.trialproject3.Activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -10,6 +12,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.example.trialproject3.Fragment.CartFragment;
 import com.example.trialproject3.Fragment.HomeFragment;
+import com.example.trialproject3.Fragment.PostsFragment;
 import com.example.trialproject3.Fragment.ProfileFragment;
 import com.example.trialproject3.Helper.AlertDialogHelper;
 import com.example.trialproject3.Map.MapboxMapActivity;
@@ -18,10 +21,13 @@ import com.example.trialproject3.databinding.ActivityMainBinding;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.Objects;
+
 public class MainActivity extends AppCompatActivity {
     private final String TAG = "MainActivity";
     private ActivityMainBinding binding;
-
+    public static String fullName;
+    public static String userType;
     public interface OnBackPressedListener {
         boolean onBackPressed();
     }
@@ -34,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
         showFragment(new HomeFragment());
         initializeBottomNavBar();
 
+        binding.extendedFabBtn.setOnClickListener(v -> showFragment(new PostsFragment()));
 
 //        House.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -78,18 +85,18 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initializeBottomNavBar() {
-        binding.bottomNavBar.setSelectedItemId(R.id.homeServices);
+        binding.bottomNavBar.setSelectedItemId(R.id.navHomeServices);
         binding.bottomNavBar.setOnItemSelectedListener(item -> {
 
-            if (item.getItemId() == R.id.homeServices) {
+            if (item.getItemId() == R.id.navHomeServices) {
                 showFragment(new HomeFragment());
-            } else if (item.getItemId() == R.id.explore) {
-               Intent intent = new Intent(MainActivity.this, MapboxMapActivity.class);
-               startActivity(intent);
-               finish();
-            }else if (item.getItemId() == R.id.cart) {
+            } else if (item.getItemId() == R.id.navExplore) {
+                Intent intent = new Intent(MainActivity.this, MapboxMapActivity.class);
+                startActivity(intent);
+                finish();
+            } else if (item.getItemId() == R.id.navCart) {
                 showFragment(new CartFragment());
-            }else if (item.getItemId() == R.id.profile) {
+            } else if (item.getItemId() == R.id.navProfile) {
                 showFragment(new ProfileFragment());
             }
 
@@ -97,5 +104,4 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
-
 }

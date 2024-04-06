@@ -265,25 +265,6 @@
 
     </androidx.cardview.widget.CardView>
 
-    <FrameLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_margin="10dp">
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/passengersInMapTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:text="There are no Passengers right now"
-            android:textAlignment="center"
-            android:textColor="@color/black"
-            android:textSize="17sp" />
-
-    </FrameLayout>
-
     <androidx.cardview.widget.CardView
         android:id="@+id/bottomContainer"
         android:layout_width="match_parent"

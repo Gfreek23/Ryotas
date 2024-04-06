@@ -23,13 +23,9 @@ public class OnBoardActivity extends AppCompatActivity {
 
     ViewPager viewPager;
     LinearLayout dotsLayout;
-
     Button btn;
-
     SliderAdapter sliderAdapter;
-
     Animation animation;
-
     TextView[] dots;
 
     @Override
@@ -56,12 +52,9 @@ public class OnBoardActivity extends AppCompatActivity {
         //call adapter ni
         sliderAdapter = new SliderAdapter(this);
         viewPager.setAdapter(sliderAdapter);
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(OnBoardActivity.this, RegisterActivity.class));
-                finish();
-            }
+        btn.setOnClickListener(view -> {
+            startActivity(new Intent(OnBoardActivity.this, RegisterActivity.class));
+            finish();
         });
     }
 
@@ -91,12 +84,12 @@ public class OnBoardActivity extends AppCompatActivity {
         public void onPageSelected(int position) {
 
             addDots(position);
-            if (position == 0){
+            if (position == 0) {
                 btn.setVisibility(View.INVISIBLE);
-            }else if(position == 1){
+            } else if (position == 1) {
                 btn.setVisibility(View.INVISIBLE);
-            }else{
-                animation = AnimationUtils.loadAnimation(OnBoardActivity.this,R.anim.slide_animation);
+            } else {
+                animation = AnimationUtils.loadAnimation(OnBoardActivity.this, R.anim.slide_animation);
                 btn.setAnimation(animation);
                 btn.setVisibility(View.VISIBLE);
             }

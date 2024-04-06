@@ -25,7 +25,6 @@ import com.example.trialproject3.Domain.PopularDomain;
 import com.example.trialproject3.Firebase.FirebaseHelper;
 import com.example.trialproject3.Helper.AlertDialogHelper;
 import com.example.trialproject3.databinding.FragmentHomeBinding;
-import com.google.firebase.firestore.DocumentReference;
 
 import java.util.ArrayList;
 
@@ -36,6 +35,7 @@ public class HomeFragment extends Fragment implements MainActivity.OnBackPressed
     private Intent intent;
     private RecyclerView.Adapter popularRecyclerViewAdapter;
     private AlertDialogHelper alertDialogHelper;
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -92,8 +92,11 @@ public class HomeFragment extends Fragment implements MainActivity.OnBackPressed
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        displayUsername();
-        initRecyclerview();
+        if(isAdded()){
+            getUserDetails();
+            initRecyclerview();
+        }
+
     }
 
     @Override
@@ -108,16 +111,15 @@ public class HomeFragment extends Fragment implements MainActivity.OnBackPressed
                 "Cancel", (dialog, which) -> alertDialogHelper.dismissDialog());
     }
 
-    private void displayUsername() {
+    private void getUserDetails() {
         if (FirebaseHelper.currentUser() != null) {
-            DocumentReference documentReference = FirebaseHelper.getFireStoreInstance()
-                    .collection("users")
-                    .document(FirebaseHelper.currentUserID());
-
-            documentReference.get()
+           FirebaseHelper.currentUserDetails().get()
                     .addOnSuccessListener(documentSnapshot -> {
-                        String getFirstName = documentSnapshot.getString("Fname");
-                        binding.firstNameTextView.setText(getFirstName);
+                        String getFullName = documentSnapshot.getString("Fname");
+                        String getUserType = documentSnapshot.getString("UserType");
+                        binding.fullNameTextView.setText(getFullName);
+                        MainActivity.fullName = getFullName;
+                        MainActivity.userType = getUserType;
                     })
                     .addOnFailureListener(e -> Log.e(TAG, "displayUsername: " + TAG + e.getMessage()));
         }
@@ -190,6 +192,4 @@ public class HomeFragment extends Fragment implements MainActivity.OnBackPressed
         popularRecyclerViewAdapter = new PopularListAdapter(items);
         binding.popularRecyclerView.setAdapter(popularRecyclerViewAdapter);
     }
-
-
 }

@@ -21,10 +21,12 @@ import android.view.View
 import android.view.animation.AccelerateDecelerateInterpolator
 import android.widget.Button
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.annotation.DrawableRes
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.ContextCompat
+import com.example.trialproject3.Activity.MainActivity
 import com.example.trialproject3.Firebase.FirebaseHelper
 import com.example.trialproject3.R
 import com.example.trialproject3.databinding.ActivityMapboxMapBinding
@@ -128,6 +130,7 @@ class MapboxMapActivity : AppCompatActivity(), PermissionsListener {
     private var isNavigatingToDestination = false
     private var isRenavigating = false
     private var isAcceptedABooking = false
+    private var lastBackButtonPressTime: Long = 0
     private var pointAnnotation: PointAnnotation? = null
     private var lastInteractedAnnotationOptions: PointAnnotationOptions? = null
     private lateinit var pointAnnotationManager: PointAnnotationManager
@@ -370,6 +373,8 @@ class MapboxMapActivity : AppCompatActivity(), PermissionsListener {
         var currentLatitude: Double = 0.0
         var currentLongitude: Double = 0.0
         private const val BUTTON_ANIMATION_DURATION = 1500L
+        private const val DOUBLE_BACK_PRESS_INTERVAL = 2000 // 2 seconds
+
     }
 
     override fun onStart() {
@@ -473,11 +478,27 @@ class MapboxMapActivity : AppCompatActivity(), PermissionsListener {
 
         // set initial sounds button state
         binding.soundBtn.unmute()
+
+        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                val currentTime = System.currentTimeMillis()
+
+                if (currentTime - lastBackButtonPressTime < DOUBLE_BACK_PRESS_INTERVAL) {
+                    val intent = Intent(this@MapboxMapActivity, MainActivity::class.java)
+                    startActivity(intent)
+                    finish()
+                } else {
+                   showToast("Press back again to exit")
+                    lastBackButtonPressTime = currentTime
+                }
+
+            }
+        })
     }
 
     private fun checkLocationPermission() {
         if (PermissionsManager.areLocationPermissionsGranted(this@MapboxMapActivity)) {
-            onMapReady()
+            checkLocationService()
         } else {
             permissionsManager = PermissionsManager(this@MapboxMapActivity)
             permissionsManager.requestLocationPermissions(this@MapboxMapActivity)
@@ -654,7 +675,6 @@ class MapboxMapActivity : AppCompatActivity(), PermissionsListener {
 
     private fun initializeLocationComponent() {
 
-        //TODO:error cause
         MapboxNavigationApp.setup(
             NavigationOptions.Builder(this)
                 .accessToken(getString(R.string.mapbox_access_token))
