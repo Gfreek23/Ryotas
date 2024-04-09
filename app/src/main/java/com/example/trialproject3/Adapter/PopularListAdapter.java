@@ -30,31 +30,31 @@ public class PopularListAdapter extends RecyclerView.Adapter<PopularListAdapter.
     @NonNull
     @Override
     public PopularListAdapter.Viewholder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View inflate= LayoutInflater.from(parent.getContext()).inflate(R.layout.viewholder_pop_list,parent,false);
-        context=parent.getContext();
+        View inflate = LayoutInflater.from(parent.getContext()).inflate(R.layout.viewholder_pop_list, parent, false);
+        context = parent.getContext();
         return new Viewholder(inflate);
     }
 
     @Override
     public void onBindViewHolder(@NonNull PopularListAdapter.Viewholder holder, int position) {
         holder.titleTxt.setText(items.get(position).getTitle());
-        holder.feeTxt.setText("₱"+items.get(position).getPrice());
-        holder.scoreTxt.setText(""+items.get(position).getScore());
+        holder.feeTxt.setText("₱" + items.get(position).getPrice());
+        holder.scoreTxt.setText("" + items.get(position).getScore());
 
-        
-    int drawableResourceId=holder.itemView.getResources().getIdentifier(items.get(position).getPicUrl(),
-            "drawable",holder.itemView.getContext().getPackageName());
 
-    Glide.with(holder.itemView.getContext())
-            .load(drawableResourceId)
-            .transform(new GranularRoundedCorners(36,36,0,0))
-            .into(holder.pic);
+        int drawableResourceId = holder.itemView.getResources().getIdentifier(items.get(position).getPicUrl(),
+                "drawable", holder.itemView.getContext().getPackageName());
 
-    holder.itemView.setOnClickListener(v -> {
-        Intent intent=new Intent(holder.itemView.getContext(), DetailActivity.class);
-        intent.putExtra("object", items.get(position));
-        holder.itemView.getContext().startActivity(intent);
-    });
+        Glide.with(holder.itemView.getContext())
+                .load(drawableResourceId)
+                .transform(new GranularRoundedCorners(36, 36, 0, 0))
+                .into(holder.pic);
+
+        holder.itemView.setOnClickListener(v -> {
+            Intent intent = new Intent(holder.itemView.getContext(), DetailActivity.class);
+            intent.putExtra("object", items.get(position));
+            holder.itemView.getContext().startActivity(intent);
+        });
 
     }
 
@@ -64,15 +64,16 @@ public class PopularListAdapter extends RecyclerView.Adapter<PopularListAdapter.
     }
 
     public class Viewholder extends RecyclerView.ViewHolder {
-        TextView titleTxt,feeTxt,scoreTxt;
+        TextView titleTxt, feeTxt, scoreTxt;
         ImageView pic;
+
         public Viewholder(@NonNull View itemView) {
             super(itemView);
 
-            titleTxt=itemView.findViewById(R.id.titleTxt2);
-            feeTxt=itemView.findViewById(R.id.feesTxt);
-            scoreTxt=itemView.findViewById(R.id.score1Txt);
-            pic=itemView.findViewById(R.id.pic1);
+            titleTxt = itemView.findViewById(R.id.titleTxt2);
+            feeTxt = itemView.findViewById(R.id.feesTxt);
+            scoreTxt = itemView.findViewById(R.id.score1Txt);
+            pic = itemView.findViewById(R.id.pic1);
         }
     }
 }

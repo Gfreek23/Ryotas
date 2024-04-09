@@ -61,8 +61,8 @@ class PostsFragment : Fragment(), MainActivity.OnBackPressedListener {
             binding.titleEditText.requestFocus()
             binding.titleEditText.error = "Enter title"
         } else if (content.isEmpty()) {
-            binding.titleEditText.requestFocus()
-            binding.titleEditText.error = "Enter title"
+            binding.contentEditText.requestFocus()
+            binding.contentEditText.error = "Enter content"
         } else {
             binding.progressBar.visibility = View.VISIBLE
             binding.postBtn.visibility = View.GONE

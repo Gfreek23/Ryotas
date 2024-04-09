@@ -2,6 +2,7 @@ package com.example.trialproject3.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -13,60 +14,49 @@ import com.bumptech.glide.Glide;
 import com.example.trialproject3.Domain.PopularDomain;
 import com.example.trialproject3.Helper.ManagementCart;
 import com.example.trialproject3.R;
+import com.example.trialproject3.databinding.ActivityDetailBinding;
 
 public class DetailActivity extends AppCompatActivity {
-private Button addToCartBtn;
-private TextView titleTxt,feeTxt,descriptionTxt,reviewTxt,scoreTxt;
-private ImageView picItem,backBtn;
-private PopularDomain object;
-private int numberOrder = 1;
-private ManagementCart managementCart;
+   private static final String TAG = "DetailActivity";
+   private ActivityDetailBinding binding;
+    private PopularDomain object;
+    private int numberOrder = 1;
+    private ManagementCart managementCart;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_detail);
+        binding = ActivityDetailBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
-
-        managementCart=new ManagementCart(this);
-        initView();
+        managementCart = new ManagementCart(this);
         getBundle();
 
     }
 
+    @SuppressLint("SetTextI18n")
     private void getBundle() {
-        object=(PopularDomain) getIntent().getSerializableExtra("object");
-        int drawableResourceId=this.getResources().getIdentifier(object.getPicUrl(),"drawable",this.getPackageName());
+        object = (PopularDomain) getIntent().getSerializableExtra("object");
+        int drawableResourceId = this.getResources().getIdentifier(object.getPicUrl(), "drawable", this.getPackageName());
 
         Glide.with(this)
                 .load(drawableResourceId)
-                .into(picItem);
+                .into(binding.itemImageView);
 
-        titleTxt.setText(object.getTitle());
-        feeTxt.setText("₱"+object.getPrice());
-        descriptionTxt.setText(object.getDescription());
-        reviewTxt.setText(object.getReview()+"");
-        scoreTxt.setText(object.getScore()+"");
+        binding.titleTxt.setText(object.getTitle());
+        binding.priceTxt.setText("₱" + object.getPrice());
+        binding.descriptionTxt.setText(object.getDescription());
+        binding.reviewsTextView.setText(object.getReview() + "");
+        binding.scoreTxt.setText(object.getScore() + "");
 
-        addToCartBtn.setOnClickListener(v -> {
+        binding.addToCartBtn.setOnClickListener(v -> {
             object.setNumberinCart(numberOrder);
             managementCart.insertFood(object);
+            Intent intent = new Intent(DetailActivity.this, MainActivity.class);
+            intent.putExtra("cart", "cart");
+            startActivity(intent);
+            finish();
         });
-        backBtn.setOnClickListener(v -> finish());
-
-
+        binding.backBtn.setOnClickListener(v -> finish());
     }
-
-    private void initView() {
-        addToCartBtn=findViewById(R.id.addToCartBtn);
-        feeTxt=findViewById(R.id.priceTxt);
-        titleTxt=findViewById(R.id.titleTxt);
-        descriptionTxt=findViewById(R.id.descriptionTxt);
-        picItem=findViewById(R.id.itemPic);
-        reviewTxt=findViewById(R.id.reviews1Txt);
-        scoreTxt=findViewById(R.id.scoreTxt);
-        backBtn=findViewById(R.id.backBtn2);
-
-    }
-
-
 }

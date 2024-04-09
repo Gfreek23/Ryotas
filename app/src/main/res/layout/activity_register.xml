@@ -64,6 +64,7 @@
                     android:elevation="3dp"
                     android:hint="Email Address"
                     android:padding="9dp"
+                    android:inputType="textEmailAddress"
                     android:textColor="@color/black"
                     android:textColorHint="@color/dark_grey"
                     android:textStyle="bold" />

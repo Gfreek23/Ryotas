@@ -49,7 +49,7 @@ public class Vegetables_Store1 extends AppCompatActivity {
 
     FirebaseFirestore fstore;
 
-    private RecyclerView recyclerViewPupolar,recyclerViewPupolar2;
+    private RecyclerView recyclerViewPupolar, recyclerViewPupolar2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,8 +84,8 @@ public class Vegetables_Store1 extends AppCompatActivity {
     }
 
     private void initRecyclerview() {
-        ArrayList<PopularDomain> items=new ArrayList<>();
-        items.add(new PopularDomain("Vegetables","Welcome to the vibrant and nourishing world of our vegetable\n" +
+        ArrayList<PopularDomain> items = new ArrayList<>();
+        items.add(new PopularDomain("Vegetables", "Welcome to the vibrant and nourishing world of our vegetable\n" +
                 "                 market! Step into a realm where colors, freshness, and flavors\n" +
                 "                 intertwine to awaken your senses and inspire your culinary\n" +
                 "                 adventures. Discover a bountiful array of seasonal treasures,\n" +
@@ -100,7 +100,7 @@ public class Vegetables_Store1 extends AppCompatActivity {
                 "                 that only vegetables can provide. So, come and immerse\n" +
                 "                 yourself in the kaleidoscope of flavors, relish the farm-to-fork\n" +
                 "                 experience, and let our vegetable market be your guiding light\n" +
-                "                 towards a more vibrant and nourished you!","pic1", 156,4.5,  100));
+                "                 towards a more vibrant and nourished you!", "pic1", 156, 4.5, 100));
         items.add(new PopularDomain("Meat", "Welcome to the vibrant and nourishing world of our vegetable\n" +
                 "                 market! Step into a realm where colors, freshness, and flavors\n" +
                 "                 intertwine to awaken your senses and inspire your culinary\n" +
@@ -132,19 +132,19 @@ public class Vegetables_Store1 extends AppCompatActivity {
                 "                 that only vegetables can provide. So, come and immerse\n" +
                 "                 yourself in the kaleidoscope of flavors, relish the farm-to-fork\n" +
                 "                 experience, and let our vegetable market be your guiding light\n" +
-                "                 towards a more vibrant and nourished you!", "pic3", 187,4.9, 1000));
-        items.add(new PopularDomain("Tomato","Freshly picked tomatoes","tomato", 156,4.5,  40));
+                "                 towards a more vibrant and nourished you!", "pic3", 187, 4.9, 1000));
+        items.add(new PopularDomain("Tomato", "Freshly picked tomatoes", "tomato", 156, 4.5, 40));
         items.add(new PopularDomain("Meat", "Fresh chopped meat", "karne", 132, 4.8, 300));
-        items.add(new PopularDomain("Perfume", "Indulge in the allure of our exquisite fragrance, where sophistication meets sensuality.", "perfume", 187,4.9, 800));
+        items.add(new PopularDomain("Perfume", "Indulge in the allure of our exquisite fragrance, where sophistication meets sensuality.", "perfume", 187, 4.9, 800));
 
-        recyclerViewPupolar=findViewById(R.id.view1);
+        recyclerViewPupolar = findViewById(R.id.view1);
         recyclerViewPupolar.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-        recyclerViewPupolar2=findViewById(R.id.view10);
+        recyclerViewPupolar2 = findViewById(R.id.view10);
         recyclerViewPupolar2.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
 
-        adapterPupolar=new PopularListAdapter(items);
+        adapterPupolar = new PopularListAdapter(items);
         recyclerViewPupolar.setAdapter(adapterPupolar);
-        adapterPupolar=new PopularListAdapter(items);
+        adapterPupolar = new PopularListAdapter(items);
         recyclerViewPupolar2.setAdapter(adapterPupolar);
     }
 }

@@ -13,6 +13,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
@@ -24,7 +26,9 @@ import com.example.trialproject3.Adapter.PopularListAdapter;
 import com.example.trialproject3.Domain.PopularDomain;
 import com.example.trialproject3.Firebase.FirebaseHelper;
 import com.example.trialproject3.Helper.AlertDialogHelper;
+import com.example.trialproject3.R;
 import com.example.trialproject3.databinding.FragmentHomeBinding;
+import com.google.firebase.firestore.DocumentSnapshot;
 
 import java.util.ArrayList;
 
@@ -41,8 +45,9 @@ public class HomeFragment extends Fragment implements MainActivity.OnBackPressed
                              Bundle savedInstanceState) {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
 
-        context = getContext();
+        context = requireContext();
         alertDialogHelper = new AlertDialogHelper(context);
+        getUserDetails();
 
         if (FirebaseHelper.currentUser() == null) {
             intent = new Intent(context, LoginActivity.class);
@@ -93,7 +98,6 @@ public class HomeFragment extends Fragment implements MainActivity.OnBackPressed
         super.onViewCreated(view, savedInstanceState);
 
         if(isAdded()){
-            getUserDetails();
             initRecyclerview();
         }
 
@@ -104,26 +108,30 @@ public class HomeFragment extends Fragment implements MainActivity.OnBackPressed
         exitApp();
         return true;
     }
+    private void getUserDetails() {
+        if (FirebaseHelper.currentUser() != null) {
+            FirebaseHelper.currentUserDetails().get()
+                    .addOnCompleteListener(task -> {
+                        if (task.isSuccessful()) {
+                            DocumentSnapshot documentSnapshot = task.getResult();
+                            String getFullName = documentSnapshot.getString("Fname");
+                            String getUserType = documentSnapshot.getString("UserType");
 
+                            binding.fullNameTextView.setText(getFullName);
+                        } else {
+                            Log.e(TAG, "getUserDetails: " + task.getException());
+                        }
+                    });
+
+        }
+    }
     private void exitApp() {
         alertDialogHelper.showAlertDialog("Exit App", "Are you sure you want to Exit App?",
                 "Exit", (dialog, which) -> requireActivity().finish(),
                 "Cancel", (dialog, which) -> alertDialogHelper.dismissDialog());
     }
 
-    private void getUserDetails() {
-        if (FirebaseHelper.currentUser() != null) {
-           FirebaseHelper.currentUserDetails().get()
-                    .addOnSuccessListener(documentSnapshot -> {
-                        String getFullName = documentSnapshot.getString("Fname");
-                        String getUserType = documentSnapshot.getString("UserType");
-                        binding.fullNameTextView.setText(getFullName);
-                        MainActivity.fullName = getFullName;
-                        MainActivity.userType = getUserType;
-                    })
-                    .addOnFailureListener(e -> Log.e(TAG, "displayUsername: " + TAG + e.getMessage()));
-        }
-    }
+
 
     private void performSearch() {
         String searchQuery = binding.searchEditText.getText().toString().trim();

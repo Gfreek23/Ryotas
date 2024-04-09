@@ -1,62 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="12dp"
     android:background="@color/white"
     tools:context=".Activity.CartActivity">
 
-    <ScrollView
-        android:id="@+id/scrollView3"
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/topBarLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:orientation="horizontal">
 
-        <LinearLayout
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/backBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:src="@drawable/arrow" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="My Cart"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="25sp"
+            android:textStyle="bold" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/bottomNavBar"
+        android:layout_below="@id/topBarLayout">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:id="@+id/backBtn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="2dp"
-                    android:src="@drawable/arrow" />
-
-                <TextView
-                    android:id="@+id/textView9"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="My Cart"
-                    android:textAlignment="center"
-                    android:textColor="@color/black"
-                    android:textSize="25sp"
-                    android:textStyle="bold" />
-
-            </LinearLayout>
+            android:orientation="vertical"
+            android:padding="10dp">
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/view3"
+                android:id="@+id/itemsRecyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/someOtherView"
                 android:layout_above="@+id/bottomNavigation"
+                android:layout_below="@+id/someOtherView"
                 android:paddingTop="16dp"
-                android:paddingBottom="16dp"/>
+                android:paddingBottom="16dp" />
 
             <TextView
                 android:id="@+id/textView10"
@@ -229,11 +228,10 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textView30" />
 
-                <ImageView
-                    android:id="@+id/imageView13"
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/addAddressBtn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:onClick="addbtn"
                     android:src="@drawable/arrow_detail"
                     app:layout_constraintBottom_toBottomOf="@+id/textView30"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -293,7 +291,7 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/Order"
+                android:id="@+id/orderNowBtn"
                 style="@android:style/Widget.Button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -303,143 +301,26 @@
                 android:textColor="@color/white"
                 android:textSize="18sp" />
 
-        </LinearLayout>
-    </ScrollView>
+        </androidx.appcompat.widget.LinearLayoutCompat>
+    </androidx.core.widget.NestedScrollView>
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/emptyTxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Your cart is empty"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_centerInParent="true"
+        android:text="Your cart is empty" />
 
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNavBar"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
-        app:layout_constraintBottom_toBottomOf="@+id/scrollView3"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/bright_blue"
+        app:itemIconSize="25dp"
+        app:itemIconTint="@color/white"
+        app:itemTextColor="@color/white"
+        app:labelVisibilityMode="labeled"
+        app:menu="@menu/menu_bottom_nav" />
 
-        <com.google.android.material.bottomappbar.BottomAppBar
-            android:id="@+id/Appbar"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_marginLeft="-17dp"
-            android:layout_gravity="bottom">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
-
-                <LinearLayout
-                    android:id="@+id/homeBtn"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="0.25"
-                    android:orientation="vertical">
-
-                    <ImageView
-                        android:id="@+id/imageView5"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_margin="4dp"
-                        android:layout_weight="1"
-                        android:src="@drawable/btn_1" />
-
-                    <TextView
-                        android:id="@+id/textView15"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Explore"
-                        android:textAlignment="center"
-                        android:textColor="@color/black" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/wishBtn"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="0.25"
-                    android:orientation="vertical">
-
-                    <ImageView
-                        android:id="@+id/imageView6"
-                        android:layout_width="65dp"
-                        android:layout_height="32dp"
-                        android:layout_gravity="center"
-                        android:layout_margin="4dp"
-                        android:src="@drawable/search"
-                        tools:layout_weight="1"
-                        tools:srcCompat="@drawable/search" />
-
-                    <TextView
-                        android:id="@+id/textView16"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Home Services"
-                        android:textAlignment="center"
-                        android:textColor="@color/black" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/cartBtn"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="0.25"
-                    android:orientation="vertical">
-
-                    <ImageView
-                        android:id="@+id/imageView7"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_margin="4dp"
-                        android:layout_weight="1"
-                        android:src="@drawable/btn_3" />
-
-                    <TextView
-                        android:id="@+id/textView17"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Cart"
-                        android:textAlignment="center"
-                        android:textColor="@color/red" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/profileBtn"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="0.25"
-                    android:orientation="vertical">
-
-                    <ImageView
-                        android:id="@+id/imageView8"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_margin="4dp"
-                        android:layout_weight="1"
-                        android:src="@drawable/btn_4" />
-
-                    <TextView
-                        android:id="@+id/textView50"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Profile"
-                        android:textAlignment="center"
-                        android:textColor="@color/black" />
-                </LinearLayout>
-            </LinearLayout>
-
-        </com.google.android.material.bottomappbar.BottomAppBar>
-
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>

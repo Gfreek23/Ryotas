@@ -44,10 +44,10 @@ public class CartActivityBackBtn1 extends AppCompatActivity {
         setContentView(R.layout.activity_cart);
 
 
-        addBtn = findViewById(R.id.imageView13);
-        backBtn = findViewById(R.id.backBtn);
-        btnfinal = findViewById(R.id.Order);
-        builder = new AlertDialog.Builder(this);
+//        addBtn = findViewById(R.id.imageView13);
+//        backBtn = findViewById(R.id.backBtn);
+//        btnfinal = findViewById(R.id.Order);
+//        builder = new AlertDialog.Builder(this);
 
         btnfinal.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -150,8 +150,8 @@ public class CartActivityBackBtn1 extends AppCompatActivity {
         taxTxt=findViewById(R.id.taxTxt);
         deliveryTxt=findViewById(R.id.deliveryTxt);
         totalTxt=findViewById(R.id.totalTxt);
-        recyclerView=findViewById(R.id.view3);
-        scrollView=findViewById(R.id.scrollView3);
+//        recyclerView=findViewById(R.id.view3);
+//        scrollView=findViewById(R.id.scrollView3);
         emptyTxt=findViewById(R.id.emptyTxt);
 
     }

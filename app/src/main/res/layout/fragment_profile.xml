@@ -35,15 +35,15 @@
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/profilePicImageView"
-                    android:layout_width="120dp"
-                    android:layout_height="120dp"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
                     android:layout_below="@id/textView"
                     android:layout_centerInParent="true"
                     android:layout_marginStart="20dp"
                     android:layout_marginTop="20dp"
                     android:layout_marginEnd="20dp"
                     android:layout_marginBottom="20dp"
-                    android:src="@drawable/user_2" />
+                    android:src="@drawable/profile_picture_100" />
 
                 <androidx.cardview.widget.CardView
                     android:id="@+id/backBtn"
@@ -72,7 +72,6 @@
 
                 </androidx.cardview.widget.CardView>
 
-
             </RelativeLayout>
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -87,13 +86,66 @@
                 android:textStyle="bold" />
 
             <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/userTypeTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:text="User Type"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/emailTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
                 android:text="email@example.com"
                 android:textAlignment="center"
                 android:textColor="@color/black"
                 android:textSize="15sp" />
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/storeInfoLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="10dp">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:text="Store"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:id="@+id/registerStoreLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Your Store is not Registered"
+                        android:textColor="@color/black" />
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/registerStoreBtn"
+                        android:layout_width="200dp"
+                        android:layout_height="wrap_content"
+                        android:text="Register Store"
+                        android:textColor="@color/black" />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
 
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"

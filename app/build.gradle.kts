@@ -84,6 +84,7 @@ dependencies {
 //    { exclude group: 'group_name', module: 'module_name' }
     implementation ("com.mapbox.navigation:android:2.17.1")
     implementation( "com.mapbox.navigation:ui-dropin:2.17.1")
+    implementation("androidx.activity:activity:1.8.0")
 
 
     testImplementation("junit:junit:4.13.2")

@@ -17,13 +17,10 @@ public class ToReceiveActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(binding.getRoot());
 
-        binding.button2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent= new Intent(ToReceiveActivity.this, MainActivity.class);
-                startActivity(intent);
-                finish();
-            }
+        binding.button.setOnClickListener((View.OnClickListener) v -> {
+            Intent intent= new Intent(ToReceiveActivity.this, MainActivity.class);
+            startActivity(intent);
+            finish();
         });
     }
 }

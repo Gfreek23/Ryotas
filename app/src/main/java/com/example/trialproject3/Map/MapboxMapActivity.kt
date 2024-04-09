@@ -27,6 +27,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.ContextCompat
 import com.example.trialproject3.Activity.MainActivity
+import com.example.trialproject3.BottomSheetModal.RegisterSellerStoreBottomSheetFragment
 import com.example.trialproject3.Firebase.FirebaseHelper
 import com.example.trialproject3.R
 import com.example.trialproject3.databinding.ActivityMapboxMapBinding
@@ -368,7 +369,7 @@ class MapboxMapActivity : AppCompatActivity(), PermissionsListener {
 
     private val viewAnnotationMap = mutableMapOf<Point, View>()
 
-    private companion object {
+    companion object {
 
         var currentLatitude: Double = 0.0
         var currentLongitude: Double = 0.0
@@ -488,7 +489,7 @@ class MapboxMapActivity : AppCompatActivity(), PermissionsListener {
                     startActivity(intent)
                     finish()
                 } else {
-                   showToast("Press back again to exit")
+                    showToast("Press back again to exit")
                     lastBackButtonPressTime = currentTime
                 }
 
@@ -722,7 +723,8 @@ class MapboxMapActivity : AppCompatActivity(), PermissionsListener {
 //        binding.mapView.gestures.addOnMoveListener(onMoveListener)
 
         binding.mapView.gestures.addOnMapLongClickListener {
-            findRoute(it)
+//            findRoute(it)
+            showBottomSheet(it)
             true
         }
 
@@ -1182,7 +1184,7 @@ class MapboxMapActivity : AppCompatActivity(), PermissionsListener {
     //start the trip when the passenger is on board
 
 
-//    private fun showEnableLocationServiceDialog() {
+    //    private fun showEnableLocationServiceDialog() {
 //        builder = AlertDialog.Builder(this)
 //        val binding: DialogEnableLocationServiceBinding =
 //            DialogEnableLocationServiceBinding.inflate(layoutInflater)
@@ -1221,6 +1223,14 @@ class MapboxMapActivity : AppCompatActivity(), PermissionsListener {
 //        }
 //
 //    }
+    private fun showBottomSheet(location: Point) {
+        val registerSellerStoreBottomSheetFragment =
+            RegisterSellerStoreBottomSheetFragment.newInstance(
+                location.longitude(),
+                location.latitude()
+            )
+        registerSellerStoreBottomSheetFragment.show(supportFragmentManager, TAG)
+    }
 
     private fun showToast(message: String) {
         Toast.makeText(this@MapboxMapActivity, message, Toast.LENGTH_SHORT).show()
@@ -1240,6 +1250,6 @@ class MapboxMapActivity : AppCompatActivity(), PermissionsListener {
     }
 
     override fun onPermissionResult(granted: Boolean) {
-        onMapReady()
+        if (granted) checkLocationService()
     }
 }

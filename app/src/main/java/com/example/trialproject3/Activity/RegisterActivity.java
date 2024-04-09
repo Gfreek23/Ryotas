@@ -80,8 +80,6 @@ public class RegisterActivity extends AppCompatActivity {
             startActivity(intent);
             finish();
         }
-
-
     }
 
     public void checkFields() {
