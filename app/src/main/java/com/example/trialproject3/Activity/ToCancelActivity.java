@@ -17,13 +17,10 @@ public class ToCancelActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(binding.getRoot());
 
-        binding.button3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(ToCancelActivity.this, MainActivity.class);
-                startActivity(intent);
-                finish();
-            }
+        binding.button3.setOnClickListener(v -> {
+            Intent intent = new Intent(ToCancelActivity.this, MainActivity.class);
+            startActivity(intent);
+            finish();
         });
     }
 }

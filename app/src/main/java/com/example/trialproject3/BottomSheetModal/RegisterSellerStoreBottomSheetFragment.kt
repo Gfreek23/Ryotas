@@ -63,6 +63,8 @@ class RegisterSellerStoreBottomSheetFragment : BottomSheetDialogFragment() {
                 binding.descriptionEditText.error = "Enter Description"
                 binding.descriptionEditText.requestFocus()
             } else {
+                binding.registerBtn.visibility = View.GONE
+                binding.progressBar.visibility = View.VISIBLE
                 getUserDetails(storeName, storeDescription, storeLocation)
 
 
@@ -86,6 +88,8 @@ class RegisterSellerStoreBottomSheetFragment : BottomSheetDialogFragment() {
     private fun getUserDetails(storeName: String, storeDescription: String, storeLocation: String) {
         FirebaseHelper.currentUserDetails().get()
             .addOnCompleteListener { task ->
+                binding.registerBtn.visibility = View.VISIBLE
+                binding.progressBar.visibility = View.GONE
                 if (task.isSuccessful) {
                     val documentSnapshot = task.result
                     val getFullName = documentSnapshot.getString("Fname")!!
@@ -110,19 +114,21 @@ class RegisterSellerStoreBottomSheetFragment : BottomSheetDialogFragment() {
         storeID: String
     ) {
         val store: MutableMap<String, Any> = HashMap()
-        store["StoreID"] = storeID
-        store["StoreName"] = storeName
-        store["StoreOwnerID"] = FirebaseHelper.currentUserID()
-        store["StoreOwner"] = ownerName
-        store["StoreDescription"] = storeDescription
-        store["StoreLocation"] = storeLocation
-        store["StoreLongitude"] = MapboxMapActivity.currentLongitude
-        store["StoreLatitude"] = MapboxMapActivity.currentLatitude
+        store["storeID"] = storeID
+        store["storeName"] = storeName
+        store["storeOwnerID"] = FirebaseHelper.currentUserID()
+        store["storeOwner"] = ownerName
+        store["storeDescription"] = storeDescription
+        store["storeLocation"] = storeLocation
+        store["storeLongitude"] = MapboxMapActivity.currentLongitude
+        store["storeLatitude"] = MapboxMapActivity.currentLatitude
 
         FirebaseHelper.getFireStoreInstance().collection(FirebaseHelper.KEY_COLLECTION_STORES)
             .document(storeID)
-            .set(store).addOnCompleteListener { task ->
-
+            .set(store)
+            .addOnCompleteListener { task ->
+                binding.registerBtn.visibility = View.VISIBLE
+                binding.progressBar.visibility = View.GONE
                 if (task.isSuccessful) {
                     toastHelper.showToast("Store Registered", 0)
                     dismiss()
