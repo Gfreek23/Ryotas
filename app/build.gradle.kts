@@ -85,6 +85,7 @@ dependencies {
     implementation ("com.mapbox.navigation:android:2.17.1")
     implementation( "com.mapbox.navigation:ui-dropin:2.17.1")
     implementation("androidx.activity:activity:1.8.0")
+    implementation("androidx.legacy:legacy-support-v4:1.0.0")
 
 
     testImplementation("junit:junit:4.13.2")
