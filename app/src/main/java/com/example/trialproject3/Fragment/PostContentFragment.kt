@@ -91,10 +91,13 @@ class PostContentFragment : Fragment(), MainActivity.OnBackPressedListener {
                                     post["userID"] = FirebaseHelper.currentUserID()
                                     post["fullName"] = MainActivity.fullName
                                     post["userPostImage"] = MainActivity.profilePicture
+                                    post["userType"] = MainActivity.userType
                                     post["email"] = FirebaseHelper.currentUser().email.toString()
                                     post["title"] = title
                                     post["description"] = description
                                     post["postImage"] = postImage
+                                    post["storeName"] = MainActivity.storeName
+                                    post["storeLocation"] = MainActivity.storeLocation
 
                                     FirebaseHelper.getFireStoreInstance()
                                         .collection(FirebaseHelper.KEY_COLLECTION_POSTS)
@@ -126,10 +129,13 @@ class PostContentFragment : Fragment(), MainActivity.OnBackPressedListener {
                 post["userID"] = FirebaseHelper.currentUserID()
                 post["fullName"] = MainActivity.fullName
                 post["userPostImage"] = MainActivity.profilePicture
+                post["userType"] = MainActivity.userType
                 post["email"] = FirebaseHelper.currentUser().email.toString()
                 post["title"] = title
                 post["description"] = description
                 post["postImage"] = postImage
+                post["storeName"] = MainActivity.storeName
+                post["storeLocation"] = MainActivity.storeLocation
 
                 FirebaseHelper.getFireStoreInstance()
                     .collection(FirebaseHelper.KEY_COLLECTION_POSTS)

@@ -13,17 +13,12 @@ import android.location.Location
 import android.location.LocationManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.provider.Settings
 import android.util.Log
-import android.util.TypedValue
-import android.view.MenuItem
 import android.view.View
 import android.view.animation.AccelerateDecelerateInterpolator
-import android.widget.Button
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.annotation.DrawableRes
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.ContextCompat
 import com.example.trialproject3.Activity.MainActivity
@@ -32,18 +27,9 @@ import com.example.trialproject3.Firebase.FirebaseHelper
 import com.example.trialproject3.R
 import com.example.trialproject3.databinding.ActivityMapboxMapBinding
 import com.example.trialproject3.databinding.MapboxItemViewAnnotationBinding
-import com.google.android.gms.maps.model.LatLng
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
-import com.google.firebase.firestore.DocumentReference
-import com.mapbox.android.gestures.MoveGestureDetector
 import com.mapbox.api.directions.v5.models.Bearing
 import com.mapbox.api.directions.v5.models.RouteOptions
-import com.mapbox.api.geocoding.v5.GeocodingCriteria
-import com.mapbox.api.geocoding.v5.MapboxGeocoding
-import com.mapbox.api.geocoding.v5.models.GeocodingResponse
 import com.mapbox.bindgen.Expected
 import com.mapbox.common.location.compat.permissions.PermissionsListener
 import com.mapbox.common.location.compat.permissions.PermissionsManager
@@ -51,19 +37,17 @@ import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.EdgeInsets
 import com.mapbox.maps.MapView
-import com.mapbox.maps.MapboxMap
 import com.mapbox.maps.Style
-import com.mapbox.maps.extension.style.expressions.generated.Expression
 import com.mapbox.maps.plugin.LocationPuck2D
 import com.mapbox.maps.plugin.animation.CameraAnimatorOptions
 import com.mapbox.maps.plugin.animation.camera
+import com.mapbox.maps.plugin.annotation.annotations
+import com.mapbox.maps.plugin.annotation.generated.OnPointAnnotationClickListener
 import com.mapbox.maps.plugin.annotation.generated.PointAnnotation
 import com.mapbox.maps.plugin.annotation.generated.PointAnnotationManager
 import com.mapbox.maps.plugin.annotation.generated.PointAnnotationOptions
-import com.mapbox.maps.plugin.gestures.OnMoveListener
+import com.mapbox.maps.plugin.annotation.generated.createPointAnnotationManager
 import com.mapbox.maps.plugin.gestures.gestures
-import com.mapbox.maps.plugin.locationcomponent.OnIndicatorBearingChangedListener
-import com.mapbox.maps.plugin.locationcomponent.OnIndicatorPositionChangedListener
 import com.mapbox.maps.plugin.locationcomponent.location
 import com.mapbox.maps.viewannotation.viewAnnotationOptions
 import com.mapbox.navigation.base.TimeFormat
@@ -114,9 +98,6 @@ import com.mapbox.navigation.ui.voice.model.SpeechAnnouncement
 import com.mapbox.navigation.ui.voice.model.SpeechError
 import com.mapbox.navigation.ui.voice.model.SpeechValue
 import com.mapbox.navigation.ui.voice.model.SpeechVolume
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 import java.util.Calendar
 import java.util.Locale
 import java.util.UUID
@@ -135,6 +116,9 @@ class MapboxMapActivity : AppCompatActivity(), PermissionsListener {
     private var pointAnnotation: PointAnnotation? = null
     private var lastInteractedAnnotationOptions: PointAnnotationOptions? = null
     private lateinit var pointAnnotationManager: PointAnnotationManager
+    private lateinit var storeAnnotationManager: PointAnnotationManager
+    private lateinit var storedestinationPointAnnotation: PointAnnotation
+    private val pointAnnotationList: MutableList<PointAnnotation> = mutableListOf()
 
     //navigation
     private val mapboxReplayer = MapboxReplayer()
@@ -401,6 +385,7 @@ class MapboxMapActivity : AppCompatActivity(), PermissionsListener {
         setContentView(binding.root)
 
         checkLocationPermission()
+        loadStoresLocationInMap()
 
         binding.tripProgressLayout.visibility = View.INVISIBLE
         binding.soundBtn.visibility = View.INVISIBLE
@@ -496,6 +481,8 @@ class MapboxMapActivity : AppCompatActivity(), PermissionsListener {
             }
         })
     }
+
+
 
     private fun checkLocationPermission() {
         if (PermissionsManager.areLocationPermissionsGranted(this@MapboxMapActivity)) {
@@ -774,6 +761,60 @@ class MapboxMapActivity : AppCompatActivity(), PermissionsListener {
         }
     }
 
+    private fun loadStoresLocationInMap() {
+        val storeReference = FirebaseHelper.getFireStoreInstance()
+            .collection(FirebaseHelper.KEY_COLLECTION_STORES)
+
+        storeReference.get()
+            .addOnCompleteListener { task->
+                if (task.isSuccessful){
+                    val storeDocuments = task.result?.documents
+                    if (storeDocuments != null) {
+                        for (storeSnapshot in storeDocuments) {
+                            val storeData = storeSnapshot.data
+                            val longitude = storeData?.get("storeLongitude") as? Double
+                            val latitude = storeData?.get("storeLatitude") as? Double
+
+                            if (longitude != null && latitude != null) {
+                                addStoreAnnotationToMap(longitude, latitude)
+                            }
+                        }
+                    }
+                }else {
+                    Log.e(TAG, "loadStoresLocationInMap: " + task.exception)
+                }
+            }
+    }
+
+    //display the pin in the map
+    private fun addStoreAnnotationToMap(
+        longitude: Double,
+        latitude: Double,
+    ) {
+
+        bitmapFromDrawableRes(
+            this@MapboxMapActivity,
+            R.drawable.store_100
+        ).let {
+            val annotationApi = binding.mapView.annotations
+            storeAnnotationManager = annotationApi.createPointAnnotationManager()
+            val pointAnnotationOptions: PointAnnotationOptions = PointAnnotationOptions()
+                .withPoint(Point.fromLngLat(longitude, latitude))
+                .withIconImage(it)
+
+            storedestinationPointAnnotation = storeAnnotationManager.create(pointAnnotationOptions)
+            pointAnnotationList.add(storedestinationPointAnnotation)
+
+            storeAnnotationManager.apply {
+                addClickListener(
+                    OnPointAnnotationClickListener {
+
+                        true
+                    }
+                )
+            }
+        }
+    }
     private fun onCameraTrackingDismissed() {
 //        Toast.makeText(this, "onCameraTrackingDismissed", Toast.LENGTH_SHORT).show()
 

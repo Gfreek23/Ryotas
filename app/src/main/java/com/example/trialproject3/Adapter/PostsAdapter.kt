@@ -9,12 +9,20 @@ import com.bumptech.glide.Glide
 import com.example.trialproject3.Models.PostsModel
 import com.example.trialproject3.databinding.ItemPostsBinding
 
-class PostsAdapter(private val context: Context, private val postsList: List<PostsModel>) :
+class PostsAdapter(
+    private val context: Context,
+    private val postsList: List<PostsModel>,
+    private val onPostItemClickListener: OnPostItemClickListener
+) :
     RecyclerView.Adapter<PostsAdapter.PostsViewHolder>() {
+
+    interface OnPostItemClickListener {
+        fun onPostItemClick(postsModel: PostsModel)
+    }
 
     class PostsViewHolder(val binding: ItemPostsBinding) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(context: Context, postsModel: PostsModel) {
+        fun bind(context: Context, postsModel: PostsModel, onPostItemClickListener: OnPostItemClickListener) {
             binding.titleTextView.text = postsModel.title
             binding.userNameTextView.text = postsModel.fullName
             binding.descriptionTextView.text = postsModel.description
@@ -28,6 +36,11 @@ class PostsAdapter(private val context: Context, private val postsList: List<Pos
                 binding.postImageView.visibility = View.VISIBLE
                 Glide.with(context).load(postsModel.postImage).into(binding.postImageView)
             }
+
+            binding.postHeaderLayout.setOnClickListener {
+                onPostItemClickListener.onPostItemClick(postsModel)
+            }
+
         }
     }
 
@@ -42,6 +55,6 @@ class PostsAdapter(private val context: Context, private val postsList: List<Pos
     }
 
     override fun onBindViewHolder(holder: PostsViewHolder, position: Int) {
-        holder.bind(context, postsList[position])
+        holder.bind(context, postsList[position], onPostItemClickListener)
     }
 }

@@ -324,39 +324,6 @@
                     app:cardElevation="5dp">
 
                     <androidx.appcompat.widget.LinearLayoutCompat
-                        android:id="@+id/cancelBtn"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="start|center_vertical"
-                        android:padding="5dp">
-
-                        <androidx.appcompat.widget.AppCompatImageView
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
-                            android:src="@drawable/tocancel" />
-
-                        <androidx.appcompat.widget.AppCompatTextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="16dp"
-                            android:text="Cancel"
-                            android:textColor="@color/black"
-                            android:textSize="17sp"
-                            android:textStyle="bold" />
-
-                    </androidx.appcompat.widget.LinearLayoutCompat>
-
-                </androidx.cardview.widget.CardView>
-
-                <androidx.cardview.widget.CardView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:background="@color/stained_white"
-                    app:cardCornerRadius="10dp"
-                    app:cardElevation="5dp">
-
-                    <androidx.appcompat.widget.LinearLayoutCompat
                         android:id="@+id/logoutBtn"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
