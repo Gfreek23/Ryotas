@@ -34,6 +34,7 @@ public class RegisterActivity extends AppCompatActivity {
     private ActivityRegisterBinding binding;
     private DatePickerDialog picker;
     private Intent intent;
+    private String profilePicture = "none";
     private SharedPreferences sharedPreferences;
 
     @SuppressLint("SetTextI18n")
@@ -192,6 +193,7 @@ public class RegisterActivity extends AppCompatActivity {
                         user.put("Phone", userPhone);
                         user.put("Gender", userGender);
                         user.put("UserType", userType);
+                        user.put("ProfilePicture", profilePicture);
 
                         documentReference.set(user)
                                 .addOnSuccessListener(unused -> {

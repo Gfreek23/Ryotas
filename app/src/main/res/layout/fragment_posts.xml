@@ -1,89 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".Fragment.PostsFragment">
 
-    <androidx.core.widget.NestedScrollView
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/topBarLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="@drawable/blue_background"
+        android:padding="10dp">
 
-        <androidx.appcompat.widget.LinearLayoutCompat
-            android:layout_width="match_parent"
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="10dp">
+            android:text="Posts"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp"
-                android:gravity="start"
-                android:text="Post a Content"
-                android:textColor="@color/black"
-                android:textSize="18sp"
-                android:textStyle="bold" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
 
-            <androidx.cardview.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                app:cardCornerRadius="10dp"
-                app:cardElevation="10dp">
-
-                <androidx.appcompat.widget.LinearLayoutCompat
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:orientation="vertical"
-                    android:padding="5dp">
-
-                    <androidx.appcompat.widget.AppCompatEditText
-                        android:id="@+id/titleEditText"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="Title..."
-                        android:textAllCaps="false"
-                        android:textColor="@color/black"
-                        android:textSize="17sp" />
-
-                    <androidx.appcompat.widget.AppCompatEditText
-                        android:id="@+id/contentEditText"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="Content..."
-                        android:textAllCaps="false"
-                        android:textColor="@color/black"
-                        android:layout_marginBottom="20dp"
-                        android:textSize="17sp" />
-
-                    <androidx.appcompat.widget.AppCompatButton
-                        android:id="@+id/postBtn"
-                        style="@android:style/Widget.Button"
-                        android:layout_width="100dp"
-                        android:layout_height="50dp"
-                        android:background="@drawable/red_banner"
-                        android:backgroundTint="@color/light_blue_2"
-                        android:text="Post"
-                        android:textColor="@color/white"
-                        android:textSize="20sp"
-                        android:textStyle="bold" />
-
-                    <ProgressBar
-                        android:id="@+id/progressBar"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:elevation="10dp"
-                        />
-
-                </androidx.appcompat.widget.LinearLayoutCompat>
-
-            </androidx.cardview.widget.CardView>
-
-        </androidx.appcompat.widget.LinearLayoutCompat>
-
-    </androidx.core.widget.NestedScrollView>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/postsRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/topBarLayout"
+        tools:listitem="@layout/item_posts" />
 
 </RelativeLayout>

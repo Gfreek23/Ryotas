@@ -7,7 +7,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -16,25 +15,20 @@ import androidx.fragment.app.FragmentTransaction;
 import com.example.trialproject3.Firebase.FirebaseHelper;
 import com.example.trialproject3.Fragment.CartFragment;
 import com.example.trialproject3.Fragment.HomeFragment;
+import com.example.trialproject3.Fragment.PostContentFragment;
 import com.example.trialproject3.Fragment.PostsFragment;
 import com.example.trialproject3.Fragment.ProfileFragment;
-import com.example.trialproject3.Helper.AlertDialogHelper;
 import com.example.trialproject3.Map.MapboxMapActivity;
 import com.example.trialproject3.R;
 import com.example.trialproject3.databinding.ActivityMainBinding;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FirebaseFirestore;
-
-import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
     private final String TAG = "MainActivity";
     private ActivityMainBinding binding;
     public static String fullName;
     public static String userType;
+    public static String profilePicture;
     private Intent intent;
 
     public interface OnBackPressedListener {
@@ -81,17 +75,20 @@ public class MainActivity extends AppCompatActivity {
                             DocumentSnapshot documentSnapshot = task.getResult();
                             String getFullName = documentSnapshot.getString("Fname");
                             String getUserType = documentSnapshot.getString("UserType");
+                            String getProfilePicture = documentSnapshot.getString("ProfilePicture");
                             MainActivity.fullName = getFullName;
                             MainActivity.userType = getUserType;
+                            MainActivity.profilePicture = getProfilePicture;
 
                             if (getUserType.equals("Seller")) {
                                 Menu menu = binding.bottomNavBar.getMenu();
-                                MenuItem menuItem = menu.getItem(2);
-                                menuItem.setVisible(false);
+                                MenuItem menuItem1  = menu.getItem(1);
+                                MenuItem menuItem2 = menu.getItem(3);
+//                                menuItem1.setVisible(false);
+                                menuItem2.setVisible(false);
 
                                 binding.extendedFabBtn.setVisibility(View.VISIBLE);
-                                binding.extendedFabBtn.setOnClickListener(v -> showFragment(new PostsFragment()));
-
+                                binding.extendedFabBtn.setOnClickListener(v -> showFragment(new PostContentFragment()));
                             }
                         } else {
                             Log.e(TAG, "getUserDetails: " + task.getException());
@@ -119,6 +116,8 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(MainActivity.this, MapboxMapActivity.class);
                 startActivity(intent);
                 finish();
+            }else if (item.getItemId() == R.id.navPosts) {
+                showFragment(new PostsFragment());
             } else if (item.getItemId() == R.id.navCart) {
                 showFragment(new CartFragment());
             } else if (item.getItemId() == R.id.navProfile) {

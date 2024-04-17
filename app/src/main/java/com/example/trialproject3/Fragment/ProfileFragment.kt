@@ -1,14 +1,18 @@
 package com.example.trialproject3.Fragment
 
+import android.app.Activity
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
+import android.media.Image
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.bumptech.glide.Glide
 import com.example.trialproject3.Activity.LoginActivity
 import com.example.trialproject3.Activity.MainActivity.OnBackPressedListener
 import com.example.trialproject3.Activity.RegisterSellerStoreActivity
@@ -20,18 +24,23 @@ import com.example.trialproject3.Helper.AlertDialogHelper
 import com.example.trialproject3.Map.MapboxMapActivity
 import com.example.trialproject3.Models.StoreDetailsModel
 import com.example.trialproject3.R
+import com.example.trialproject3.Utility.ToastHelper
 import com.example.trialproject3.databinding.FragmentProfileBinding
+import com.github.dhaval2404.imagepicker.ImagePicker
 import com.google.android.gms.tasks.Task
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.EventListener
 import com.google.firebase.firestore.toObject
+import com.google.firebase.storage.FirebaseStorage
 
 class ProfileFragment : Fragment(), OnBackPressedListener {
     private val TAG = "ProfileFragment"
-    private var context: Context? = null
+    private lateinit var context: Context
     private lateinit var binding: FragmentProfileBinding
     private lateinit var intent: Intent
     private lateinit var alertDialogHelper: AlertDialogHelper
+    private lateinit var toastHelper: ToastHelper
+    private var profilePicture: String = "none"
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -41,6 +50,9 @@ class ProfileFragment : Fragment(), OnBackPressedListener {
 
         context = requireContext()
         alertDialogHelper = AlertDialogHelper(context)
+        toastHelper = ToastHelper(context)
+
+        binding.profilePictureProgressBar.visibility = View.GONE
         binding.storeInfoLayout.visibility = View.GONE
         binding.storeDisplayLayout.visibility = View.GONE
         binding.registerStoreLayout.visibility = View.GONE
@@ -48,8 +60,15 @@ class ProfileFragment : Fragment(), OnBackPressedListener {
         binding.toPayBtn.visibility = View.GONE
         binding.toReceiveBtn.visibility = View.GONE
 
-        binding.backBtn.setOnClickListener { v: View? -> backToHomeFragment() }
+        binding.backBtn.setOnClickListener { backToHomeFragment() }
 
+        binding.uploadImageView.setOnClickListener {
+            ImagePicker.with(this)
+                .crop()
+                .compress(1024)
+                .maxResultSize(1080, 1080)
+                .start()
+        }
 
         binding.logoutBtn.setOnClickListener {
             alertDialogHelper.showAlertDialog(
@@ -90,9 +109,16 @@ class ProfileFragment : Fragment(), OnBackPressedListener {
                         val documentSnapshot = task.result
                         val getFirstName = documentSnapshot.getString("Fname")
                         val getUserType = documentSnapshot.getString("UserType")
+                        val getProfilePicture = documentSnapshot.get("ProfilePicture")
                         binding.fullNameTextView.text = getFirstName
                         binding.userTypeTextView.text = getUserType
                         binding.emailTextView.text = FirebaseHelper.currentUser().email
+
+                        if (getProfilePicture != "none") {
+                            Glide.with(context)
+                                .load(getProfilePicture)
+                                .into(binding.profilePicImageView)
+                        }
 
                         if (getUserType == "Seller") {
                             binding.storeInfoLayout.visibility = View.VISIBLE
@@ -120,7 +146,8 @@ class ProfileFragment : Fragment(), OnBackPressedListener {
                                                 binding.storeLocationTextView.text =
                                                     storeDetailsModel.storeLocation
                                             } else {
-                                                binding.registerStoreLayout.visibility = View.VISIBLE
+                                                binding.registerStoreLayout.visibility =
+                                                    View.VISIBLE
                                                 binding.registerStoreBtn.setOnClickListener {
                                                     val intent =
                                                         Intent(
@@ -135,7 +162,7 @@ class ProfileFragment : Fragment(), OnBackPressedListener {
                                     }
                                 }
                             }
-                        }else{
+                        } else {
                             binding.toShipBtn.visibility = View.VISIBLE
                             binding.toPayBtn.visibility = View.VISIBLE
                             binding.toReceiveBtn.visibility = View.VISIBLE
@@ -168,11 +195,73 @@ class ProfileFragment : Fragment(), OnBackPressedListener {
         }
     }
 
+    private fun updateProfilePicture(profilePictureUri: Uri) {
+        binding.profilePictureProgressBar.visibility = View.VISIBLE
+
+        val storageRef = FirebaseStorage.getInstance().reference
+        val profilePictureRef =
+            storageRef.child("/profilePictures/${FirebaseHelper.currentUserID()}")
+
+        profilePictureRef.putFile(profilePictureUri)
+            .addOnCompleteListener { uploadTask ->
+                if (uploadTask.isSuccessful) {
+                    profilePictureRef.downloadUrl
+                        .addOnSuccessListener {
+                            profilePicture = it.toString()
+                            FirebaseHelper.currentUserDetails()
+                                .update("ProfilePicture", profilePicture)
+                                .addOnCompleteListener { task ->
+                                    binding.profilePictureProgressBar.visibility = View.GONE
+
+                                    if (task.isSuccessful) {
+                                        binding.profilePicImageView.setImageURI(profilePictureUri)
+                                        toastHelper.showToast("Profile picture updated", 0)
+                                    } else {
+                                        toastHelper.showToast(
+                                            "Profile picture failed to update",
+                                            1
+                                        )
+                                    }
+                                }
+                        }
+                        .addOnFailureListener {
+                            toastHelper.showToast(
+                                "Profile picture failed to update",
+                                1
+                            )
+                            Log.e(TAG, "updateProfilePicture: " + it.message)
+                        }
+
+                } else {
+                    toastHelper.showToast(
+                        "Profile picture failed to update",
+                        1
+                    )
+                    Log.e(TAG, "updateProfilePicture: " + uploadTask.exception)
+                }
+            }
+    }
+
     private fun backToHomeFragment() {
         val fragmentManager = requireActivity().supportFragmentManager
         val fragmentTransaction = fragmentManager.beginTransaction()
         fragmentTransaction.replace(R.id.fragmentContainer, HomeFragment())
         fragmentTransaction.addToBackStack(null)
         fragmentTransaction.commit()
+    }
+
+    @Deprecated("Deprecated in Java")
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == Activity.RESULT_OK) {
+            if (data != null) {
+                val uri = data.data!!
+                updateProfilePicture(uri)
+            }
+        } else if (resultCode == ImagePicker.RESULT_ERROR) {
+            toastHelper.showToast(ImagePicker.getError(data), 1)
+        } else {
+            toastHelper.showToast("Task Cancelled", 1)
+        }
     }
 }

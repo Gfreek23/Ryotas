@@ -8,6 +8,12 @@
         android:title="Explore" />
 
     <item
+        android:id="@+id/navPosts"
+        android:enabled="true"
+        android:icon="@drawable/baseline_feed_24"
+        android:title="Posts" />
+
+    <item
         android:id="@+id/navHomeServices"
         android:enabled="true"
         android:icon="@drawable/search"
@@ -24,5 +30,7 @@
         android:enabled="true"
         android:icon="@drawable/btn_4"
         android:title="Profile" />
+
+
 
 </menu>

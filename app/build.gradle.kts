@@ -64,16 +64,19 @@ dependencies {
     implementation ("androidx.core:core-ktx:1.12.0")
 
     //firebase
+    implementation(platform("com.google.firebase:firebase-bom:32.8.1"))
     implementation ("com.google.firebase:firebase-auth:22.3.1")
     implementation("com.google.firebase:firebase-database-ktx:20.3.1")
     implementation("com.google.firebase:firebase-firestore-ktx:24.10.3")
     implementation("com.google.firebase:firebase-auth-ktx:22.3.1")
+    implementation("com.google.firebase:firebase-storage")
 
     //others
     implementation("com.github.bumptech.glide:glide:4.15.1")
     implementation("com.github.bumptech.glide:compiler:4.12.0")
     implementation("de.hdodenhof:circleimageview:3.1.0")
     implementation("com.makeramen:roundedimageview:2.3.0")
+    implementation ("com.github.dhaval2404:imagepicker:2.1")
 
     //mapbox
     implementation ("com.mapbox.search:place-autocomplete:1.0.0-rc.6")
