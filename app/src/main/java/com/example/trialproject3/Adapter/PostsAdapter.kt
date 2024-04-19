@@ -4,6 +4,8 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.RatingBar
+import androidx.appcompat.widget.AppCompatRatingBar
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.trialproject3.Models.PostsModel
@@ -12,7 +14,8 @@ import com.example.trialproject3.databinding.ItemPostsBinding
 class PostsAdapter(
     private val context: Context,
     private val postsList: List<PostsModel>,
-    private val onPostItemClickListener: OnPostItemClickListener
+    private val onPostItemClickListener: OnPostItemClickListener,
+    private val onPostRateClickListener: OnPostRateClickListener
 ) :
     RecyclerView.Adapter<PostsAdapter.PostsViewHolder>() {
 
@@ -20,13 +23,23 @@ class PostsAdapter(
         fun onPostItemClick(postsModel: PostsModel)
     }
 
+    interface OnPostRateClickListener {
+        fun onPostRateClick(postsModel: PostsModel, rating: Float)
+    }
+
     class PostsViewHolder(val binding: ItemPostsBinding) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(context: Context, postsModel: PostsModel, onPostItemClickListener: OnPostItemClickListener) {
+        fun bind(
+            context: Context,
+            postsModel: PostsModel,
+            onPostItemClickListener: OnPostItemClickListener,
+            onPostRateClickListener: OnPostRateClickListener
+        ) {
             binding.titleTextView.text = postsModel.title
             binding.userNameTextView.text = postsModel.fullName
             binding.descriptionTextView.text = postsModel.description
             binding.emailTextView.text = postsModel.email
+            binding.timePostedTextView.text = postsModel.timePosted
             binding.postImageView.visibility = View.GONE
 
             if (postsModel.userPostImage != "none") {
@@ -39,6 +52,17 @@ class PostsAdapter(
 
             binding.postHeaderLayout.setOnClickListener {
                 onPostItemClickListener.onPostItemClick(postsModel)
+            }
+
+            if (postsModel.userType == "Seller") {
+                binding.postRatingBar.visibility = View.GONE
+                binding.rateBtn.visibility = View.GONE
+            }
+
+            binding.postRatingBar.setOnRatingBarChangeListener { ratingBar, rating, fromUser ->
+                binding.rateBtn.setOnClickListener {
+                    onPostRateClickListener.onPostRateClick(postsModel, rating)
+                }
             }
 
         }
@@ -55,6 +79,6 @@ class PostsAdapter(
     }
 
     override fun onBindViewHolder(holder: PostsViewHolder, position: Int) {
-        holder.bind(context, postsList[position], onPostItemClickListener)
+        holder.bind(context, postsList[position], onPostItemClickListener, onPostRateClickListener)
     }
 }

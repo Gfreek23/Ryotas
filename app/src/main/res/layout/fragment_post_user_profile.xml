@@ -127,6 +127,16 @@
             android:textColor="@color/black"
             android:textSize="15sp" />
 
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/phoneTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:text="Phone Number"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="15sp" />
+
         <androidx.appcompat.widget.LinearLayoutCompat
             android:id="@+id/storeInfoLayout"
             android:layout_width="match_parent"

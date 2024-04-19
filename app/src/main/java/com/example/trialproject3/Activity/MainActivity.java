@@ -15,6 +15,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.trialproject3.Firebase.FirebaseHelper;
+import com.example.trialproject3.Fragment.AddProductFragment;
 import com.example.trialproject3.Fragment.CartFragment;
 import com.example.trialproject3.Fragment.HomeFragment;
 import com.example.trialproject3.Fragment.PostContentFragment;
@@ -36,7 +37,8 @@ public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding binding;
     public static String fullName;
     public static String userType;
-    public static String profilePicture;
+    public static String profilePicture = "none";
+    public static String phoneNumber;
     public static String storeName;
     public static String storeLocation;
     private Intent intent;
@@ -51,7 +53,8 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        binding.extendedFabBtn.setVisibility(View.GONE);
+        binding.postContentFAB.setVisibility(View.GONE);
+        binding.addProductFAB.setVisibility(View.GONE);
         initializeBottomNavBar();
         getUserDetails();
 
@@ -86,9 +89,11 @@ public class MainActivity extends AppCompatActivity {
                             String getFullName = documentSnapshot.getString("Fname");
                             String getUserType = documentSnapshot.getString("UserType");
                             String getProfilePicture = documentSnapshot.getString("ProfilePicture");
-                            MainActivity.fullName = getFullName;
-                            MainActivity.userType = getUserType;
-                            MainActivity.profilePicture = getProfilePicture;
+                            String getPhoneNumber = documentSnapshot.getString("Phone");
+                            fullName = getFullName;
+                            userType = getUserType;
+                            profilePicture = getProfilePicture;
+                            phoneNumber = getPhoneNumber;
 
                             if (getUserType.equals("Seller")) {
                                 Menu menu = binding.bottomNavBar.getMenu();
@@ -97,42 +102,43 @@ public class MainActivity extends AppCompatActivity {
 //                                menuItem1.setVisible(false);
                                 menuItem2.setVisible(false);
 
-                                binding.extendedFabBtn.setVisibility(View.VISIBLE);
-                                binding.extendedFabBtn.setOnClickListener(v -> showFragment(new PostContentFragment()));
+                                binding.postContentFAB.setVisibility(View.VISIBLE);
+                                binding.addProductFAB.setVisibility(View.VISIBLE);
+                                binding.postContentFAB.setOnClickListener(v -> showFragment(new PostContentFragment()));
+                                binding.addProductFAB.setOnClickListener(v -> showFragment(new AddProductFragment()));
                             }
                         } else {
                             Log.e(TAG, "getUserDetails: " + task.getException());
                         }
                     });
 
-        }
+            FirebaseHelper.getFireStoreInstance()
+                    .collection(FirebaseHelper.KEY_COLLECTION_STORES)
+                    .addSnapshotListener((value, error) -> {
+                        if (error != null) {
+                            Log.e(TAG, "loadUserProfile: " + error.getMessage());
 
-        FirebaseHelper.getFireStoreInstance()
-                .collection(FirebaseHelper.KEY_COLLECTION_STORES)
-                .addSnapshotListener((value, error) -> {
-                    if (error != null) {
-                        Log.e(TAG, "loadUserProfile: " + error.getMessage());
+                            return;
+                        }
 
-                        return;
-                    }
+                        if (value != null && !value.isEmpty()) {
+                            ArrayList<StoreDetailsModel> storeDetailsModelList = new ArrayList<>();
 
-                    if (value != null && !value.isEmpty()) {
-                        ArrayList<StoreDetailsModel> storeDetailsModelList = new ArrayList<>();
+                            for (DocumentSnapshot storeSnapshot : value.getDocuments()) {
+                                StoreDetailsModel storeDetailsModel = storeSnapshot.toObject(StoreDetailsModel.class);
+                                if (storeDetailsModel != null) {
+                                    storeDetailsModelList.add(storeDetailsModel);
+                                    if (storeDetailsModel.getStoreOwnerID().equals(FirebaseHelper.currentUserID())) {
+                                        storeName = storeDetailsModel.getStoreName();
+                                        storeLocation = storeDetailsModel.getStoreLocation();
 
-                        for (DocumentSnapshot storeSnapshot : value.getDocuments()) {
-                            StoreDetailsModel storeDetailsModel = storeSnapshot.toObject(StoreDetailsModel.class);
-                            if (storeDetailsModel != null) {
-                                storeDetailsModelList.add(storeDetailsModel);
-                                if (storeDetailsModel.getStoreOwnerID().equals(FirebaseHelper.currentUserID())) {
-                                    storeName = storeDetailsModel.getStoreName();
-                                    storeLocation = storeDetailsModel.getStoreLocation();
-
-                                    Toast.makeText(this, storeName, Toast.LENGTH_SHORT).show();
+//                                        Toast.makeText(this, storeName, Toast.LENGTH_SHORT).show();
+                                    }
                                 }
                             }
                         }
-                    }
-                });
+                    });
+        }
     }
 
     private void showFragment(Fragment fragment) {

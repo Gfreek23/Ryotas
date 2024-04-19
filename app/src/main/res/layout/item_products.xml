@@ -2,7 +2,7 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:layout_margin="5dp"
     app:cardBackgroundColor="@color/white"
     app:cardCornerRadius="5dp"
@@ -13,20 +13,19 @@
         android:layout_height="wrap_content"
         android:padding="10dp">
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/timePostedTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:text="Time Posted"
-            android:textColor="@color/black"
-            android:textSize="14sp" />
+        <!--        <androidx.appcompat.widget.AppCompatTextView-->
+        <!--            android:id="@+id/timePostedTextView"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_alignParentEnd="true"-->
+        <!--            android:text="Time Posted"-->
+        <!--            android:textColor="@color/black"-->
+        <!--            android:textSize="14sp" />-->
 
         <RelativeLayout
             android:id="@+id/postHeaderLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/timePostedTextView">
+            android:layout_height="wrap_content">
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/userImageView"
@@ -38,7 +37,7 @@
                 android:src="@drawable/user_2" />
 
             <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/userNameTextView"
+                android:id="@+id/sellerNameTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
@@ -52,7 +51,7 @@
                 android:id="@+id/emailTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/userNameTextView"
+                android:layout_below="@id/sellerNameTextView"
                 android:layout_marginStart="10dp"
                 android:layout_toEndOf="@+id/userImageView"
                 android:text="Email"
@@ -62,57 +61,53 @@
         </RelativeLayout>
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/titleTextView"
+            android:id="@+id/productNameTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/postHeaderLayout"
             android:layout_marginBottom="5dp"
-            android:text="Title"
+            android:text="Product Name"
             android:textColor="@color/black"
             android:textSize="20sp"
             android:textStyle="bold" />
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/descriptionTextView"
+            android:id="@+id/priceTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/titleTextView"
+            android:layout_below="@id/productNameTextView"
             android:layout_marginBottom="5dp"
-            android:text="Description"
+            android:text="₱"
             android:textColor="@color/black"
-            android:textSize="18sp" />
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/productDescriptionTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/priceTextView"
+            android:layout_marginBottom="5dp"
+            android:text="Product Description"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
 
         <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/postImageView"
-            android:layout_width="300dp"
-            android:layout_height="300dp"
-            android:layout_below="@id/descriptionTextView"
+            android:id="@+id/productImageView"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_below="@id/productDescriptionTextView"
             android:layout_centerHorizontal="true"
+            android:layout_marginBottom="10dp"
             android:src="@drawable/baseline_image_24" />
 
-        <androidx.appcompat.widget.AppCompatRatingBar
-            android:id="@+id/postRatingBar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/postImageView"
-            android:layout_centerHorizontal="true"
-            android:layout_margin="5dp"
-            android:numStars="5"
-            android:rating="0.0"
-            android:stepSize="1"
-            android:theme="@style/RatingStars" />
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/rateBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/postRatingBar"
-            android:layout_centerHorizontal="true"
-            android:layout_gravity="center"
-            android:paddingStart="20dp"
-            android:paddingEnd="20dp"
-            android:text="Rate"
-            android:textColor="@color/black" />
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/addToCartImageView"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_below="@id/productImageView"
+            android:layout_alignParentStart="true"
+            android:src="@drawable/baseline_add_shopping_cart_24" />
 
     </RelativeLayout>
 

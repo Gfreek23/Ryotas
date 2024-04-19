@@ -51,7 +51,8 @@
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="20dp"
+                android:layout_marginBottom="100dp"
+                android:padding="10dp"
                 android:gravity="center"
                 android:orientation="vertical">
 
@@ -96,14 +97,17 @@
 
             </androidx.appcompat.widget.LinearLayoutCompat>
 
+            <ProgressBar
+                android:id="@+id/progressBar"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:elevation="10dp" />
+
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/loginBtn"
                 style="@android:style/Widget.Button"
                 android:layout_width="100dp"
                 android:layout_height="50dp"
-                android:layout_marginStart="32dp"
-                android:layout_marginTop="124dp"
-                android:layout_marginEnd="32dp"
                 android:background="@drawable/red_banner"
                 android:text="Login"
                 android:textColor="#ffffff"
@@ -143,12 +147,6 @@
                 android:textColor="@color/white"
                 android:textSize="16sp"
                 android:textStyle="bold" />
-
-            <ProgressBar
-                android:id="@+id/progressbarLog"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:elevation="10dp" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 

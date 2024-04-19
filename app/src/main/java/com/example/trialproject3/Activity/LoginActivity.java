@@ -56,7 +56,7 @@ public class LoginActivity extends AppCompatActivity {
         binding = ActivityLoginBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        binding.progressbarLog.setVisibility(View.GONE);
+        binding.progressBar.setVisibility(View.GONE);
         builder = new AlertDialog.Builder(this);
 
         ActionBar actionBar = getSupportActionBar();
@@ -85,9 +85,7 @@ public class LoginActivity extends AppCompatActivity {
             startActivity(intent);
             finish();
         });
-
         binding.forgotPasswordTextView.setOnClickListener(v -> forgotPassword());
-
     }
 
     public void signInUser() {
@@ -108,7 +106,8 @@ public class LoginActivity extends AppCompatActivity {
             binding.passwordEditText.setError("Password is required");
             binding.passwordEditText.requestFocus();
         } else {
-            binding.progressbarLog.setVisibility(View.VISIBLE);
+            binding.progressBar.setVisibility(View.VISIBLE);
+            binding.loginBtn.setVisibility(View.GONE);
             loginUser(userEmail, userPassword);
         }
     }
@@ -117,7 +116,8 @@ public class LoginActivity extends AppCompatActivity {
         FirebaseHelper.getAuth()
                 .signInWithEmailAndPassword(userEmail, userPassword)
                 .addOnCompleteListener(LoginActivity.this, task -> {
-                    binding.progressbarLog.setVisibility(View.GONE);
+                    binding.progressBar.setVisibility(View.GONE);
+                    binding.loginBtn.setVisibility(View.VISIBLE);
 
                     if (task.isSuccessful()) {
                         if (task.getResult().getUser().isEmailVerified()) {
@@ -149,13 +149,19 @@ public class LoginActivity extends AppCompatActivity {
     private void showAlertDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
         builder.setTitle("Email not verified");
-        builder.setMessage("Please verify your email now. You cannot login without email verification.");
+        builder.setMessage("Your Email is not Verified.\nPlease Verify your Email");
 
-        builder.setPositiveButton("Continue", (dialog, which) -> {
-            Intent intent = new Intent(Intent.ACTION_MAIN);
+        builder.setPositiveButton("Verify", (dialog, which) -> {
+            intent = new Intent(Intent.ACTION_MAIN);
             intent.addCategory(Intent.CATEGORY_APP_EMAIL);
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);  //sa email app ni siya mo diritso dili sa atoang app mag open
             startActivity(intent);
+        });
+
+        builder.setNegativeButton("Later", (dialog, which) -> {
+            intent = new Intent(LoginActivity.this, MainActivity.class);
+            startActivity(intent);
+            finish();
         });
 
         AlertDialog alertDialog = builder.create();

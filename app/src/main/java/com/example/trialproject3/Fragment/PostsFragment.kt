@@ -14,11 +14,9 @@ import com.example.trialproject3.Models.PostsModel
 import com.example.trialproject3.R
 import com.example.trialproject3.Utility.ToastHelper
 import com.example.trialproject3.databinding.FragmentPostsBinding
-import com.google.api.Distribution.BucketOptions.Linear
-import java.util.EventListener
 
 
-class PostsFragment : Fragment(), PostsAdapter.OnPostItemClickListener {
+class PostsFragment : Fragment(), PostsAdapter.OnPostItemClickListener, PostsAdapter.OnPostRateClickListener {
     private val TAG: String = "PostsFragment"
     private lateinit var binding: FragmentPostsBinding
     private lateinit var context: Context
@@ -62,12 +60,14 @@ class PostsFragment : Fragment(), PostsAdapter.OnPostItemClickListener {
                 for (posts in value.documents) {
                     val post = posts.toObject(PostsModel::class.java)
                     if (post != null) {
-
                         postsList.add(post)
                     }
                 }
-                val postsAdapter = PostsAdapter(context, postsList, this@PostsFragment)
-                binding.postsRecyclerView.layoutManager = LinearLayoutManager(context)
+                val postsAdapter = PostsAdapter(context, postsList, this@PostsFragment, this@PostsFragment)
+                binding.postsRecyclerView.layoutManager = LinearLayoutManager(context).apply {
+                    reverseLayout = true
+                    stackFromEnd = true
+                }
                 binding.postsRecyclerView.adapter = postsAdapter
             }
         }
@@ -77,19 +77,42 @@ class PostsFragment : Fragment(), PostsAdapter.OnPostItemClickListener {
         goToFragment(postsModel)
     }
 
-    private fun goToFragment(postsModel: PostsModel) {
-        val fragment = PostUserProfileFragment()
-        val bundle = Bundle()
-        bundle.putString(
-            PostUserProfileFragment.POST_USER_ID_PARAMS,
-            postsModel.userID
-        ) // Replace "your string value" with the actual string you want to pass
-        fragment.arguments = bundle
+    override fun onPostRateClick(postsModel: PostsModel, rating: Float) {
+        rateUser(postsModel, rating)
+    }
 
+    private fun rateUser(postsModel: PostsModel, rating: Float) {
+        val userReference = FirebaseHelper.getFireStoreInstance()
+            .collection(FirebaseHelper.KEY_COLLECTION_USERS)
+            .document(postsModel.userID)
+
+        userReference.update("sellerRatings", rating)
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful){
+                    toastHelper.showToast("User Rated", 0)
+                }else{
+                    toastHelper.showToast("User failed to rated", 1)
+                    Log.e(TAG, "rateUser: " + task.exception)
+                }
+            }
+
+    }
+
+    private fun goToFragment(postsModel: PostsModel) {
+//        val fragment = PostUserProfileFragment()
+//        val bundle = Bundle()
+//        bundle.putString(
+//            PostUserProfileFragment.POST_USER_ID_PARAMS,
+//            postsModel.userID
+//        )
+//        fragment.arguments = bundle
+        val postUserProfileFragment = PostUserProfileFragment.newInstance(postsModel.userID)
         val fragmentManager = requireActivity().supportFragmentManager
         val fragmentTransaction = fragmentManager.beginTransaction()
-        fragmentTransaction.replace(R.id.fragmentContainer, fragment)
+        fragmentTransaction.replace(R.id.fragmentContainer, postUserProfileFragment)
         fragmentTransaction.addToBackStack(null)
         fragmentTransaction.commit()
     }
+
+
 }

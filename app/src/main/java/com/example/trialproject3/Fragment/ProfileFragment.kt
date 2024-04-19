@@ -110,9 +110,11 @@ class ProfileFragment : Fragment(), OnBackPressedListener {
                         val getFirstName = documentSnapshot.getString("Fname")
                         val getUserType = documentSnapshot.getString("UserType")
                         val getProfilePicture = documentSnapshot.get("ProfilePicture")
+                        val getPhone: String = documentSnapshot.get("Phone").toString()
                         binding.fullNameTextView.text = getFirstName
                         binding.userTypeTextView.text = getUserType
                         binding.emailTextView.text = FirebaseHelper.currentUser().email
+                        binding.phoneTextView.text = getPhone
 
                         if (getProfilePicture != "none") {
                             Glide.with(context)
@@ -139,12 +141,22 @@ class ProfileFragment : Fragment(), OnBackPressedListener {
                                             stores.toObject(StoreDetailsModel::class.java)
                                         if (storeDetailsModel != null) {
                                             if (storeDetailsModel.storeOwnerID == FirebaseHelper.currentUserID()) {
+                                                storeDetailsModelList.add(storeDetailsModel)
                                                 binding.storeDisplayLayout.visibility = View.VISIBLE
 
                                                 binding.storeNameTextView.text =
                                                     storeDetailsModel.storeName
                                                 binding.storeLocationTextView.text =
                                                     storeDetailsModel.storeLocation
+                                                binding.addAnotherStoreBtn.setOnClickListener {
+                                                    val intent =
+                                                        Intent(
+                                                            context,
+                                                            MapboxMapActivity::class.java
+                                                        )
+                                                    startActivity(intent)
+                                                    requireActivity().finish()
+                                                }
                                             } else {
                                                 binding.registerStoreLayout.visibility =
                                                     View.VISIBLE
@@ -157,6 +169,7 @@ class ProfileFragment : Fragment(), OnBackPressedListener {
                                                     startActivity(intent)
                                                     requireActivity().finish()
                                                 }
+
                                             }
                                         }
                                     }
@@ -167,7 +180,7 @@ class ProfileFragment : Fragment(), OnBackPressedListener {
                             binding.toPayBtn.visibility = View.VISIBLE
                             binding.toReceiveBtn.visibility = View.VISIBLE
 
-                            binding.toShipBtn.setOnClickListener { v: View? ->
+                            binding.toShipBtn.setOnClickListener {
 //             Retrieve the cart items from the intent
 //            List<PopularDomain> cartItems = (List<PopularDomain>)  getIntent().getSerializableExtra("cartItems");
 
@@ -197,6 +210,7 @@ class ProfileFragment : Fragment(), OnBackPressedListener {
 
     private fun updateProfilePicture(profilePictureUri: Uri) {
         binding.profilePictureProgressBar.visibility = View.VISIBLE
+        binding.uploadImageView.visibility = View.GONE
 
         val storageRef = FirebaseStorage.getInstance().reference
         val profilePictureRef =
@@ -212,6 +226,7 @@ class ProfileFragment : Fragment(), OnBackPressedListener {
                                 .update("ProfilePicture", profilePicture)
                                 .addOnCompleteListener { task ->
                                     binding.profilePictureProgressBar.visibility = View.GONE
+                                    binding.uploadImageView.visibility = View.VISIBLE
 
                                     if (task.isSuccessful) {
                                         binding.profilePicImageView.setImageURI(profilePictureUri)

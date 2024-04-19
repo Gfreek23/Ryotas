@@ -129,6 +129,16 @@
                 android:textColor="@color/black"
                 android:textSize="15sp" />
 
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/phoneTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:text="Phone Number"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="15sp" />
+
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:id="@+id/storeInfoLayout"
                 android:layout_width="match_parent"
@@ -136,15 +146,6 @@
                 android:gravity="center"
                 android:orientation="vertical"
                 android:padding="10dp">
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
-                    android:text="Store"
-                    android:textColor="@color/black"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
 
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:id="@+id/registerStoreLayout"
@@ -173,6 +174,7 @@
                     android:id="@+id/storeDisplayLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    app:cardBackgroundColor="@color/white"
                     app:cardCornerRadius="5dp"
                     app:cardElevation="10dp">
 
@@ -181,6 +183,15 @@
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
                         android:padding="10dp">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="10dp"
+                            android:text="Store:"
+                            android:textColor="@color/black"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
 
                         <androidx.appcompat.widget.AppCompatTextView
                             android:id="@+id/storeNameTextView"
@@ -200,6 +211,15 @@
                             android:textColor="@color/black"
                             android:textSize="16sp" />
 
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:id="@+id/addAnotherStoreBtn"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:paddingStart="20dp"
+                            android:paddingEnd="20dp"
+                            android:text="Add Another Store"
+                            android:textColor="@color/black" />
 
                     </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -220,7 +240,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
-                    android:background="@color/stained_white"
+                    app:cardBackgroundColor="@color/stained_white"
                     app:cardCornerRadius="10dp"
                     app:cardElevation="5dp">
 
@@ -253,7 +273,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
-                    android:background="@color/stained_white"
+                    app:cardBackgroundColor="@color/stained_white"
                     app:cardCornerRadius="10dp"
                     app:cardElevation="5dp">
 
@@ -286,7 +306,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
-                    android:background="@color/stained_white"
+                    app:cardBackgroundColor="@color/stained_white"
                     app:cardCornerRadius="10dp"
                     app:cardElevation="5dp">
 
@@ -319,7 +339,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
-                    android:background="@color/stained_white"
+                    app:cardBackgroundColor="@color/stained_white"
                     app:cardCornerRadius="10dp"
                     app:cardElevation="5dp">
 

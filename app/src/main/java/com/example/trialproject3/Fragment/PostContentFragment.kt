@@ -17,6 +17,9 @@ import com.example.trialproject3.Utility.ToastHelper
 import com.example.trialproject3.databinding.FragmentPostContentBinding
 import com.github.dhaval2404.imagepicker.ImagePicker
 import com.google.firebase.storage.FirebaseStorage
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 import java.util.UUID
 
 class PostContentFragment : Fragment(), MainActivity.OnBackPressedListener {
@@ -76,6 +79,11 @@ class PostContentFragment : Fragment(), MainActivity.OnBackPressedListener {
             binding.progressBar.visibility = View.VISIBLE
             binding.postBtn.visibility = View.GONE
 
+            val currentTimeMillis = System.currentTimeMillis()
+            val sdf = SimpleDateFormat("MMMM-yyyy-dd hh:mm:ss a", Locale.getDefault())
+            val currentDate = Date(currentTimeMillis)
+            val formattedDateTime = sdf.format(currentDate)
+
             if (postImageUri != null) {
                 val storageRef = FirebaseStorage.getInstance().reference
                 val postImageRef = storageRef.child("/postsImages/${UUID.randomUUID()}")
@@ -93,11 +101,13 @@ class PostContentFragment : Fragment(), MainActivity.OnBackPressedListener {
                                     post["userPostImage"] = MainActivity.profilePicture
                                     post["userType"] = MainActivity.userType
                                     post["email"] = FirebaseHelper.currentUser().email.toString()
+                                    post["phoneNumber"] = MainActivity.phoneNumber
                                     post["title"] = title
                                     post["description"] = description
                                     post["postImage"] = postImage
                                     post["storeName"] = MainActivity.storeName
                                     post["storeLocation"] = MainActivity.storeLocation
+                                    post["timePosted"] = formattedDateTime
 
                                     FirebaseHelper.getFireStoreInstance()
                                         .collection(FirebaseHelper.KEY_COLLECTION_POSTS)
@@ -131,11 +141,13 @@ class PostContentFragment : Fragment(), MainActivity.OnBackPressedListener {
                 post["userPostImage"] = MainActivity.profilePicture
                 post["userType"] = MainActivity.userType
                 post["email"] = FirebaseHelper.currentUser().email.toString()
+                post["phoneNumber"] = MainActivity.phoneNumber
                 post["title"] = title
                 post["description"] = description
                 post["postImage"] = postImage
                 post["storeName"] = MainActivity.storeName
                 post["storeLocation"] = MainActivity.storeLocation
+                post["timePosted"] = formattedDateTime
 
                 FirebaseHelper.getFireStoreInstance()
                     .collection(FirebaseHelper.KEY_COLLECTION_POSTS)

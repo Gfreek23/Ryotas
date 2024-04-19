@@ -23,11 +23,11 @@ import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.ContextCompat
 import com.example.trialproject3.Activity.MainActivity
 import com.example.trialproject3.BottomSheetModal.RegisterSellerStoreBottomSheetFragment
+import com.example.trialproject3.BottomSheetModal.ShowStoreInfoBottomSheetFragment
 import com.example.trialproject3.Firebase.FirebaseHelper
 import com.example.trialproject3.R
 import com.example.trialproject3.databinding.ActivityMapboxMapBinding
 import com.example.trialproject3.databinding.MapboxItemViewAnnotationBinding
-import com.google.firebase.database.FirebaseDatabase
 import com.mapbox.api.directions.v5.models.Bearing
 import com.mapbox.api.directions.v5.models.RouteOptions
 import com.mapbox.bindgen.Expected
@@ -102,7 +102,8 @@ import java.util.Calendar
 import java.util.Locale
 import java.util.UUID
 
-class MapboxMapActivity : AppCompatActivity(), PermissionsListener {
+class MapboxMapActivity : AppCompatActivity(), PermissionsListener,
+    ShowStoreInfoBottomSheetFragment.OnNavigateListener {
     private val TAG = "MapboxMapActivity"
     private lateinit var binding: ActivityMapboxMapBinding
 
@@ -337,7 +338,7 @@ class MapboxMapActivity : AppCompatActivity(), PermissionsListener {
                 mapboxNavigation.registerVoiceInstructionsObserver(voiceInstructionsObserver)
                 // start the trip session to being receiving location updates in free drive
                 // and later when a route is set also receiving route progress updates
-                mapboxNavigation.startTripSession() //TODO: error cause
+                mapboxNavigation.startTripSession()
             }
 
             override fun onDetached(mapboxNavigation: MapboxNavigation) {
@@ -353,18 +354,15 @@ class MapboxMapActivity : AppCompatActivity(), PermissionsListener {
 
     private val viewAnnotationMap = mutableMapOf<Point, View>()
 
-    companion object {
+    interface OnNavigateListener {
+        fun onNavigateClick(longitude: Double, latitude: Double)
+    }
 
+    companion object {
         var currentLatitude: Double = 0.0
         var currentLongitude: Double = 0.0
         private const val BUTTON_ANIMATION_DURATION = 1500L
         private const val DOUBLE_BACK_PRESS_INTERVAL = 2000 // 2 seconds
-
-    }
-
-    override fun onStart() {
-        super.onStart()
-
 
     }
 
@@ -390,7 +388,6 @@ class MapboxMapActivity : AppCompatActivity(), PermissionsListener {
         binding.tripProgressLayout.visibility = View.INVISIBLE
         binding.soundBtn.visibility = View.INVISIBLE
         binding.maneuverView.visibility = View.INVISIBLE
-        binding.bookingsImgBtn.visibility = View.GONE
         binding.navigationStatusTextView.visibility = View.GONE
         binding.pingLocationImgBtn.visibility = View.GONE
         binding.pingLocationImgBtn2.visibility = View.GONE
@@ -429,9 +426,8 @@ class MapboxMapActivity : AppCompatActivity(), PermissionsListener {
 
             binding.fullscreenImgBtn.visibility = View.GONE
             binding.minimizeScreenImgBtn.visibility = View.VISIBLE
-            binding.bookingsImgBtn.visibility = View.VISIBLE
 
-            binding.bottomNavigationView.visibility = View.GONE
+//            binding.bottomNavigationView.visibility = View.GONE
         }
 
         binding.minimizeScreenImgBtn.setOnClickListener {
@@ -442,12 +438,12 @@ class MapboxMapActivity : AppCompatActivity(), PermissionsListener {
 
             binding.minimizeScreenImgBtn.visibility = View.GONE
             binding.fullscreenImgBtn.visibility = View.VISIBLE
-            binding.bookingsImgBtn.visibility = View.GONE
 
-            binding.bottomNavigationView.visibility = View.VISIBLE
+//            binding.bottomNavigationView.visibility = View.VISIBLE
         }
 
         binding.stopNavigationImgBtn.setOnClickListener {
+            clearRouteAndStopNavigation()
         }
         binding.recenterBtn.setOnClickListener {
             navigationCamera.requestNavigationCameraToFollowing()
@@ -481,7 +477,6 @@ class MapboxMapActivity : AppCompatActivity(), PermissionsListener {
             }
         })
     }
-
 
 
     private fun checkLocationPermission() {
@@ -711,7 +706,7 @@ class MapboxMapActivity : AppCompatActivity(), PermissionsListener {
 
         binding.mapView.gestures.addOnMapLongClickListener {
 //            findRoute(it)
-            showBottomSheet(it)
+            showRegisterSellerStoreBottomSheet(it)
             true
         }
 
@@ -729,6 +724,10 @@ class MapboxMapActivity : AppCompatActivity(), PermissionsListener {
 //        }
     }
 
+    override fun onNavigateClick(longitude: Double, latitude: Double) {
+        val point = Point.fromLngLat(longitude, latitude)
+        findRoute(point)
+    }
 
     private fun removeDestinationAnnotationFromMap() {
         pointAnnotation?.let { pointAnnotationManager.delete(it) }
@@ -766,21 +765,22 @@ class MapboxMapActivity : AppCompatActivity(), PermissionsListener {
             .collection(FirebaseHelper.KEY_COLLECTION_STORES)
 
         storeReference.get()
-            .addOnCompleteListener { task->
-                if (task.isSuccessful){
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
                     val storeDocuments = task.result?.documents
                     if (storeDocuments != null) {
                         for (storeSnapshot in storeDocuments) {
                             val storeData = storeSnapshot.data
                             val longitude = storeData?.get("storeLongitude") as? Double
                             val latitude = storeData?.get("storeLatitude") as? Double
+                            val storeID = storeData?.get("storeID") as? String
 
-                            if (longitude != null && latitude != null) {
-                                addStoreAnnotationToMap(longitude, latitude)
+                            if (storeID != null && longitude != null && latitude != null) {
+                                addStoreAnnotationToMap(storeID, longitude, latitude)
                             }
                         }
                     }
-                }else {
+                } else {
                     Log.e(TAG, "loadStoresLocationInMap: " + task.exception)
                 }
             }
@@ -788,6 +788,7 @@ class MapboxMapActivity : AppCompatActivity(), PermissionsListener {
 
     //display the pin in the map
     private fun addStoreAnnotationToMap(
+        storeID: String,
         longitude: Double,
         latitude: Double,
     ) {
@@ -809,12 +810,15 @@ class MapboxMapActivity : AppCompatActivity(), PermissionsListener {
                 addClickListener(
                     OnPointAnnotationClickListener {
 
+                        showStoreInfoBottomSheet(storeID, longitude, latitude)
+
                         true
                     }
                 )
             }
         }
     }
+
     private fun onCameraTrackingDismissed() {
 //        Toast.makeText(this, "onCameraTrackingDismissed", Toast.LENGTH_SHORT).show()
 
@@ -825,6 +829,18 @@ class MapboxMapActivity : AppCompatActivity(), PermissionsListener {
 //        binding.mapView.gestures.removeOnMoveListener(onMoveListener)
     }
 
+    private fun showStoreInfoBottomSheet(
+        storeID: String,
+        longitude: Double,
+        latitude: Double
+    ) {
+        val showStoreInfoBottomSheetFragment =
+            ShowStoreInfoBottomSheetFragment.newInstance(storeID, longitude, latitude)
+        showStoreInfoBottomSheetFragment.show(
+            supportFragmentManager,
+            ShowStoreInfoBottomSheetFragment.TAG
+        )
+    }
 
     //displays the the "you"
     private fun createViewAnnotation(mapView: MapView, coordinate: Point) {
@@ -872,23 +888,14 @@ class MapboxMapActivity : AppCompatActivity(), PermissionsListener {
             binding.showTripProgressImgBtn.visibility = View.VISIBLE
             binding.pingLocationImgBtn2.visibility = View.VISIBLE
         }
-
         binding.showTripProgressImgBtn.setOnClickListener {
             binding.tripProgressLayout.visibility = View.VISIBLE
             binding.showTripProgressImgBtn.visibility = View.GONE
             binding.pingLocationImgBtn2.visibility = View.GONE
         }
-
         binding.mapView.getMapboxMap().apply {
             loadStyleUri(Style.TRAFFIC_DAY) {
             }
-        }
-
-
-        if (isNavigatingToDestination) {
-            showToast("Navigating to Passenger's destination")
-        } else {
-            showToast("Navigating to Passenger's pickup location")
         }
 
         val originLocation = navigationLocationProvider.lastLocation
@@ -948,7 +955,7 @@ class MapboxMapActivity : AppCompatActivity(), PermissionsListener {
         binding.routeOverviewBtn.visibility = View.VISIBLE
         binding.tripProgressLayout.visibility = View.VISIBLE
 
-        binding.bottomNavigationView.visibility = View.GONE
+//        binding.bottomNavigationView.visibility = View.GONE
         binding.fullscreenImgBtn.visibility = View.GONE
         binding.minimizeScreenImgBtn.visibility = View.GONE
 
@@ -977,231 +984,8 @@ class MapboxMapActivity : AppCompatActivity(), PermissionsListener {
         binding.routeOverviewBtn.visibility = View.INVISIBLE
         binding.tripProgressLayout.visibility = View.INVISIBLE
 
-        binding.bottomNavigationView.visibility = View.VISIBLE
+//        binding.bottomNavigationView.visibility = View.VISIBLE
         binding.fullscreenImgBtn.visibility = View.VISIBLE
-    }
-
-    fun calculateTravelTime(distance: Double, averageSpeed: Double): Double {
-        // Distance is in kilometers, averageSpeed is in kilometers per hour
-        return distance / averageSpeed // Travel time in hours
-    }
-
-    fun calculateArrivalTime(travelTime: Double): Long {
-        val currentTimeMillis = System.currentTimeMillis()
-        val travelTimeMillis =
-            (travelTime * 60 * 60 * 1000).toLong() // Convert travel time to milliseconds
-        return currentTimeMillis + travelTimeMillis
-    }
-
-    private fun handleDriverArrival() {
-
-        val driverReference = FirebaseHelper.getFireStoreInstance()
-            .collection(FirebaseHelper.KEY_COLLECTION_USERS)
-            .document(FirebaseHelper.currentUser().uid)
-
-        driverReference.get()
-            .addOnSuccessListener {
-
-                if (it.exists()) {
-                    val currentPassengersTransported =
-                        it.getLong("passengersTransported") ?: 0
-                    val newPassengersTransported = currentPassengersTransported + 1
-                    val currentDriverRating = it.getDouble("driverRatings") ?: 0.0
-                    val newDriverRating = currentDriverRating + 3.0
-
-                    val updateDriverStatus = HashMap<String, Any>()
-                    updateDriverStatus["isAvailable"] = true
-                    updateDriverStatus["navigationStatus"] = "idle"
-                    updateDriverStatus["driverPingedLocation"] = "none"
-                    updateDriverStatus["driverPingedLatitude"] = 0.0
-                    updateDriverStatus["driverPingedLongitude"] = 0.0
-                    updateDriverStatus["passengersTransported"] = newPassengersTransported
-                    updateDriverStatus["driverRatings"] = newDriverRating
-                }
-            }
-            .addOnFailureListener {
-                Log.e(TAG, "handleDriverArrival: " + it.message)
-            }
-
-        val tripReference = FirebaseHelper.getFireStoreInstance()
-            .collection(FirebaseHelper.KEY_COLLECTION_TRIPS)
-            .document()
-
-        if (isNavigatingToDestination) {
-
-            //update driver status
-            val updateDriverStatus = HashMap<String, Any>()
-            updateDriverStatus["tripID"] = "none"
-
-            driverReference.get()
-                .addOnSuccessListener {
-
-                }
-                .addOnFailureListener {
-                    Log.e(TAG, "handleDriverArrival: " + it.message)
-                }
-
-            //update trip
-            val updateTrip = HashMap<String, Any>()
-            updateTrip["tripStatus"] = "Passenger has transported to destination"
-
-            tripReference.update(updateTrip)
-                .addOnSuccessListener {
-
-                }
-                .addOnFailureListener {
-                    Log.e(TAG, "handleDriverArrival: " + it.message)
-                }
-
-        } else {
-            //update driver status
-            val updateDriverStatus = HashMap<String, Any>()
-            updateDriverStatus["tripID"] = ""
-
-            driverReference.get()
-                .addOnSuccessListener { }
-                .addOnFailureListener {
-                    Log.e(TAG, "handleDriverArrival: " + it.message)
-                }
-
-            //update trip
-            val updateTrip = HashMap<String, Any>()
-            updateTrip["tripStatus"] = "Passenger has transported to destination"
-
-            tripReference.update(updateTrip)
-                .addOnSuccessListener {
-                    isNavigatingToDestination = true
-                }
-                .addOnFailureListener {
-                    Log.e(TAG, "handleDriverArrival: " + it.message)
-                }
-        }
-    }
-
-    private fun setTripAsComplete(
-        tripID: String,
-        bookingID: String,
-        passengerID: String
-    ) {
-
-        //update current booking
-        val bookingReference = FirebaseDatabase.getInstance()
-            .getReference(FirebaseHelper.KEY_COLLECTION_BOOKINGS)
-
-        val updateBooking = HashMap<String, Any>()
-        updateBooking["bookingStatus"] = "Transported to destination"
-        updateBooking["ratingStatus"] = "Driver not rated"
-
-        bookingReference.child(bookingID).updateChildren(updateBooking)
-            .addOnSuccessListener {
-                Log.i(TAG, "setTripAsComplete: bookingReference updated successfully ")
-            }
-            .addOnFailureListener {
-                Log.e(TAG, "setTripAsComplete - bookingReference: " + it.message)
-            }
-
-        //update current trip
-        val tripReference = FirebaseHelper.getFireStoreInstance()
-            .collection(FirebaseHelper.KEY_COLLECTION_TRIPS)
-            .document(tripID)
-
-        val updateTrip = HashMap<String, Any>()
-        updateTrip["tripStatus"] = "Passenger has transported to destination"
-
-        tripReference.update(updateTrip)
-            .addOnSuccessListener {
-                clearRouteAndStopNavigation()
-            }
-            .addOnFailureListener {
-                Log.e(TAG, "setTripAsComplete - tripReference: " + it.message)
-            }
-
-        //update driver status
-        val driverReference = FirebaseHelper.getFireStoreInstance()
-            .collection(FirebaseHelper.KEY_COLLECTION_USERS)
-            .document(FirebaseHelper.currentUser().uid)
-
-        driverReference.get()
-            .addOnSuccessListener { documentSnapshot ->
-                if (documentSnapshot.exists()) {
-
-                    val getCurrentPassengersTransported: Long =
-                        documentSnapshot.getLong("passengersTransported") ?: 0
-                    val addPassengersTransported = getCurrentPassengersTransported + 1
-
-                    val currentDriverRating: Double =
-                        documentSnapshot.getDouble("driverRatings") ?: 0.0
-                    val newDriverRating = currentDriverRating + 3.0
-                    val getUsersRated = documentSnapshot.getLong("usersRated") ?: 0
-
-                    val updateDriverInfo = HashMap<String, Any>()
-
-//                    if (getUsersRated <= 0) {
-//                        updateDriverInfo["driverRatings"] = newDriverRating
-//
-//                    } else {
-//                        val calculatedRatings = currentDriverRating / getUsersRated
-//                        val decimalFormat = DecimalFormat("#.##")
-//                        val formattedRatings: Double =
-//                            decimalFormat.format(calculatedRatings).toDouble()
-//                        updateDriverInfo["driverRatings"] = formattedRatings
-//                    }
-
-                    updateDriverInfo["isAvailable"] = true
-                    updateDriverInfo["navigationStatus"] = "idle"
-                    updateDriverInfo["driverPingedLocation"] = "none"
-                    updateDriverInfo["driverPingedLatitude"] = 0.0
-                    updateDriverInfo["driverPingedLongitude"] = 0.0
-                    updateDriverInfo["driverRatings"] = newDriverRating
-                    updateDriverInfo["passengersTransported"] = addPassengersTransported
-
-                    driverReference.update(updateDriverInfo)
-                        .addOnSuccessListener {
-
-
-                            removeDestinationAnnotationFromMap()
-                        }
-                        .addOnFailureListener {
-                            Log.e(TAG, "setTripAsComplete - driverReference: " + it.message)
-                        }
-                }
-            }
-            .addOnFailureListener { exception ->
-                Log.e(
-                    TAG,
-                    "Error getting document in setTripAsComplete - driverReference: $exception"
-                )
-            }
-
-        val passengerReference = FirebaseHelper.getFireStoreInstance()
-            .collection(FirebaseHelper.KEY_COLLECTION_USERS)
-            .document(passengerID)
-
-        passengerReference.get()
-            .addOnSuccessListener {
-                if (it.exists()) {
-
-                    val currentTotalTrips: Long = it.getLong("totalTrips") ?: 0
-                    val addTotalTrips = currentTotalTrips + 1
-
-                    val updateTotalTrips = HashMap<String, Any>()
-                    updateTotalTrips["totalTrips"] = addTotalTrips
-
-                    passengerReference.update(updateTotalTrips)
-                        .addOnSuccessListener {
-                            Log.i(TAG, "setTripAsComplete: passengerReference updated successfully")
-                        }
-                        .addOnFailureListener {
-                            Log.e(
-                                TAG,
-                                "setTripAsComplete - passengerReference" + it.message
-                            )
-                        }
-                }
-            }
-            .addOnFailureListener {
-                Log.e(TAG, "setTripAsComplete - passengerReference: " + it.message)
-            }
     }
 
     private fun getCurrentTimeAndDate(): String {
@@ -1223,7 +1007,6 @@ class MapboxMapActivity : AppCompatActivity(), PermissionsListener {
     }
 
     //start the trip when the passenger is on board
-
 
     //    private fun showEnableLocationServiceDialog() {
 //        builder = AlertDialog.Builder(this)
@@ -1264,13 +1047,16 @@ class MapboxMapActivity : AppCompatActivity(), PermissionsListener {
 //        }
 //
 //    }
-    private fun showBottomSheet(location: Point) {
+    private fun showRegisterSellerStoreBottomSheet(location: Point) {
         val registerSellerStoreBottomSheetFragment =
             RegisterSellerStoreBottomSheetFragment.newInstance(
                 location.longitude(),
                 location.latitude()
             )
-        registerSellerStoreBottomSheetFragment.show(supportFragmentManager, TAG)
+        registerSellerStoreBottomSheetFragment.show(
+            supportFragmentManager,
+            RegisterSellerStoreBottomSheetFragment.TAG
+        )
     }
 
     private fun showToast(message: String) {
