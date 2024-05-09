@@ -9,6 +9,7 @@ import androidx.appcompat.widget.AppCompatRatingBar
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.trialproject3.Models.PostsModel
+import com.example.trialproject3.R
 import com.example.trialproject3.databinding.ItemPostsBinding
 
 class PostsAdapter(
@@ -43,11 +44,15 @@ class PostsAdapter(
             binding.postImageView.visibility = View.GONE
 
             if (postsModel.userPostImage != "none") {
-                Glide.with(context).load(postsModel.userPostImage).into(binding.userImageView)
+                Glide.with(context).load(postsModel.userPostImage)
+                    .placeholder(R.drawable.loading_gif)
+                    .into(binding.userImageView)
             }
             if (postsModel.postImage != "none") {
                 binding.postImageView.visibility = View.VISIBLE
-                Glide.with(context).load(postsModel.postImage).into(binding.postImageView)
+                Glide.with(context).load(postsModel.postImage)
+                    .placeholder(R.drawable.loading_gif)
+                    .into(binding.postImageView)
             }
 
             binding.postHeaderLayout.setOnClickListener {

@@ -79,6 +79,18 @@ class PostContentFragment : Fragment(), MainActivity.OnBackPressedListener {
             binding.progressBar.visibility = View.VISIBLE
             binding.postBtn.visibility = View.GONE
 
+            val sharedPreferences = context.getSharedPreferences(
+                "currentUserPrefs",
+                Context.MODE_PRIVATE
+            )
+
+            val fullName = sharedPreferences.getString("fullName", null)
+            val userType = sharedPreferences.getString("userType", null)
+            val profilePicture =
+                sharedPreferences.getString("profilePicture", null)
+            val phoneNumber =
+                sharedPreferences.getString("phoneNumber", null)
+
             val currentTimeMillis = System.currentTimeMillis()
             val sdf = SimpleDateFormat("MMMM-yyyy-dd hh:mm:ss a", Locale.getDefault())
             val currentDate = Date(currentTimeMillis)
@@ -95,18 +107,20 @@ class PostContentFragment : Fragment(), MainActivity.OnBackPressedListener {
                                 .addOnSuccessListener {
                                     postImage = it.toString()
 
+
+
                                     val post = HashMap<Any, String>()
                                     post["userID"] = FirebaseHelper.currentUserID()
-                                    post["fullName"] = MainActivity.fullName
-                                    post["userPostImage"] = MainActivity.profilePicture
-                                    post["userType"] = MainActivity.userType
+                                    post["fullName"] = fullName!!
+                                    post["userPostImage"] = profilePicture!!
+                                    post["userType"] = userType!!
                                     post["email"] = FirebaseHelper.currentUser().email.toString()
-                                    post["phoneNumber"] = MainActivity.phoneNumber
+                                    post["phoneNumber"] = phoneNumber!!
                                     post["title"] = title
                                     post["description"] = description
                                     post["postImage"] = postImage
-                                    post["storeName"] = MainActivity.storeName
-                                    post["storeLocation"] = MainActivity.storeLocation
+                                    post["storeName"] = MainActivity.storeName!!
+                                    post["storeLocation"] = MainActivity.storeLocation!!
                                     post["timePosted"] = formattedDateTime
 
                                     FirebaseHelper.getFireStoreInstance()
@@ -137,16 +151,16 @@ class PostContentFragment : Fragment(), MainActivity.OnBackPressedListener {
             } else {
                 val post = HashMap<Any, String>()
                 post["userID"] = FirebaseHelper.currentUserID()
-                post["fullName"] = MainActivity.fullName
-                post["userPostImage"] = MainActivity.profilePicture
-                post["userType"] = MainActivity.userType
+                post["fullName"] = fullName!!
+                post["userPostImage"] = profilePicture!!
+                post["userType"] = userType!!
                 post["email"] = FirebaseHelper.currentUser().email.toString()
-                post["phoneNumber"] = MainActivity.phoneNumber
+                post["phoneNumber"] = phoneNumber!!
                 post["title"] = title
                 post["description"] = description
                 post["postImage"] = postImage
-                post["storeName"] = MainActivity.storeName
-                post["storeLocation"] = MainActivity.storeLocation
+                post["storeName"] = MainActivity.storeName!!
+                post["storeLocation"] = MainActivity.storeLocation!!
                 post["timePosted"] = formattedDateTime
 
                 FirebaseHelper.getFireStoreInstance()

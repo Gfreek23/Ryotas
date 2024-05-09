@@ -24,6 +24,7 @@ import com.example.trialproject3.Helper.AlertDialogHelper
 import com.example.trialproject3.Map.MapboxMapActivity
 import com.example.trialproject3.Models.StoreDetailsModel
 import com.example.trialproject3.R
+import com.example.trialproject3.Utility.LoadingSpinnerOverlay
 import com.example.trialproject3.Utility.ToastHelper
 import com.example.trialproject3.databinding.FragmentProfileBinding
 import com.github.dhaval2404.imagepicker.ImagePicker
@@ -41,6 +42,7 @@ class ProfileFragment : Fragment(), OnBackPressedListener {
     private lateinit var alertDialogHelper: AlertDialogHelper
     private lateinit var toastHelper: ToastHelper
     private var profilePicture: String = "none"
+    private lateinit var loadingSpinnerOverlay: LoadingSpinnerOverlay
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -51,6 +53,7 @@ class ProfileFragment : Fragment(), OnBackPressedListener {
         context = requireContext()
         alertDialogHelper = AlertDialogHelper(context)
         toastHelper = ToastHelper(context)
+        loadingSpinnerOverlay = LoadingSpinnerOverlay(context)
 
         binding.profilePictureProgressBar.visibility = View.GONE
         binding.storeInfoLayout.visibility = View.GONE
@@ -95,16 +98,20 @@ class ProfileFragment : Fragment(), OnBackPressedListener {
     }
 
     private fun logoutUser() {
+        loadingSpinnerOverlay.showLoading()
         FirebaseHelper.signOutUser()
         intent = Intent(context, LoginActivity::class.java)
         startActivity(intent)
         requireActivity().finish()
+        loadingSpinnerOverlay.hideLoading()
     }
 
     private fun loadUserProfile() {
+        loadingSpinnerOverlay.showLoading()
         if (FirebaseHelper.currentUser() != null) {
             FirebaseHelper.currentUserDetails().get()
                 .addOnCompleteListener { task: Task<DocumentSnapshot> ->
+                    loadingSpinnerOverlay.hideLoading()
                     if (task.isSuccessful) {
                         val documentSnapshot = task.result
                         val getFirstName = documentSnapshot.getString("Fname")
@@ -119,6 +126,7 @@ class ProfileFragment : Fragment(), OnBackPressedListener {
                         if (getProfilePicture != "none") {
                             Glide.with(context)
                                 .load(getProfilePicture)
+                                .placeholder(R.drawable.loading_gif)
                                 .into(binding.profilePicImageView)
                         }
 
@@ -209,6 +217,7 @@ class ProfileFragment : Fragment(), OnBackPressedListener {
     }
 
     private fun updateProfilePicture(profilePictureUri: Uri) {
+        loadingSpinnerOverlay.showLoading()
         binding.profilePictureProgressBar.visibility = View.VISIBLE
         binding.uploadImageView.visibility = View.GONE
 
@@ -225,6 +234,7 @@ class ProfileFragment : Fragment(), OnBackPressedListener {
                             FirebaseHelper.currentUserDetails()
                                 .update("ProfilePicture", profilePicture)
                                 .addOnCompleteListener { task ->
+                                    loadingSpinnerOverlay.hideLoading()
                                     binding.profilePictureProgressBar.visibility = View.GONE
                                     binding.uploadImageView.visibility = View.VISIBLE
 

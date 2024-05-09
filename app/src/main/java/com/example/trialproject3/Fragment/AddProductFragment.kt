@@ -10,8 +10,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import com.example.trialproject3.Activity.MainActivity
 import com.example.trialproject3.Firebase.FirebaseHelper
+import com.example.trialproject3.Models.ProductsModel
 import com.example.trialproject3.R
 import com.example.trialproject3.Utility.ToastHelper
 import com.example.trialproject3.databinding.FragmentAddProductBinding
@@ -23,13 +26,14 @@ import java.util.Locale
 import java.util.UUID
 
 
-class AddProductFragment : Fragment() {
+class AddProductFragment : Fragment(), MainActivity.OnBackPressedListener {
     private val TAG = "AddProductFragment"
     private lateinit var binding: FragmentAddProductBinding
     private var productImageUri: Uri? = null
     private lateinit var productImage: String
     private lateinit var toastHelper: ToastHelper
     private lateinit var context: Context
+    private var selectedCategory: String? = null
 
     companion object {
         @JvmStatic
@@ -51,7 +55,7 @@ class AddProductFragment : Fragment() {
         context = requireContext()
         toastHelper = ToastHelper(context)
 
-        binding.addProductImageView.setOnClickListener {
+        binding.productImageView.setOnClickListener {
             ImagePicker.with(this)
                 .crop()
                 .compress(1024)
@@ -59,9 +63,35 @@ class AddProductFragment : Fragment() {
                 .start()
         }
 
+        val productCategorySpinner = binding.productCategorySpinner
+        ArrayAdapter.createFromResource(
+            requireContext(),
+            R.array.product_categories,
+            android.R.layout.simple_spinner_item
+        ).also { adapter ->
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            productCategorySpinner.adapter = adapter
+        }
+        productCategorySpinner.setSelection(0)
+        productCategorySpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
+                selectedCategory = parent.getItemAtPosition(position).toString()
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>) {
+                // This method is invoked when the spinner selection disappears from this view.
+                // You can leave it empty if you don't have anything to do.
+            }
+        }
+
         binding.addBtn.setOnClickListener { addProduct() }
 
         return binding.root
+    }
+
+    override fun onBackPressed(): Boolean {
+        goToFragment(HomeFragment())
+        return true
     }
 
     private fun addProduct() {
@@ -75,11 +105,14 @@ class AddProductFragment : Fragment() {
         } else if (productDescription.isEmpty()) {
             binding.descriptionEditText.requestFocus()
             binding.descriptionEditText.error = "Enter Product description"
-        }else if (price == 0.0) {
+        } else if (price == 0.0) {
             binding.priceEditText.requestFocus()
             binding.priceEditText.error = "Enter price"
         } else if (productImageUri == null) {
             toastHelper.showToast("Enter product image", 1)
+        } else if (selectedCategory == null || selectedCategory == "Select product category") {
+            binding.productCategorySpinner.requestFocus()
+            toastHelper.showToast("Select product category", 1)
         } else {
             binding.progressBar.visibility = View.VISIBLE
             binding.addBtn.visibility = View.GONE
@@ -100,20 +133,34 @@ class AddProductFragment : Fragment() {
                                 .addOnSuccessListener {
                                     productImage = it.toString()
 
-                                    val product = HashMap<Any, Any>()
-                                    product["sellerUserID"] = FirebaseHelper.currentUserID()
-                                    product["userType"] = MainActivity.userType
-                                    product["sellerName"] = MainActivity.fullName
-                                    product["sellerProfilePicture"] = MainActivity.profilePicture
-                                    product["sellerEmail"] = FirebaseHelper.currentUser().email.toString()
-                                    product["sellerPhoneNumber"] = MainActivity.phoneNumber
-                                    product["productName"] = productName
-                                    product["productDescription"] = productDescription
-                                    product["price"] = price
-                                    product["productImage"] = productImage
-                                    product["storeName"] = MainActivity.storeName
-                                    product["storeLocation"] = MainActivity.storeLocation
-                                    product["timePosted"] = formattedDateTime
+                                    val sharedPreferences = context.getSharedPreferences(
+                                        "currentUserPrefs",
+                                        Context.MODE_PRIVATE
+                                    )
+
+                                    val fullName = sharedPreferences.getString("fullName", null)
+                                    val userType = sharedPreferences.getString("userType", null)
+                                    val profilePicture =
+                                        sharedPreferences.getString("profilePicture", null)
+                                    val phoneNumber =
+                                        sharedPreferences.getString("phoneNumber", null)
+
+                                    val product = ProductsModel(
+                                        sellerUserID = FirebaseHelper.currentUserID(),
+                                        userType = userType!!,
+                                        sellerName = fullName!!,
+                                        sellerProfilePicture = profilePicture!!,
+                                        sellerEmail = FirebaseHelper.currentUser().email.toString(),
+                                        sellerPhoneNumber = phoneNumber!!,
+                                        productName = productName,
+                                        productDescription = productDescription,
+                                        productCategory = selectedCategory!!,
+                                        price = price,
+                                        productImage = productImage,
+                                        storeName = MainActivity.storeName!!,
+                                        storeLocation = MainActivity.storeLocation!!,
+                                        timePosted = formattedDateTime
+                                    )
 
                                     FirebaseHelper.getFireStoreInstance()
                                         .collection(FirebaseHelper.KEY_COLLECTION_PRODUCTS)
@@ -166,4 +213,6 @@ class AddProductFragment : Fragment() {
             toastHelper.showToast("Task Cancelled", 1)
         }
     }
+
+
 }

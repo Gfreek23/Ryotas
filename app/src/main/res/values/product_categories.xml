@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="product_categories">
+        <item>Select product category</item>
+        <item>Electronics</item>
+        <item>Fashion</item>
+        <item>Home &amp; Kitchen</item>
+        <item>Books</item>
+        <item>Toys &amp; Games</item>
+        <item>Sports &amp; Outdoors</item>
+        <item>Health &amp; Personal Care</item>
+        <item>Automotive</item>
+        <item>Grocery &amp; Gourmet Food</item>
+        <item>Industrial &amp; Scientific</item>
+    </string-array>
+</resources>

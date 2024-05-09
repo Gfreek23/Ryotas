@@ -4,6 +4,7 @@ data class CartModel(
     val cartID : String = "",
     val cartUserID: String = "",
     val productName: String = "",
+    val productNameLowercase: String = "",
     val productDescription: String = "",
     val price: Double = 0.0,
     val productImage: String = "",

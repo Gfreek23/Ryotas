@@ -21,6 +21,7 @@ import com.example.trialproject3.Firebase.FirebaseHelper
 import com.example.trialproject3.Helper.ManagementCart
 import com.example.trialproject3.Models.CartModel
 import com.example.trialproject3.R
+import com.example.trialproject3.Utility.LoadingSpinnerOverlay
 import com.example.trialproject3.Utility.ToastHelper
 import com.example.trialproject3.databinding.FragmentCartBinding
 import java.io.Serializable
@@ -32,6 +33,7 @@ class CartFragment : Fragment(), OnBackPressedListener, CartAdapter.OnIncreaseCa
     private lateinit var builder: AlertDialog.Builder
     private lateinit var toastHelper: ToastHelper
     private lateinit var cartAdapter: CartAdapter
+    private lateinit var loadingSpinnerOverlay: LoadingSpinnerOverlay
 
     companion object {
         private const val TAG = "CartFragment"
@@ -46,6 +48,7 @@ class CartFragment : Fragment(), OnBackPressedListener, CartAdapter.OnIncreaseCa
         context = requireContext()
         builder = AlertDialog.Builder(context)
         toastHelper = ToastHelper(context)
+        loadingSpinnerOverlay = LoadingSpinnerOverlay(context)
 
         binding.emptyTxt.visibility = View.GONE
 
@@ -54,23 +57,13 @@ class CartFragment : Fragment(), OnBackPressedListener, CartAdapter.OnIncreaseCa
                 .setMessage("Do you want to purchase these items?")
                 .setCancelable(true)
                 .setPositiveButton("Yes") { dialog: DialogInterface?, which: Int ->
-
                 }
                 .setNegativeButton("No") { dialog: DialogInterface, which: Int -> dialog.cancel() }
                 .show()
         }
 
-        binding.backBtn.setOnClickListener {
-            builder.setTitle("Are you sure?")
-                .setMessage("Do you want to leave your cart?")
-                .setCancelable(true)
-                .setPositiveButton("Yes") { dialog: DialogInterface, which: Int ->
-                    dialog.cancel()
-                    backToHomeFragment()
-                }
-                .setNegativeButton("No") { dialog: DialogInterface, which: Int -> dialog.cancel() }
-                .show()
-        }
+        binding.backBtn.setOnClickListener { backToHomeFragment() }
+
         binding.addAddressBtn.setOnClickListener {
             startActivity(
                 Intent(
@@ -85,10 +78,9 @@ class CartFragment : Fragment(), OnBackPressedListener, CartAdapter.OnIncreaseCa
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        if (isAdded) {
+        if (isAdded)
             loadCart()
-        }
+
     }
 
     override fun onBackPressed(): Boolean {
@@ -97,12 +89,14 @@ class CartFragment : Fragment(), OnBackPressedListener, CartAdapter.OnIncreaseCa
     }
 
     private fun loadCart() {
+        loadingSpinnerOverlay.showLoading()
         val cartReference = FirebaseHelper.getFireStoreInstance()
             .collection(FirebaseHelper.KEY_COLLECTION_CARTS)
 
         cartReference.addSnapshotListener { value, error ->
             if (error != null) {
                 Log.e(TAG, "loadCart: " + error.message)
+                loadingSpinnerOverlay.hideLoading()
                 return@addSnapshotListener
             }
 
@@ -121,8 +115,15 @@ class CartFragment : Fragment(), OnBackPressedListener, CartAdapter.OnIncreaseCa
                         CartAdapter(context, cartsList, this@CartFragment, this@CartFragment)
                     binding.cartRecyclerView.layoutManager = LinearLayoutManager(context)
                     binding.cartRecyclerView.adapter = cartAdapter
+                } else {
+                    binding.cartLayout.visibility = View.GONE
+                    binding.emptyTxt.visibility = View.VISIBLE
                 }
+            } else {
+                binding.cartLayout.visibility = View.GONE
+                binding.emptyTxt.visibility = View.VISIBLE
             }
+            loadingSpinnerOverlay.hideLoading()
         }
     }
 
@@ -150,7 +151,6 @@ class CartFragment : Fragment(), OnBackPressedListener, CartAdapter.OnIncreaseCa
 
     @SuppressLint("NotifyDataSetChanged")
     private fun updateQuantity(cartModel: CartModel) {
-        // Update the quantity in Firestore
         val cartReference = FirebaseHelper.getFireStoreInstance()
             .collection(FirebaseHelper.KEY_COLLECTION_CARTS)
             .document(cartModel.cartID)
