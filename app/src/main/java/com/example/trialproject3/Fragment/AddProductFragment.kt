@@ -153,6 +153,8 @@ class AddProductFragment : Fragment(), MainActivity.OnBackPressedListener {
                                         sellerEmail = FirebaseHelper.currentUser().email.toString(),
                                         sellerPhoneNumber = phoneNumber!!,
                                         productName = productName,
+                                        productNameLowercase = productName.toLowerCase(Locale.getDefault()),
+                                        productNameWords = productName.toLowerCase(Locale.getDefault()).split(" "),
                                         productDescription = productDescription,
                                         productCategory = selectedCategory!!,
                                         price = price,

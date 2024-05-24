@@ -18,6 +18,7 @@ import com.example.trialproject3.Activity.ToShipActivity
 import com.example.trialproject3.Adapter.CartAdapter
 import com.example.trialproject3.Adapter.CartListAdapter
 import com.example.trialproject3.Firebase.FirebaseHelper
+import com.example.trialproject3.Helper.AlertDialogHelper
 import com.example.trialproject3.Helper.ManagementCart
 import com.example.trialproject3.Models.CartModel
 import com.example.trialproject3.R
@@ -26,14 +27,19 @@ import com.example.trialproject3.Utility.ToastHelper
 import com.example.trialproject3.databinding.FragmentCartBinding
 import java.io.Serializable
 
-class CartFragment : Fragment(), OnBackPressedListener, CartAdapter.OnIncreaseCartClickListener,
-    CartAdapter.OnDecreaseCartClickListener {
+class CartFragment : Fragment(),
+    OnBackPressedListener,
+    CartAdapter.OnIncreaseCartClickListener,
+    CartAdapter.OnDecreaseCartClickListener,
+    CartAdapter.OnRemoveCartItemClickListener {
+
     private lateinit var binding: FragmentCartBinding
     private lateinit var context: Context
     private lateinit var builder: AlertDialog.Builder
     private lateinit var toastHelper: ToastHelper
     private lateinit var cartAdapter: CartAdapter
     private lateinit var loadingSpinnerOverlay: LoadingSpinnerOverlay
+    private lateinit var alertDialogHelper: AlertDialogHelper
 
     companion object {
         private const val TAG = "CartFragment"
@@ -49,6 +55,7 @@ class CartFragment : Fragment(), OnBackPressedListener, CartAdapter.OnIncreaseCa
         builder = AlertDialog.Builder(context)
         toastHelper = ToastHelper(context)
         loadingSpinnerOverlay = LoadingSpinnerOverlay(context)
+        alertDialogHelper = AlertDialogHelper(context)
 
         binding.emptyTxt.visibility = View.GONE
 
@@ -88,6 +95,7 @@ class CartFragment : Fragment(), OnBackPressedListener, CartAdapter.OnIncreaseCa
         return true
     }
 
+    @SuppressLint("SetTextI18n")
     private fun loadCart() {
         loadingSpinnerOverlay.showLoading()
         val cartReference = FirebaseHelper.getFireStoreInstance()
@@ -112,9 +120,18 @@ class CartFragment : Fragment(), OnBackPressedListener, CartAdapter.OnIncreaseCa
                 }
                 if (cartsList.isNotEmpty()) {
                     cartAdapter =
-                        CartAdapter(context, cartsList, this@CartFragment, this@CartFragment)
+                        CartAdapter(
+                            context,
+                            cartsList,
+                            this@CartFragment,
+                            this@CartFragment,
+                            this@CartFragment
+                        )
                     binding.cartRecyclerView.layoutManager = LinearLayoutManager(context)
                     binding.cartRecyclerView.adapter = cartAdapter
+
+                    val totalPrice = cartAdapter.calculateTotalPrice()
+                    binding.totalPriceTextView.text = "Total Price: $totalPrice"
                 } else {
                     binding.cartLayout.visibility = View.GONE
                     binding.emptyTxt.visibility = View.VISIBLE
@@ -137,16 +154,39 @@ class CartFragment : Fragment(), OnBackPressedListener, CartAdapter.OnIncreaseCa
 
     override fun onIncreaseCartClick(cartModel: CartModel) {
         cartModel.quantity++
-        toastHelper.showToast(cartModel.quantity.toString(), 0)
         updateQuantity(cartModel)
     }
 
     override fun onDecreaseCartClick(cartModel: CartModel) {
-        if (cartModel.quantity > 0) {
+        if (cartModel.quantity > 1) {
             cartModel.quantity--
+            updateQuantity(cartModel)
         }
-        toastHelper.showToast(cartModel.quantity.toString(), 0)
-        updateQuantity(cartModel)
+    }
+
+    override fun onRemoveCartItemClick(cartModel: CartModel) {
+        val cartReference = FirebaseHelper.getFireStoreInstance()
+            .collection(FirebaseHelper.KEY_COLLECTION_CARTS)
+            .document(cartModel.cartID)
+
+        alertDialogHelper.showAlertDialog(
+            "Cart",
+            "Are you sure you want to remove this item from your cart?",
+            "Remove",
+            { dialog, id ->
+                cartReference.delete()
+                    .addOnSuccessListener {
+                        Log.d(TAG, "DocumentSnapshot successfully deleted!")
+                    }
+                    .addOnFailureListener { e ->
+                        Log.w(TAG, "Error deleting document", e)
+                    }
+            },
+            "Close",
+            { dialog, id ->
+                dialog.dismiss()
+            }
+        )
     }
 
     @SuppressLint("NotifyDataSetChanged")
@@ -163,16 +203,4 @@ class CartFragment : Fragment(), OnBackPressedListener, CartAdapter.OnIncreaseCa
                 Log.e(TAG, "Failed to update quantity: ${e.message}")
             }
     }
-//    @SuppressLint("SetTextI18n")
-//    private fun calculateCart() {
-//        val percentTax = 0.02
-//        val delivery = 10.0
-//        val tax = Math.round(managementCart.getTotalFee() * percentTax * 100.0) / 100.0
-//        val total = Math.round((managementCart.getTotalFee() + tax + delivery) * 100.0) / 100.0
-//        val itemTotal = (Math.round(managementCart.getTotalFee() * 100) / 100).toDouble()
-//        binding.totalFeeTxt.text = "₱$itemTotal"
-//        binding.taxTxt.text = "₱$tax"
-//        binding.deliveryTxt.text = "₱$delivery"
-//        binding.totalTxt.text = "₱$total"
-//    }
 }

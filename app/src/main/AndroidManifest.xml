@@ -24,6 +24,14 @@
         android:theme="@style/Theme.TrialProject3"
         tools:targetApi="33">
         <activity
+            android:name=".Activity.SplashActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
             android:name=".Activity.ProductDetailsActivity"
             android:exported="false" />
         <activity

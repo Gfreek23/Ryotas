@@ -122,6 +122,7 @@ class ProfileFragment : Fragment(), OnBackPressedListener {
                         binding.userTypeTextView.text = getUserType
                         binding.emailTextView.text = FirebaseHelper.currentUser().email
                         binding.phoneTextView.text = getPhone
+                        binding.addressTextView.text = "House"
 
                         if (getProfilePicture != "none") {
                             Glide.with(context)
@@ -131,6 +132,7 @@ class ProfileFragment : Fragment(), OnBackPressedListener {
                         }
 
                         if (getUserType == "Seller") {
+                            binding.addressTextView.visibility = View.GONE
                             binding.storeInfoLayout.visibility = View.VISIBLE
                             val storeReference = FirebaseHelper.getFireStoreInstance()
                                 .collection(FirebaseHelper.KEY_COLLECTION_STORES)
@@ -189,12 +191,7 @@ class ProfileFragment : Fragment(), OnBackPressedListener {
                             binding.toReceiveBtn.visibility = View.VISIBLE
 
                             binding.toShipBtn.setOnClickListener {
-//             Retrieve the cart items from the intent
-//            List<PopularDomain> cartItems = (List<PopularDomain>)  getIntent().getSerializableExtra("cartItems");
-
-//             Start ToShipActivity and pass the cart items
-                                val intent = Intent(context, ToShipActivity::class.java)
-                                //            intent.putExtra("cartItems", (Serializable) cartItems);
+                                intent = Intent(context, ToShipActivity::class.java)
                                 startActivity(intent)
                                 requireActivity().finish()
                             }

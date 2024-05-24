@@ -1,20 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-	xmlns:app="http://schemas.android.com/apk/res-auto"
-	android:id="@+id/annotationBackground"
-	android:layout_width="wrap_content"
-	android:layout_height="wrap_content"
-	android:gravity="center"
-	android:padding="10dp"
-	app:cardCornerRadius="10dp"
-	app:cardElevation="10dp">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/annotationBackground"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    app:cardBackgroundColor="@color/white"
+    app:cardCornerRadius="10dp"
+    app:cardElevation="10dp">
 
-	<androidx.appcompat.widget.AppCompatTextView
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:layout_margin="10dp"
-		android:text="You"
-		android:textColor="@color/black"
-		android:textSize="20sp" />
+    <androidx.appcompat.widget.AppCompatTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:fontFamily="@font/gabarito_medium"
+        android:text="You"
+        android:textColor="@color/black"
+        android:textSize="20sp" />
 
 </androidx.cardview.widget.CardView>

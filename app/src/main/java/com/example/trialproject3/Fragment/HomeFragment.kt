@@ -14,13 +14,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.trialproject3.Activity.LoginActivity
 import com.example.trialproject3.Activity.MainActivity.OnBackPressedListener
 import com.example.trialproject3.Adapter.ProductsAdapter
 import com.example.trialproject3.Firebase.FirebaseHelper
 import com.example.trialproject3.Helper.AlertDialogHelper
-import com.example.trialproject3.Models.CartModel
 import com.example.trialproject3.Models.ProductsModel
 import com.example.trialproject3.R
 import com.example.trialproject3.Utility.LoadingSpinnerOverlay
@@ -28,11 +26,7 @@ import com.example.trialproject3.Utility.ToastHelper
 import com.example.trialproject3.databinding.FragmentHomeBinding
 import com.google.android.gms.tasks.Task
 import com.google.firebase.firestore.DocumentSnapshot
-import java.text.SimpleDateFormat
 import java.util.ArrayList
-import java.util.Date
-import java.util.Locale
-import java.util.UUID
 
 class HomeFragment : Fragment(), OnBackPressedListener, ProductsAdapter.OnProductItemClickListener {
     private val TAG = "HomeFragment"
@@ -62,6 +56,7 @@ class HomeFragment : Fragment(), OnBackPressedListener, ProductsAdapter.OnProduc
         toastHelper = ToastHelper(context)
         loadingSpinnerOverlay = LoadingSpinnerOverlay(context)
 
+        binding.noProductTextView.visibility = View.GONE
         binding.productsRecyclerView.layoutManager = GridLayoutManager(context, 2)
 
         binding.searchBar.setOnTouchListener { v, event ->
@@ -100,11 +95,10 @@ class HomeFragment : Fragment(), OnBackPressedListener, ProductsAdapter.OnProduc
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         if (isAdded) {
-            getUserDetails()
-            loadProducts()
+            fetchUserDetails()
 
             val productsList = arguments?.getSerializable("productsList") as? ArrayList<ProductsModel>
-            Log.e(TAG, "onViewCreated: " + productsList.toString())
+            Log.e(TAG, "productsList: " + productsList.toString())
             if (productsList != null) loadSearchedProducts(productsList)
             else loadProducts()
         }
@@ -127,7 +121,7 @@ class HomeFragment : Fragment(), OnBackPressedListener, ProductsAdapter.OnProduc
         fragmentTransaction.commit()
     }
 
-    private fun getUserDetails() {
+    private fun fetchUserDetails() {
         if (FirebaseHelper.currentUser() != null) {
             FirebaseHelper.currentUserDetails().get()
                 .addOnCompleteListener { task: Task<DocumentSnapshot> ->
@@ -146,6 +140,10 @@ class HomeFragment : Fragment(), OnBackPressedListener, ProductsAdapter.OnProduc
     private fun loadSearchedProducts(productsList: ArrayList<ProductsModel>) {
         loadingSpinnerOverlay.showLoading()
         val productsAdapter = ProductsAdapter(context, productsList, this@HomeFragment)
+
+        if (productsList.isEmpty()) {
+            binding.noProductTextView.visibility = View.VISIBLE
+        }
 
         binding.productsRecyclerView.adapter = productsAdapter
         loadingSpinnerOverlay.hideLoading()

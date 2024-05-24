@@ -14,10 +14,10 @@
         android:title="Posts" />
 
     <item
-        android:id="@+id/navHomeServices"
+        android:id="@+id/navShop"
         android:enabled="true"
         android:icon="@drawable/search"
-        android:title="Home Services" />
+        android:title="Shop" />
 
     <item
         android:id="@+id/navCart"

@@ -54,19 +54,18 @@
                 android:layout_above="@+id/bottomNavigation"
                 android:layout_below="@+id/someOtherView"
                 android:paddingTop="16dp"
-                android:paddingBottom="16dp" />
+                android:paddingBottom="16dp"
+                android:layout_marginBottom="10dp"/>
 
             <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/textView10"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
                 android:text="Order Summary"
                 android:textColor="@color/black"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
-            <androidx.constraintlayout.widget.ConstraintLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
@@ -74,94 +73,51 @@
                 android:padding="12dp">
 
                 <TextView
-                    android:id="@+id/textView18"
-                    style="@style/textStyle"
+                    android:id="@+id/subTotalPriceTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Subtotal"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    android:layout_alignParentStart="true"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:fontFamily="@font/gabarito_regular"
+                    android:text="Sub Total:"
+                    android:textColor="@color/black"
+                    android:textSize="17sp" />
 
                 <TextView
-                    android:id="@+id/textView19"
-                    style="@style/textStyle"
+                    android:id="@+id/subTotalTxt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:text="Delivery"
-                    app:layout_constraintStart_toStartOf="@+id/textView18"
-                    app:layout_constraintTop_toBottomOf="@+id/textView18" />
+                    android:layout_toEndOf="@id/subTotalPriceTextView"
+                    android:fontFamily="@font/gabarito_medium"
+                    android:text="₱"
+                    android:textColor="@color/black"
+                    android:textSize="17sp" />
 
                 <TextView
-                    android:id="@+id/textView20"
-                    style="@style/textStyle"
+                    android:id="@+id/totalPriceTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:text="Total Tax"
-                    app:layout_constraintStart_toStartOf="@+id/textView19"
-                    app:layout_constraintTop_toBottomOf="@+id/textView19" />
+                    android:layout_below="@id/subTotalPriceTextView"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginEnd="10dp"
+                    android:fontFamily="@font/gabarito_medium"
+                    android:text="Total:"
+                    android:textColor="@color/black"
+                    android:textSize="17sp" />
 
                 <TextView
-                    android:id="@+id/totalFeeTxt"
-                    style="@style/textStyle"
+                    android:id="@+id/totalPriceTxt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="₱-"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/textView18" />
+                    android:layout_below="@id/subTotalPriceTextView"
+                    android:layout_toEndOf="@id/totalPriceTextView"
+                    android:fontFamily="@font/gabarito_medium"
+                    android:text="₱"
+                    android:textColor="@color/black"
+                    android:textSize="17sp" />
 
-                <TextView
-                    android:id="@+id/deliveryTxt"
-                    style="@style/textStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:text="₱-"
-                    app:layout_constraintEnd_toEndOf="@+id/totalFeeTxt"
-                    app:layout_constraintTop_toBottomOf="@+id/totalFeeTxt" />
-
-                <TextView
-                    android:id="@+id/taxTxt"
-                    style="@style/textStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:text="₱-"
-                    app:layout_constraintEnd_toEndOf="@+id/deliveryTxt"
-                    app:layout_constraintTop_toBottomOf="@+id/deliveryTxt" />
-
-                <View
-                    android:id="@+id/view4"
-                    android:layout_width="wrap_content"
-                    android:layout_height="1dp"
-                    android:layout_margin="8dp"
-                    android:background="@color/grey"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView20" />
-
-                <TextView
-                    android:id="@+id/textView24"
-                    style="@style/textStyleBold"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:text="Total"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="@+id/textView20"
-                    app:layout_constraintTop_toBottomOf="@+id/view4" />
-
-                <TextView
-                    android:id="@+id/totalTxt"
-                    style="@style/textStyleBold"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="₱-"
-                    app:layout_constraintBottom_toBottomOf="@+id/textView24"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/textView24" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
+            </RelativeLayout>
 
             <TextView
                 android:id="@+id/informationTextView"
@@ -173,124 +129,97 @@
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
-            <androidx.constraintlayout.widget.ConstraintLayout
+            <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:background="@drawable/grey_background"
-                android:padding="12dp">
+                android:orientation="vertical"
+                android:padding="10dp">
 
                 <TextView
-                    android:id="@+id/textView31"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="4dp"
-                    android:layout_marginTop="16dp"
-                    android:text="Payment Method"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/view5" />
+                    android:layout_marginBottom="10dp"
+                    android:text="Your Delivery Address" />
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="5dp"
+                        android:src="@drawable/location" />
+
+                    <TextView
+                        android:id="@+id/addressTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Address" />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/addAddressBtn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="5dp"
+                        android:src="@drawable/arrow_detail" />
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="1dp"
+                        android:layout_weight="2"
+                        android:background="@color/grey" />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
 
                 <TextView
-                    android:id="@+id/textView29"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Your Delivery Address"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    android:layout_marginBottom="10dp"
+                    android:text="Payment Method" />
 
-                <ImageView
-                    android:id="@+id/imageView12"
-                    android:layout_width="wrap_content"
+                <RadioGroup
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:src="@drawable/location"
-                    app:layout_constraintStart_toStartOf="@+id/textView29"
-                    app:layout_constraintTop_toBottomOf="@+id/textView29" />
+                    android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/addressTextView"
-                    style="@style/textStyleBold"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:text="Davao City, Davao Del Sur"
-                    app:layout_constraintBottom_toBottomOf="@+id/imageView12"
-                    app:layout_constraintStart_toEndOf="@+id/imageView12"
-                    app:layout_constraintTop_toTopOf="@+id/imageView12"
-                    app:layout_constraintVertical_bias="0.0" />
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawableStart="@drawable/cash_on_delivery_32"
+                        android:drawablePadding="8dp"
+                        android:text="Cash on Delivery"
+                        android:fontFamily="@font/gabarito_medium"
+                        android:textColor="@color/black"
+                        android:textSize="16sp"/>
 
-                <View
-                    android:id="@+id/view5"
-                    android:layout_width="wrap_content"
-                    android:layout_height="1dp"
-                    android:layout_marginTop="8dp"
-                    android:background="@color/grey"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView30" />
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawableStart="@drawable/gcash_32"
+                        android:drawablePadding="8dp"
+                        android:text="Gcash"
+                        android:fontFamily="@font/gabarito_medium"
+                        android:textColor="@color/black"
+                        android:textSize="16sp"/>
 
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/addAddressBtn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/arrow_detail"
-                    app:layout_constraintBottom_toBottomOf="@+id/textView30"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                </RadioGroup>
 
-                <ImageView
-                    android:id="@+id/gcash"
-                    android:layout_width="34dp"
-                    android:layout_height="26dp"
-                    android:layout_marginStart="104dp"
-                    android:layout_marginTop="32dp"
-                    android:src="@drawable/ic_gcash"
-                    app:layout_constraintStart_toStartOf="@+id/textView31"
-                    app:layout_constraintTop_toBottomOf="@+id/textView31" />
 
-                <TextView
-                    android:id="@+id/textView32"
-                    style="@style/textStyleBold"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:text="CoD"
-                    app:layout_constraintBottom_toBottomOf="@+id/cod"
-                    app:layout_constraintStart_toEndOf="@+id/cod"
-                    app:layout_constraintTop_toTopOf="@+id/cod"
-                    app:layout_constraintVertical_bias="0.555" />
-
-                <ImageView
-                    android:id="@+id/cod"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="4dp"
-                    android:layout_marginTop="36dp"
-                    android:src="@drawable/credit_card"
-                    app:layout_constraintStart_toStartOf="@+id/textView31"
-                    app:layout_constraintTop_toBottomOf="@+id/textView31" />
-
-                <TextView
-                    android:id="@+id/G_cash"
-                    style="@style/textStyleBold"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="64dp"
-                    android:text="Gcash"
-                    app:layout_constraintBottom_toBottomOf="@+id/gcash"
-                    app:layout_constraintStart_toEndOf="@+id/gcash"
-                    app:layout_constraintTop_toTopOf="@+id/gcash"
-                    app:layout_constraintVertical_bias="1.0" />
-
-                <ImageView
-                    android:id="@+id/imageView15"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/arrow_detail"
-                    app:layout_constraintBottom_toBottomOf="@+id/textView32"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/textView31" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.appcompat.widget.LinearLayoutCompat>
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/orderNowBtn"
@@ -312,9 +241,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
+        android:layout_margin="10dp"
+        android:background="@drawable/edit_text_shape"
+        android:elevation="5dp"
+        android:fontFamily="@font/gabarito_medium"
+        android:padding="10dp"
         android:text="Your cart is empty"
         android:textColor="@color/black"
-        android:textSize="17sp"
-        android:textStyle="bold" />
+        android:textSize="17sp" />
 
 </RelativeLayout>

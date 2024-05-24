@@ -25,6 +25,7 @@ import com.example.trialproject3.Activity.MainActivity
 import com.example.trialproject3.BottomSheetModal.RegisterSellerStoreBottomSheetFragment
 import com.example.trialproject3.BottomSheetModal.ShowStoreInfoBottomSheetFragment
 import com.example.trialproject3.Firebase.FirebaseHelper
+import com.example.trialproject3.Helper.AlertDialogHelper
 import com.example.trialproject3.R
 import com.example.trialproject3.databinding.ActivityMapboxMapBinding
 import com.example.trialproject3.databinding.MapboxItemViewAnnotationBinding
@@ -106,6 +107,7 @@ class MapboxMapActivity : AppCompatActivity(), PermissionsListener,
     ShowStoreInfoBottomSheetFragment.OnNavigateListener {
     private val TAG = "MapboxMapActivity"
     private lateinit var binding: ActivityMapboxMapBinding
+    private lateinit var alertDialogHelper: AlertDialogHelper
 
     private lateinit var permissionsManager: PermissionsManager
     private val LOCATION_PERMISSION_REQUEST_CODE = 123
@@ -382,6 +384,8 @@ class MapboxMapActivity : AppCompatActivity(), PermissionsListener,
         binding = ActivityMapboxMapBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        alertDialogHelper = AlertDialogHelper(this@MapboxMapActivity)
+
         checkLocationPermission()
         loadStoresLocationInMap()
 
@@ -494,9 +498,20 @@ class MapboxMapActivity : AppCompatActivity(), PermissionsListener,
         val isGpsEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
         val isNetworkEnabled = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)
         if (!isGpsEnabled && !isNetworkEnabled) {
-        } else {
+            alertDialogHelper.showAlertDialog(
+                "Location Service",
+                "Please enable location service",
+                "Enable",
+                { dialog, id ->
+                    val intent = Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS)
+                    startActivity(intent)
+                },
+                null,
+                null
+            )
+        } else
             onMapReady()
-        }
+
     }
 
     @SuppressLint("SetTextI18n")

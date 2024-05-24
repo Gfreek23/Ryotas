@@ -125,12 +125,7 @@ public class CartActivity extends AppCompatActivity {
     private void initList() {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         binding.itemsRecyclerView.setLayoutManager(linearLayoutManager);
-        adapter = new CartListAdapter(managementCart.getListCart(), this, new ChangeNumberItemsListener() {
-            @Override
-            public void change() {
-                calculateCart();
-            }
-        });
+        adapter = new CartListAdapter(managementCart.getListCart(), this, () -> calculateCart());
 
         binding.itemsRecyclerView.setAdapter(adapter);
         if (managementCart.getListCart().isEmpty()) {
@@ -149,7 +144,7 @@ public class CartActivity extends AppCompatActivity {
         tax = Math.round((managementCart.getTotalFee() * percentTax * 100.0)) / 100.0;
 
         double total = Math.round((managementCart.getTotalFee() + tax + delivery) * 100.0) / 100.0;
-        double itemTotal = Math.round(managementCart.getTotalFee() * 100) / 100;
+        double itemTotal = (double) Math.round(managementCart.getTotalFee() * 100) / 100;
 
         binding.totalFeeTxt.setText("₱" + itemTotal);
         binding.taxTxt.setText("₱" + tax);
@@ -167,10 +162,10 @@ public class CartActivity extends AppCompatActivity {
 
 
     private void initializeBottomNavBar() {
-        binding.bottomNavBar.setSelectedItemId(R.id.navHomeServices);
+        binding.bottomNavBar.setSelectedItemId(R.id.navShop);
         binding.bottomNavBar.setOnItemSelectedListener(item -> {
 
-            if (item.getItemId() == R.id.navHomeServices) {
+            if (item.getItemId() == R.id.navShop) {
                  intent = new Intent(CartActivity.this, MainActivity.class);
                 startActivity(intent);
                 finish();

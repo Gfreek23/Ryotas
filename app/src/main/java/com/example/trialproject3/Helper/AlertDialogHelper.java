@@ -5,10 +5,12 @@ import android.content.DialogInterface;
 
 import androidx.appcompat.app.AlertDialog;
 
+import com.example.trialproject3.R;
+
 public class AlertDialogHelper {
 
     private Context context;
-    private AlertDialog dialog; // Reference to the dialog
+    private AlertDialog dialog;
 
     public AlertDialogHelper(Context context) {
         this.context = context;
@@ -17,8 +19,7 @@ public class AlertDialogHelper {
     public void showAlertDialog(String title, String message,
                                 String positiveButtonText, DialogInterface.OnClickListener positiveButtonListener,
                                 String negativeButtonText, DialogInterface.OnClickListener negativeButtonListener) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        builder.setTitle(title);
+        AlertDialog.Builder builder = new AlertDialog.Builder(context, R.style.AlertDialogCustom);        builder.setTitle(title);
         builder.setMessage(message);
 
         if (positiveButtonText != null) {
@@ -29,7 +30,7 @@ public class AlertDialogHelper {
             builder.setNegativeButton(negativeButtonText, negativeButtonListener);
         }
 
-        AlertDialog dialog = builder.create();
+        dialog = builder.create();
         dialog.show();
     }
 

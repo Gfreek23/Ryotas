@@ -152,10 +152,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initializeBottomNavBar() {
-        binding.bottomNavBar.selectedItemId = R.id.navHomeServices
+        binding.bottomNavBar.selectedItemId = R.id.navShop
         binding.bottomNavBar.setOnItemSelectedListener { item: MenuItem ->
             when (item.itemId) {
-                R.id.navHomeServices -> {
+                R.id.navShop -> {
                     showFragment(HomeFragment())
                 }
 

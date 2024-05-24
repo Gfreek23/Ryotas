@@ -13,7 +13,8 @@ class CartAdapter(
     private val context: Context,
     private val cartModelList: List<CartModel>,
     private val onIncreaseCartClickListener: OnIncreaseCartClickListener,
-    private val onDecreaseCartClickListener: OnDecreaseCartClickListener
+    private val onDecreaseCartClickListener: OnDecreaseCartClickListener,
+    private val onRemoveCartItemClickListener: OnRemoveCartItemClickListener
 ) :
     RecyclerView.Adapter<CartAdapter.CartViewHolder>() {
 
@@ -24,24 +25,26 @@ class CartAdapter(
     interface OnDecreaseCartClickListener {
         fun onDecreaseCartClick(cartModel: CartModel)
     }
-    var totalPrice: Double = 0.0
 
-    init {
-        calculateTotalPrice()
+    interface OnRemoveCartItemClickListener {
+        fun onRemoveCartItemClick(cartModel: CartModel)
     }
 
-    private fun calculateTotalPrice() {
-        totalPrice = 0.0
+    fun calculateTotalPrice(): Double {
+        var totalPrice = 0.0
         for (cartModel in cartModelList) {
             totalPrice += cartModel.price * cartModel.quantity
         }
+        return totalPrice
     }
+
     class CartViewHolder(val binding: ItemCartBinding) : RecyclerView.ViewHolder(binding.root) {
         @SuppressLint("SetTextI18n")
         fun bind(
             context: Context, cartModel: CartModel,
             onIncreaseCartClickListener: OnIncreaseCartClickListener,
-            onDecreaseCartClickListener: OnDecreaseCartClickListener
+            onDecreaseCartClickListener: OnDecreaseCartClickListener,
+            onRemoveCartItemClickListener: OnRemoveCartItemClickListener
         ) {
             binding.storeNameTextView.text = cartModel.storeName
             binding.productNameTextView.text = cartModel.productName
@@ -55,6 +58,10 @@ class CartAdapter(
             }
             binding.decreaseQuantityBtn.setOnClickListener {
                 onDecreaseCartClickListener.onDecreaseCartClick(cartModel)
+            }
+
+            binding.removeItemBtn.setOnClickListener {
+                onRemoveCartItemClickListener.onRemoveCartItemClick(cartModel)
             }
         }
     }
@@ -70,7 +77,8 @@ class CartAdapter(
             context,
             cartModelList[position],
             onIncreaseCartClickListener,
-            onDecreaseCartClickListener
+            onDecreaseCartClickListener,
+            onRemoveCartItemClickListener
         )
     }
 

@@ -2,9 +2,7 @@
 <resources>
     <color name="black">#000000</color>
     <color name="white">#FFFFFFFF</color>
-
-    <color name="stained_white">#F5F5F5</color>
-
+    <color name="stained_white">#E6E6E6</color>
     <color name="red">#E76160</color>
     <color name="orange">#fb8b24</color>fb8b24
     <color name="grey">#ababab</color>
@@ -15,5 +13,6 @@
     <color name="light_blue">#add8e6</color>
     <color name="light_blue_2">#2a8ff5</color>
     <color name="cheese">#FFC800</color>
-
+    <color name="transparent">#65999999</color>
+    <color name="transparent_dark_gray">#99000000</color>
 </resources>

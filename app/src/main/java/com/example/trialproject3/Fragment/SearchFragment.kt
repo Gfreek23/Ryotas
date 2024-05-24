@@ -150,7 +150,7 @@ class SearchFragment : Fragment(), MainActivity.OnBackPressedListener {
     private fun searchProducts(query: String) {
         val productReference = FirebaseHelper.getFireStoreInstance()
             .collection(FirebaseHelper.KEY_COLLECTION_PRODUCTS)
-            .whereEqualTo("productName", query.toLowerCase(Locale.getDefault()))
+            .whereEqualTo("productNameLowercase", query.toLowerCase(Locale.getDefault()))
 
         productReference.get()
             .addOnCompleteListener { task ->
@@ -159,18 +159,12 @@ class SearchFragment : Fragment(), MainActivity.OnBackPressedListener {
                     for (document in task.result) {
                         val product = document.toObject(ProductsModel::class.java)
                         productsList.add(product)
+                        Log.d(TAG, "searchProducts: $productsList")
                     }
 
-                    // Create a new instance of Bundle
                     val bundle = Bundle()
-
-                    // Put the productsList into the bundle
                     bundle.putSerializable("productsList", ArrayList(productsList))
-
-                    // Create a new instance of HomeFragment
                     val homeFragment = HomeFragment()
-
-                    // Set the arguments of the fragment to the bundle
                     homeFragment.arguments = bundle
 
                     val fragmentManager = requireActivity().supportFragmentManager
@@ -178,9 +172,9 @@ class SearchFragment : Fragment(), MainActivity.OnBackPressedListener {
                     fragmentTransaction.replace(R.id.fragmentContainer, homeFragment)
                     fragmentTransaction.addToBackStack(null)
                     fragmentTransaction.commit()
-                } else {
+                } else
                     Log.e(TAG, "Error getting products: ", task.exception)
-                }
+
             }
     }
 
@@ -198,16 +192,9 @@ class SearchFragment : Fragment(), MainActivity.OnBackPressedListener {
                         productsList.add(product)
                     }
 
-                    // Create a new instance of Bundle
                     val bundle = Bundle()
-
-                    // Put the productsList into the bundle
                     bundle.putSerializable("productsList", ArrayList(productsList))
-
-                    // Create a new instance of HomeFragment
                     val homeFragment = HomeFragment()
-
-                    // Set the arguments of the fragment to the bundle
                     homeFragment.arguments = bundle
 
                     val fragmentManager = requireActivity().supportFragmentManager
