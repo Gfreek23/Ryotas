@@ -19,7 +19,8 @@ import com.example.trialproject3.Utility.ToastHelper
 import com.example.trialproject3.databinding.FragmentPostsBinding
 
 
-class PostsFragment : Fragment(), PostsAdapter.OnPostItemClickListener,
+class PostsFragment : Fragment(),
+    PostsAdapter.OnPostItemClickListener,
     PostsAdapter.OnPostRateClickListener {
     private val TAG: String = "PostsFragment"
     private lateinit var binding: FragmentPostsBinding
@@ -59,20 +60,20 @@ class PostsFragment : Fragment(), PostsAdapter.OnPostItemClickListener,
         super.onViewCreated(view, savedInstanceState)
         if (isAdded) {
             val postsList = arguments?.getSerializable("postsList") as? ArrayList<PostsModel>
-            if (postsList != null)
-                loadSearchedPosts(postsList)
-            else
-                loadPosts()
+            if (postsList != null) loadSearchedPosts(postsList)
+            else loadPosts()
 
         }
-
     }
 
     private fun loadSearchedPosts(postsLists: ArrayList<PostsModel>) {
         loadingSpinnerOverlay.showLoading()
         val postsAdapter = PostsAdapter(context, postsLists, this, this)
         binding.postsRecyclerView.adapter = postsAdapter
-
+        binding.postsRecyclerView.layoutManager = LinearLayoutManager(context).apply {
+            reverseLayout = true
+            stackFromEnd = true
+        }
         if (postsLists.isEmpty()) binding.noPostsTextView.visibility = View.VISIBLE
         else binding.noPostsTextView.visibility = View.GONE
 
@@ -147,13 +148,11 @@ class PostsFragment : Fragment(), PostsAdapter.OnPostItemClickListener,
     }
 
     private fun goToPostUserProfileFragment(postsModel: PostsModel) {
-        val postUserProfileFragment = PostUserProfileFragment.newInstance(postsModel.userID)
+        val postUserProfileFragment = PostUserProfileFragment.newInstance(postsModel.postID)
         val fragmentManager = requireActivity().supportFragmentManager
         val fragmentTransaction = fragmentManager.beginTransaction()
         fragmentTransaction.replace(R.id.fragmentContainer, postUserProfileFragment)
         fragmentTransaction.addToBackStack(null)
         fragmentTransaction.commit()
     }
-
-
 }

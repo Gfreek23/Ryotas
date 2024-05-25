@@ -23,13 +23,13 @@ class PostUserProfileFragment : Fragment(), MainActivity.OnBackPressedListener {
 
     companion object {
         const val TAG: String = "PostUserProfileFragment"
-        const val POST_USER_ID_PARAMS = "postUserID"
+        const val POST_USER_ID_PARAMS = "postID"
 
         @JvmStatic
-        fun newInstance(postUserID: String) =
+        fun newInstance(postID: String) =
             PostUserProfileFragment().apply {
                 arguments = Bundle().apply {
-                    putString(POST_USER_ID_PARAMS, postUserID)
+                    putString(POST_USER_ID_PARAMS, postID)
                 }
             }
     }
@@ -51,9 +51,9 @@ class PostUserProfileFragment : Fragment(), MainActivity.OnBackPressedListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val postUserID = arguments?.getString(POST_USER_ID_PARAMS)
-        if (isAdded && !postUserID.isNullOrEmpty()) {
-            loadPostUserDetails(postUserID)
+        val postID = arguments?.getString(POST_USER_ID_PARAMS)
+        if (isAdded && !postID.isNullOrEmpty()) {
+            loadPostUserDetails(postID)
         }
     }
 
@@ -70,11 +70,11 @@ class PostUserProfileFragment : Fragment(), MainActivity.OnBackPressedListener {
         fragmentTransaction.commit()
     }
 
-    private fun loadPostUserDetails(postUserID: String) {
+    private fun loadPostUserDetails(postID: String) {
         loadingSpinnerOverlay.showLoading()
         FirebaseHelper.getFireStoreInstance()
-            .collection(FirebaseHelper.KEY_COLLECTION_USERS)
-            .document(postUserID)
+            .collection(FirebaseHelper.KEY_COLLECTION_POSTS)
+            .document(postID)
             .get()
             .addOnCompleteListener { task ->
                 loadingSpinnerOverlay.hideLoading()
@@ -82,18 +82,16 @@ class PostUserProfileFragment : Fragment(), MainActivity.OnBackPressedListener {
                 if (task.isSuccessful) {
                     val userSnapshot = task.result
 
-                    val getFullName = userSnapshot.getString("Fname")
+                    val getFullName = userSnapshot.getString("fullName")
                     val getEmail = userSnapshot.getString("email")
                     val getPhone = userSnapshot.getString("phoneNumber")
-                    val getProfilePicture = userSnapshot.getString("ProfilePicture")
-                    val getUserType = userSnapshot.getString("UserType")
+                    val getProfilePicture = userSnapshot.getString("userPostImage")
                     val getStoreName = userSnapshot.getString("storeName")
                     val getStoreLocation = userSnapshot.getString("storeLocation")
 
                     binding.fullNameTextView.text = getFullName
                     binding.emailTextView.text = getEmail
                     binding.phoneTextView.text = getPhone
-                    binding.userTypeTextView.text = getUserType
                     binding.storeNameTextView.text = getStoreName
                     binding.storeLocationTextView.text = getStoreLocation
 

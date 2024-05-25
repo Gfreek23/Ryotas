@@ -179,7 +179,6 @@ public class RegisterActivity extends AppCompatActivity {
                     binding.registerBtn.setVisibility(View.VISIBLE);
 
                     if (task.isSuccessful()) {
-
                         Toast.makeText(RegisterActivity.this, "Successfully Registered.",
                                 Toast.LENGTH_SHORT).show();
                         DocumentReference documentReference = FirebaseHelper.getFireStoreInstance()
@@ -187,6 +186,7 @@ public class RegisterActivity extends AppCompatActivity {
                                 .document(task.getResult().getUser().getUid());
 
                         Map<String, Object> user = new HashMap<>();
+                        user.put("userID", task.getResult().getUser().getUid());
                         user.put("Fname", userName);
                         user.put("email", userEmail);
                         user.put("Bday", userBday);

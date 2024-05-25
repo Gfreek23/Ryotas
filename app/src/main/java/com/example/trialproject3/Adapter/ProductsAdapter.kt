@@ -33,13 +33,9 @@ class ProductsAdapter(
             productsModel: ProductsModel,
             onProductItemClickListener: OnProductItemClickListener
         ) {
-//            binding.addToCartImageView.visibility = View.GONE
-//
-//            binding.sellerNameTextView.text = productsModel.sellerName
-//            binding.emailTextView.text = productsModel.sellerEmail
             binding.productNameTextView.text = productsModel.productName
             binding.priceTextView.text = "₱ ${productsModel.price}"
-//            binding.productDescriptionTextView.text = productsModel.productDescription
+            binding.productRatings.rating = productsModel.productRatings.toFloat()
 
             val sharedPreferences = context.getSharedPreferences(
                 "currentUserPrefs",
@@ -63,9 +59,7 @@ class ProductsAdapter(
                     .into(binding.productImageView)
             }
 
-//            binding.addToCartImageView.setOnClickListener {
-//                onProductItemClickListener.onProductItemClick(productsModel)
-//            }
+
         }
     }
 

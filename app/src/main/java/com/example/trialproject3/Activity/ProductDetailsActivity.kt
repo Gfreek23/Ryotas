@@ -4,6 +4,8 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import android.widget.RatingBar
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -33,6 +35,9 @@ class ProductDetailsActivity : AppCompatActivity() {
         binding = ActivityProductDetailsBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        binding.checkBtn.visibility = View.GONE
+        binding.progressBar.visibility = View.GONE
+
         toastHelper = ToastHelper(this@ProductDetailsActivity)
         loadingSpinnerOverlay = LoadingSpinnerOverlay(this@ProductDetailsActivity)
 
@@ -50,11 +55,24 @@ class ProductDetailsActivity : AppCompatActivity() {
                         UUID.randomUUID().toString()
                     )
                 }
+
+                binding.productRatings.onRatingBarChangeListener =
+                    RatingBar.OnRatingBarChangeListener { _, rating, _ ->
+                        if (rating >= 0.5) {
+                            binding.checkBtn.visibility = View.VISIBLE
+                            binding.checkBtn.setOnClickListener {
+                                rateProduct(
+                                    productsModel.productID,
+                                    rating
+                                )
+                            }
+                        } else binding.checkBtn.visibility = View.GONE
+                    }
+
             } else {
                 Log.e(TAG, "Failed to cast productDetails to ProductsModel")
             }
         }
-
 
         onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
@@ -69,15 +87,41 @@ class ProductDetailsActivity : AppCompatActivity() {
         loadingSpinnerOverlay.showLoading()
         binding.productNameTextView.text = productsModel.productName
         binding.priceTextView.text = "₱ ${productsModel.price}"
+        binding.productRatings.rating = productsModel.productRatings.toFloat()
         binding.productDescriptionTextView.text = productsModel.productDescription
         binding.productCategoryTextView.text = productsModel.productCategory
         binding.storeNameTextView.text = productsModel.storeName
+
         if (productsModel.productImage != "none") {
             Glide.with(this)
                 .load(productsModel.productImage)
                 .into(binding.productImageView)
         }
         loadingSpinnerOverlay.hideLoading()
+    }
+
+    private fun rateProduct(productID: String, rating: Float) {
+        binding.progressBar.visibility = View.VISIBLE
+        binding.checkBtn.visibility = View.GONE
+
+        val productReference = FirebaseHelper.getFireStoreInstance()
+            .collection(FirebaseHelper.KEY_COLLECTION_PRODUCTS)
+            .document(productID)
+
+        productReference.update("productRatings", rating)
+            .addOnCompleteListener { task ->
+                binding.progressBar.visibility = View.GONE
+
+                if (task.isSuccessful) {
+                    toastHelper.showToast("Rated $rating", 1)
+                    binding.productRatings.setIsIndicator(true)
+
+                } else {
+                    Log.e(TAG, "rateProduct: " + task.exception)
+                    binding.checkBtn.visibility = View.VISIBLE
+
+                }
+            }
     }
 
     private fun addToCart(productsModel: ProductsModel, cartID: String) {

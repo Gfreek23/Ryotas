@@ -39,7 +39,7 @@ class PostsAdapter(
             binding.titleTextView.text = postsModel.title
             binding.userNameTextView.text = postsModel.fullName
             binding.descriptionTextView.text = postsModel.description
-            binding.categoryTextView.text = postsModel.category
+            binding.categoryTextView.text = postsModel.postCategory
             binding.emailTextView.text = postsModel.email
             binding.timePostedTextView.text = postsModel.timePosted
             binding.postImageView.visibility = View.GONE
@@ -55,12 +55,17 @@ class PostsAdapter(
                     .placeholder(R.drawable.loading_gif)
                     .into(binding.postImageView)
             }
+            val sharedPreferences =
+                context.getSharedPreferences("currentUserPrefs", Context.MODE_PRIVATE)
+            val userType = sharedPreferences.getString("userType", null)
 
-            binding.postHeaderLayout.setOnClickListener {
-                onPostItemClickListener.onPostItemClick(postsModel)
-            }
+            if (userType == "Buyer")
+                itemView.setOnClickListener {
+                    onPostItemClickListener.onPostItemClick(postsModel)
+                }
 
-            if (postsModel.userType == "Seller") {
+
+            if (userType == "Seller") {
                 binding.postRatingBar.visibility = View.GONE
                 binding.rateBtn.visibility = View.GONE
             }

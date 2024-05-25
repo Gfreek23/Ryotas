@@ -5,8 +5,6 @@ import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.MotionEvent
@@ -59,6 +57,11 @@ class HomeFragment : Fragment(), OnBackPressedListener, ProductsAdapter.OnProduc
         binding.noProductTextView.visibility = View.GONE
         binding.productsRecyclerView.layoutManager = GridLayoutManager(context, 2)
 
+
+        val sharedPreferences = context.getSharedPreferences("currentUserPrefs", Context.MODE_PRIVATE)
+        val fullName = sharedPreferences.getString("fullName", null)
+        binding.fullNameTextView.text = fullName
+
         binding.searchBar.setOnTouchListener { v, event ->
             if (event.action == MotionEvent.ACTION_UP) {
                 showSearchFragment()
@@ -77,8 +80,7 @@ class HomeFragment : Fragment(), OnBackPressedListener, ProductsAdapter.OnProduc
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         if (isAdded) {
-            fetchUserDetails()
-
+//            fetchUserDetails()
             val productsList =
                 arguments?.getSerializable("productsList") as? ArrayList<ProductsModel>
             Log.e(TAG, "productsList: " + productsList.toString())
@@ -99,7 +101,7 @@ class HomeFragment : Fragment(), OnBackPressedListener, ProductsAdapter.OnProduc
     private fun showSearchFragment() {
         val fragmentManager = requireActivity().supportFragmentManager
         val fragmentTransaction = fragmentManager.beginTransaction()
-        fragmentTransaction.replace(R.id.fragmentContainer, SearchFragment())
+        fragmentTransaction.replace(R.id.fragmentContainer, SearchProductsFragment())
         fragmentTransaction.addToBackStack(null)
         fragmentTransaction.commit()
     }
@@ -125,10 +127,8 @@ class HomeFragment : Fragment(), OnBackPressedListener, ProductsAdapter.OnProduc
         val productsAdapter = ProductsAdapter(context, productsList, this@HomeFragment)
         binding.productsRecyclerView.adapter = productsAdapter
 
-        if (productsList.isEmpty())
-            binding.noProductTextView.visibility = View.VISIBLE
-        else
-            binding.noProductTextView.visibility = View.GONE
+        if (productsList.isEmpty()) binding.noProductTextView.visibility = View.VISIBLE
+        else binding.noProductTextView.visibility = View.GONE
 
         loadingSpinnerOverlay.hideLoading()
     }

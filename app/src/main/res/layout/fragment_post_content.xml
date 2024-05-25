@@ -33,14 +33,29 @@
                     android:orientation="vertical"
                     android:padding="5dp">
 
-                    <androidx.appcompat.widget.AppCompatTextView
+                    <androidx.appcompat.widget.LinearLayoutCompat
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="20dp"
-                        android:fontFamily="@font/gabarito_semibold"
-                        android:text="Post a Content"
-                        android:textColor="@color/black"
-                        android:textSize="18sp" />
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="5dp"
+                            app:srcCompat="@drawable/post_24" />
+
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/gabarito_semibold"
+                            android:text="Post a Content"
+                            android:textColor="@color/black"
+                            android:textSize="18sp" />
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>
 
                     <androidx.appcompat.widget.AppCompatEditText
                         android:id="@+id/titleEditText"
@@ -61,13 +76,13 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="10dp"
-                        android:padding="10dp"
-                        android:background="@drawable/outlined_shape" />
+                        android:background="@drawable/outlined_shape"
+                        android:padding="5dp" />
 
                     <androidx.appcompat.widget.AppCompatEditText
                         android:id="@+id/descriptionEditText"
                         android:layout_width="match_parent"
-                        android:layout_height="200dp"
+                        android:layout_height="100dp"
                         android:layout_marginBottom="10dp"
                         android:background="@drawable/outlined_shape"
                         android:fontFamily="@font/gabarito_semibold"

@@ -16,18 +16,16 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.TextView
 import android.widget.Toast
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.trialproject3.Activity.MainActivity
-import com.example.trialproject3.Adapter.ProductsAdapter
 import com.example.trialproject3.Firebase.FirebaseHelper
 import com.example.trialproject3.Models.ProductsModel
 import com.example.trialproject3.R
-import com.example.trialproject3.databinding.FragmentSearchBinding
+import com.example.trialproject3.databinding.FragmentSearchProductsBinding
 import java.util.Locale
 
-class SearchFragment : Fragment(), MainActivity.OnBackPressedListener {
+class SearchProductsFragment : Fragment(), MainActivity.OnBackPressedListener {
     private val TAG = "SearchFragment"
-    private lateinit var binding: FragmentSearchBinding
+    private lateinit var binding: FragmentSearchProductsBinding
     private lateinit var context: Context
     private var selectedCategory: String? = null
 
@@ -38,7 +36,7 @@ class SearchFragment : Fragment(), MainActivity.OnBackPressedListener {
 
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
-            SearchFragment().apply {
+            SearchProductsFragment().apply {
                 arguments = Bundle().apply {
                     putString(ARG_PARAM1, param1)
                     putString(ARG_PARAM2, param2)
@@ -52,7 +50,7 @@ class SearchFragment : Fragment(), MainActivity.OnBackPressedListener {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentSearchBinding.inflate(inflater, container, false)
+        binding = FragmentSearchProductsBinding.inflate(inflater, container, false)
 
         binding.searchBar.requestFocus()
 
@@ -85,7 +83,6 @@ class SearchFragment : Fragment(), MainActivity.OnBackPressedListener {
                     selectedCategory = parent.getItemAtPosition(position).toString()
                     if (position != 0)
                         binding.searchBar.setText("Category: $selectedCategory")
-
                 }
 
                 override fun onNothingSelected(parent: AdapterView<*>) {
@@ -100,8 +97,7 @@ class SearchFragment : Fragment(), MainActivity.OnBackPressedListener {
                 if (binding.searchBar.text.toString().isNotEmpty())
                     if (binding.searchBar.text.toString().startsWith("Category: "))
                         searchProductsByCategory(selectedCategory!!)
-                    else
-                        searchProducts(binding.searchBar.text.toString())
+                    else searchProducts(binding.searchBar.text.toString())
                 true
             } else
                 false
@@ -182,11 +178,10 @@ class SearchFragment : Fragment(), MainActivity.OnBackPressedListener {
     }
 
     private fun searchProductsByCategory(query: String) {
+        Toast.makeText(context, "Searching by category: $query", Toast.LENGTH_SHORT).show()
         val productReference = FirebaseHelper.getFireStoreInstance()
             .collection(FirebaseHelper.KEY_COLLECTION_PRODUCTS)
-            .whereEqualTo("productCategory", query.toLowerCase(Locale.getDefault()))
-
-        Toast.makeText(context, "Searching for $query", Toast.LENGTH_SHORT).show()
+            .whereEqualTo("productCategory", query)
 
         productReference.get()
             .addOnCompleteListener { task ->

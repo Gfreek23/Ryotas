@@ -2,8 +2,9 @@
 <resources>
     <string-array name="post_categories">
         <item>Select category</item>
-        <item>Job Hiring</item>
-        <item>Nigga Hiring</item>
-        
+        <item>Home cleaning</item>
+        <item>Car wash</item>
+        <item>Gardening</item>
+        <item>Haircut</item>
     </string-array>
 </resources>

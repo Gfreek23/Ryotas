@@ -64,25 +64,35 @@ class AddProductFragment : Fragment(), MainActivity.OnBackPressedListener {
         }
 
         val productCategorySpinner = binding.productCategorySpinner
-        ArrayAdapter.createFromResource(
-            requireContext(),
-            R.array.product_categories,
-            android.R.layout.simple_spinner_item
-        ).also { adapter ->
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-            productCategorySpinner.adapter = adapter
-        }
-        productCategorySpinner.setSelection(0)
-        productCategorySpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
-                selectedCategory = parent.getItemAtPosition(position).toString()
+        val postCategories = resources.getStringArray(R.array.product_categories)
+        val adapter = object : ArrayAdapter<String>(
+            context,
+            R.layout.spinner_item,
+            postCategories
+        ) {
+            override fun isEnabled(position: Int): Boolean {
+                return position != 0
             }
+        }
+        adapter.setDropDownViewResource(R.layout.spinner_item)
+        productCategorySpinner.adapter = adapter
 
-            override fun onNothingSelected(parent: AdapterView<*>) {
-                // This method is invoked when the spinner selection disappears from this view.
-                // You can leave it empty if you don't have anything to do.
+        productCategorySpinner.onItemSelectedListener =
+            object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: AdapterView<*>,
+                    view: View,
+                    position: Int,
+                    id: Long
+                ) {
+                    selectedCategory = parent.getItemAtPosition(position).toString()
+                }
+
+                override fun onNothingSelected(parent: AdapterView<*>) {
+                    // This method is invoked when the spinner selection disappears from this view.
+                    // You can leave it empty if you don't have anything to do.
+                }
             }
-        }
 
         binding.addBtn.setOnClickListener { addProduct() }
 
@@ -146,6 +156,7 @@ class AddProductFragment : Fragment(), MainActivity.OnBackPressedListener {
                                         sharedPreferences.getString("phoneNumber", null)
 
                                     val product = ProductsModel(
+                                        productID = UUID.randomUUID().toString(),
                                         sellerUserID = FirebaseHelper.currentUserID(),
                                         userType = userType!!,
                                         sellerName = fullName!!,
@@ -154,7 +165,9 @@ class AddProductFragment : Fragment(), MainActivity.OnBackPressedListener {
                                         sellerPhoneNumber = phoneNumber!!,
                                         productName = productName,
                                         productNameLowercase = productName.toLowerCase(Locale.getDefault()),
-                                        productNameWords = productName.toLowerCase(Locale.getDefault()).split(" "),
+                                        productNameWords = productName.toLowerCase(Locale.getDefault())
+                                            .split(" "),
+                                        productRatings = 0.0F,
                                         productDescription = productDescription,
                                         productCategory = selectedCategory!!,
                                         price = price,
@@ -166,7 +179,8 @@ class AddProductFragment : Fragment(), MainActivity.OnBackPressedListener {
 
                                     FirebaseHelper.getFireStoreInstance()
                                         .collection(FirebaseHelper.KEY_COLLECTION_PRODUCTS)
-                                        .document().set(product)
+                                        .document(product.productID)
+                                        .set(product)
                                         .addOnCompleteListener { task ->
                                             binding.progressBar.visibility = View.GONE
                                             binding.addBtn.visibility = View.VISIBLE
@@ -183,6 +197,8 @@ class AddProductFragment : Fragment(), MainActivity.OnBackPressedListener {
                                         }
                                 }
                                 .addOnFailureListener {
+                                    binding.progressBar.visibility = View.GONE
+                                    binding.addBtn.visibility = View.VISIBLE
                                     Log.e(TAG, "addProduct: " + it.message)
                                 }
                         } else {
@@ -215,6 +231,4 @@ class AddProductFragment : Fragment(), MainActivity.OnBackPressedListener {
             toastHelper.showToast("Task Cancelled", 1)
         }
     }
-
-
 }

@@ -1,5 +1,6 @@
 package com.example.trialproject3.Fragment
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
@@ -8,6 +9,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.example.trialproject3.Activity.MainActivity
@@ -42,6 +45,7 @@ class SearchPostsFragment : Fragment(), MainActivity.OnBackPressedListener {
                 }
             }
     }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -63,31 +67,65 @@ class SearchPostsFragment : Fragment(), MainActivity.OnBackPressedListener {
 
         binding.backArrow.setOnClickListener { backToPostsFragment() }
 
+        val postCategorySpinner = binding.postCategorySpinner
+        val postCategories = resources.getStringArray(R.array.post_categories)
+        val adapter = object : ArrayAdapter<String>(
+            context,
+            R.layout.spinner_item,
+            postCategories
+        ) {
+            override fun isEnabled(position: Int): Boolean {
+                return position != 0
+            }
+        }
+        adapter.setDropDownViewResource(R.layout.spinner_item)
+        postCategorySpinner.adapter = adapter
+
+        postCategorySpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            @SuppressLint("SetTextI18n")
+            override fun onItemSelected(
+                parent: AdapterView<*>,
+                view: View,
+                position: Int,
+                id: Long
+            ) {
+                selectedCategory = parent.getItemAtPosition(position).toString()
+                if (position != 0)
+                    binding.searchBar.setText("Category: $selectedCategory")
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>) {
+                // Optionally do something when nothing is selected
+            }
+        }
+
         binding.searchBar.setOnEditorActionListener { v: TextView, actionId: Int, event: KeyEvent? ->
             if (actionId == EditorInfo.IME_ACTION_DONE ||
                 (event?.action == KeyEvent.ACTION_DOWN && event.keyCode == KeyEvent.KEYCODE_ENTER)
             ) {
-//                if (binding.searchBar.text.toString().isNotEmpty())
-//                    if (selectedCategory != null)
-//                        searchProductsByCategory(selectedCategory!!)
-//                    else
-//                        searchProducts(binding.searchBar.text.toString())
-//                searchProducts(binding.searchBar.text.toString())
+                if (binding.searchBar.text.toString().isNotEmpty())
+                    if (binding.searchBar.text.toString().startsWith("Category: "))
+                        searchPostsByCategory(selectedCategory!!)
+                    else searchPosts(binding.searchBar.text.toString())
                 true
             } else
                 false
 
         }
 
+        binding.searchBtn.setOnClickListener {
+            if (binding.searchBar.text.toString().isNotEmpty())
+                if (binding.searchBar.text.toString().startsWith("Category: "))
+                    searchPostsByCategory(selectedCategory!!)
+                else searchPosts(binding.searchBar.text.toString())
+        }
+
         return binding.root
     }
 
 
-
-
     override fun onBackPressed(): Boolean {
         backToPostsFragment()
-
         return true
     }
 
@@ -99,8 +137,7 @@ class SearchPostsFragment : Fragment(), MainActivity.OnBackPressedListener {
         fragmentTransaction.commit()
     }
 
-    private fun searchPosts(query: String){
-        loadingSpinnerOverlay.showLoading()
+    private fun searchPosts(query: String) {
         val postsReference = FirebaseHelper.getFireStoreInstance()
             .collection(FirebaseHelper.KEY_COLLECTION_POSTS)
             .whereEqualTo("productNameLowercase", query.toLowerCase(Locale.getDefault()))
@@ -129,6 +166,36 @@ class SearchPostsFragment : Fragment(), MainActivity.OnBackPressedListener {
                     Log.e(TAG, "Error getting posts: ", task.exception)
 
             }
+    }
 
+    private fun searchPostsByCategory(query: String) {
+        val postsReference = FirebaseHelper.getFireStoreInstance()
+            .collection(FirebaseHelper.KEY_COLLECTION_POSTS)
+            .whereEqualTo("postCategory", query)
+
+        postsReference.get()
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    val postsList = mutableListOf<PostsModel>()
+                    for (document in task.result) {
+                        val posts = document.toObject(PostsModel::class.java)
+                        postsList.add(posts)
+                        Log.d(TAG, "searchProducts: $postsList")
+                    }
+
+                    val bundle = Bundle()
+                    bundle.putSerializable("postsList", ArrayList(postsList))
+                    val postsFragment = PostsFragment()
+                    postsFragment.arguments = bundle
+
+                    val fragmentManager = requireActivity().supportFragmentManager
+                    val fragmentTransaction = fragmentManager.beginTransaction()
+                    fragmentTransaction.replace(R.id.fragmentContainer, postsFragment)
+                    fragmentTransaction.addToBackStack(null)
+                    fragmentTransaction.commit()
+                } else
+                    Log.e(TAG, "Error getting posts: ", task.exception)
+
+            }
     }
 }

@@ -20,6 +20,8 @@
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="30dp"
+            android:layout_marginBottom="20dp"
+            android:fontFamily="@font/gabarito_medium"
             android:text="Profile"
             android:textColor="@color/white"
             android:textSize="20sp" />
@@ -29,9 +31,6 @@
             android:layout_height="100dp"
             android:layout_below="@id/textView"
             android:layout_centerInParent="true"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="20dp"
             android:layout_marginBottom="20dp">
 
             <de.hdodenhof.circleimageview.CircleImageView
@@ -100,29 +99,41 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
+            android:fontFamily="@font/gabarito_medium"
             android:text="Name"
             android:textAlignment="center"
             android:textColor="@color/bright_blue"
-            android:textSize="25sp"
-            android:textStyle="bold" />
+            android:textSize="25sp" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/userTypeTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="5dp"
-            android:text="User Type"
+            android:fontFamily="@font/gabarito_medium"
+            android:text="Seller"
             android:textAlignment="center"
             android:textColor="@color/black"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+            android:textSize="19sp" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/emailTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
+            android:layout_marginBottom="5dp"
+            android:fontFamily="@font/gabarito_regular"
             android:text="email@example.com"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="15sp" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/addressTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:fontFamily="@font/gabarito_regular"
+            android:text="Address"
             android:textAlignment="center"
             android:textColor="@color/black"
             android:textSize="15sp" />
@@ -132,65 +143,86 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
+            android:fontFamily="@font/gabarito_regular"
             android:text="Phone Number"
             android:textAlignment="center"
             android:textColor="@color/black"
             android:textSize="15sp" />
 
-        <androidx.appcompat.widget.LinearLayoutCompat
-            android:id="@+id/storeInfoLayout"
+        <androidx.cardview.widget.CardView
+            android:id="@+id/storeDisplayLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:padding="10dp">
+            android:layout_margin="10dp"
+            app:cardBackgroundColor="@color/white"
+            app:cardCornerRadius="5dp"
+            app:cardElevation="5dp">
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/storeDisplayLayout"
+            <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:cardCornerRadius="5dp"
-                app:cardElevation="10dp">
+                android:orientation="vertical"
+                android:padding="10dp">
 
                 <androidx.appcompat.widget.LinearLayoutCompat
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="10dp">
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="10dp"
+                    >
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        app:srcCompat="@drawable/store_32"
+                        android:layout_marginEnd="5dp"/>
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="10dp"
-                        android:text="Store Details:"
+                        android:text="Store:"
                         android:textColor="@color/black"
                         android:textSize="18sp"
-                        android:textStyle="bold" />
+                        android:fontFamily="@font/gabarito_semibold" />
 
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/storeNameTextView"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="10dp"
-                        android:text="Store Name"
-                        android:textColor="@color/black"
-                        android:textSize="17sp" />
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/storeNameTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:text="Store Name"
+                    android:textColor="@color/black"
+                    android:fontFamily="@font/gabarito_medium"
+                    android:textSize="18sp" />
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_marginEnd="5dp"
+                        app:srcCompat="@drawable/location_32"/>
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/storeLocationTextView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="10dp"
                         android:text="Store Location"
                         android:textColor="@color/black"
-                        android:textSize="16sp" />
-
+                        android:fontFamily="@font/gabarito_medium"
+                        android:textSize="17sp" />
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
-            </androidx.cardview.widget.CardView>
+            </androidx.appcompat.widget.LinearLayoutCompat>
 
-        </androidx.appcompat.widget.LinearLayoutCompat>
+        </androidx.cardview.widget.CardView>
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 

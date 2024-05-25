@@ -29,6 +29,8 @@
                     android:layout_alignParentTop="true"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="30dp"
+                    android:layout_marginBottom="20dp"
+                    android:fontFamily="@font/gabarito_medium"
                     android:text="Profile"
                     android:textColor="@color/white"
                     android:textSize="20sp" />
@@ -38,9 +40,6 @@
                     android:layout_height="100dp"
                     android:layout_below="@id/textView"
                     android:layout_centerInParent="true"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginEnd="20dp"
                     android:layout_marginBottom="20dp">
 
                     <de.hdodenhof.circleimageview.CircleImageView
@@ -157,8 +156,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:orientation="vertical"
-                android:padding="10dp">
+                android:orientation="vertical">
 
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:id="@+id/registerStoreLayout"
@@ -171,16 +169,26 @@
                     <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
                         android:fontFamily="@font/gabarito_medium"
                         android:text="Your Store is not Registered"
-                        android:textColor="@color/black" />
+                        android:textColor="@color/crimson_red"
+                        android:textSize="15sp" />
 
                     <androidx.appcompat.widget.AppCompatButton
                         android:id="@+id/registerStoreBtn"
-                        android:layout_width="200dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:background="@drawable/red_banner"
+                        android:backgroundTint="@color/light_blue_2"
+                        android:drawableStart="@drawable/store_32"
+                        android:drawablePadding="10dp"
+                        android:drawableTint="@color/white"
+                        android:fontFamily="@font/gabarito_semibold"
+                        android:paddingHorizontal="20dp"
                         android:text="Register Store"
-                        android:textColor="@color/black" />
+                        android:textColor="@color/white"
+                        android:textSize="14sp" />
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -188,9 +196,10 @@
                     android:id="@+id/storeDisplayLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
                     app:cardBackgroundColor="@color/white"
                     app:cardCornerRadius="5dp"
-                    app:cardElevation="10dp">
+                    app:cardElevation="5dp">
 
                     <androidx.appcompat.widget.LinearLayoutCompat
                         android:layout_width="match_parent"
@@ -198,48 +207,82 @@
                         android:orientation="vertical"
                         android:padding="10dp">
 
-                        <androidx.appcompat.widget.AppCompatTextView
+                        <androidx.appcompat.widget.LinearLayoutCompat
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="10dp"
-                            android:text="Store:"
-                            android:textColor="@color/black"
-                            android:textSize="18sp"
-                            android:textStyle="bold" />
+                            android:gravity="center"
+                            android:orientation="horizontal">
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:layout_marginEnd="5dp"
+                                app:srcCompat="@drawable/store_32" />
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/gabarito_semibold"
+                                android:text="Store:"
+                                android:textColor="@color/black"
+                                android:textSize="18sp" />
+
+                        </androidx.appcompat.widget.LinearLayoutCompat>
 
                         <androidx.appcompat.widget.AppCompatTextView
                             android:id="@+id/storeNameTextView"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="10dp"
+                            android:fontFamily="@font/gabarito_medium"
                             android:text="Store Name"
                             android:textColor="@color/black"
                             android:textSize="17sp" />
 
-                        <androidx.appcompat.widget.AppCompatTextView
-                            android:id="@+id/storeLocationTextView"
+                        <androidx.appcompat.widget.LinearLayoutCompat
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="10dp"
-                            android:text="Store Location"
-                            android:textColor="@color/black"
-                            android:textSize="16sp" />
+                            android:gravity="center"
+                            android:orientation="horizontal">
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:layout_marginEnd="5dp"
+                                app:srcCompat="@drawable/location_32" />
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/storeLocationTextView"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/gabarito_medium"
+                                android:text="Store Location"
+                                android:textColor="@color/black"
+                                android:textSize="17sp" />
+
+                        </androidx.appcompat.widget.LinearLayoutCompat>
 
                         <androidx.appcompat.widget.AppCompatButton
                             android:id="@+id/addAnotherStoreBtn"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:paddingStart="20dp"
-                            android:paddingEnd="20dp"
+                            android:background="@drawable/red_banner"
+                            android:backgroundTint="@color/light_blue_2"
+                            android:drawableStart="@drawable/baseline_add_24"
+                            android:drawablePadding="10dp"
+                            android:drawableTint="@color/white"
+                            android:fontFamily="@font/gabarito_semibold"
+                            android:paddingHorizontal="20dp"
                             android:text="Add Another Store"
-                            android:textColor="@color/black" />
+                            android:textColor="@color/white" />
 
                     </androidx.appcompat.widget.LinearLayoutCompat>
 
 
                 </androidx.cardview.widget.CardView>
-
 
             </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -254,7 +297,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
-                    app:cardBackgroundColor="@color/stained_white"
+                    app:cardBackgroundColor="@color/white"
                     app:cardCornerRadius="10dp"
                     app:cardElevation="5dp">
 
@@ -287,7 +330,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
-                    app:cardBackgroundColor="@color/stained_white"
+                    app:cardBackgroundColor="@color/white"
                     app:cardCornerRadius="10dp"
                     app:cardElevation="5dp">
 
@@ -320,7 +363,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
-                    app:cardBackgroundColor="@color/stained_white"
+                    app:cardBackgroundColor="@color/white"
                     app:cardCornerRadius="10dp"
                     app:cardElevation="5dp">
 
@@ -353,7 +396,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
-                    app:cardBackgroundColor="@color/stained_white"
+                    android:layout_marginBottom="10dp"
+                    app:cardBackgroundColor="@color/white"
                     app:cardCornerRadius="10dp"
                     app:cardElevation="5dp">
 
@@ -374,7 +418,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="16dp"
                             android:text="Logout"
-                            android:textColor="@color/red"
+                            android:textColor="@color/crimson_red"
                             android:textSize="17sp"
                             android:textStyle="bold" />
 

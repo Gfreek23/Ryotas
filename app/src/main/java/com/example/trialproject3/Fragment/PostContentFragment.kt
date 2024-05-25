@@ -76,7 +76,7 @@ class PostContentFragment : Fragment(), MainActivity.OnBackPressedListener {
                 position: Int,
                 id: Long
             ) {
-                selectedCategory = parent.getItemAtPosition(position) as String
+                selectedCategory = parent.getItemAtPosition(position).toString()
             }
 
             override fun onNothingSelected(parent: AdapterView<*>) {
@@ -113,7 +113,7 @@ class PostContentFragment : Fragment(), MainActivity.OnBackPressedListener {
             binding.descriptionEditText.requestFocus()
             binding.descriptionEditText.error = "Enter content"
 
-        } else if (selectedCategory != null) {
+        } else if (selectedCategory == null) {
             binding.postCategorySpinner.requestFocus()
             toastHelper.showToast("Select a category", 1)
         } else {
@@ -151,6 +151,7 @@ class PostContentFragment : Fragment(), MainActivity.OnBackPressedListener {
                                     postImage = it.toString()
 
                                     val postsModel = PostsModel(
+                                        postID = UUID.randomUUID().toString(),
                                         userID = FirebaseHelper.currentUserID(),
                                         fullName = fullName!!,
                                         userType = userType!!,
@@ -159,7 +160,9 @@ class PostContentFragment : Fragment(), MainActivity.OnBackPressedListener {
                                         phoneNumber = phoneNumber!!,
                                         title = title,
                                         titleLowerCase = title.toLowerCase(Locale.getDefault()),
-                                        category = selectedCategory!!,
+                                        titleWords = title.toLowerCase(Locale.getDefault())
+                                            .split(" "),
+                                        postCategory = selectedCategory!!,
                                         description = description,
                                         postImage = postImage,
                                         storeLocation = MainActivity.storeLocation!!,
@@ -169,7 +172,8 @@ class PostContentFragment : Fragment(), MainActivity.OnBackPressedListener {
 
                                     FirebaseHelper.getFireStoreInstance()
                                         .collection(FirebaseHelper.KEY_COLLECTION_POSTS)
-                                        .document().set(postsModel)
+                                        .document(postsModel.postID)
+                                        .set(postsModel)
                                         .addOnCompleteListener { task ->
                                             loadingSpinnerOverlay.hideLoading()
                                             binding.progressBar.visibility = View.GONE
@@ -196,6 +200,7 @@ class PostContentFragment : Fragment(), MainActivity.OnBackPressedListener {
             } else {
                 //post content without image
                 val postsModel = PostsModel(
+                    postID = UUID.randomUUID().toString(),
                     userID = FirebaseHelper.currentUserID(),
                     fullName = fullName!!,
                     userType = userType!!,
@@ -204,7 +209,8 @@ class PostContentFragment : Fragment(), MainActivity.OnBackPressedListener {
                     phoneNumber = phoneNumber!!,
                     title = title,
                     titleLowerCase = title.toLowerCase(Locale.getDefault()),
-                    category = selectedCategory!!,
+                    titleWords = title.toLowerCase(Locale.getDefault()).split(" "),
+                    postCategory = selectedCategory!!,
                     description = description,
                     storeLocation = MainActivity.storeLocation!!,
                     storeName = MainActivity.storeName!!,
@@ -213,7 +219,8 @@ class PostContentFragment : Fragment(), MainActivity.OnBackPressedListener {
 
                 FirebaseHelper.getFireStoreInstance()
                     .collection(FirebaseHelper.KEY_COLLECTION_POSTS)
-                    .document().set(postsModel)
+                    .document(postsModel.postID)
+                    .set(postsModel)
                     .addOnCompleteListener { task ->
                         loadingSpinnerOverlay.hideLoading()
                         binding.progressBar.visibility = View.GONE
