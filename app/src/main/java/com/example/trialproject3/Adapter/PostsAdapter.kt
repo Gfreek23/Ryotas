@@ -39,6 +39,7 @@ class PostsAdapter(
             binding.titleTextView.text = postsModel.title
             binding.userNameTextView.text = postsModel.fullName
             binding.descriptionTextView.text = postsModel.description
+            binding.categoryTextView.text = postsModel.category
             binding.emailTextView.text = postsModel.email
             binding.timePostedTextView.text = postsModel.timePosted
             binding.postImageView.visibility = View.GONE

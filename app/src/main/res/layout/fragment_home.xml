@@ -28,6 +28,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Welcome"
+                    android:fontFamily="@font/gabarito_regular"
                     android:textColor="@color/black"
                     android:textSize="17sp" />
 
@@ -36,9 +37,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Name"
+                    android:fontFamily="@font/gabarito_semibold"
                     android:textColor="@color/black"
                     android:textSize="16sp"
-                    android:textStyle="bold" />
+                    />
 
             </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -59,21 +61,15 @@
 
             <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/searchBar"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="5"
                 android:background="@null"
-                android:hint="Search..."
+                android:hint="Search products..."
                 android:padding="5dp"
+                android:fontFamily="@font/gabarito_regular"
                 android:textColor="@color/black"
                 android:textColorHint="@color/dark_grey"
                 android:textSize="16sp" />
-
-            <androidx.appcompat.widget.AppCompatImageView
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                app:srcCompat="@drawable/car_ui_icon_search" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 

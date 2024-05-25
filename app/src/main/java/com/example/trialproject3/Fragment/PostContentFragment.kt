@@ -9,10 +9,14 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
 import com.example.trialproject3.Activity.MainActivity
 import com.example.trialproject3.Firebase.FirebaseHelper
+import com.example.trialproject3.Models.PostsModel
 import com.example.trialproject3.R
+import com.example.trialproject3.Utility.LoadingSpinnerOverlay
 import com.example.trialproject3.Utility.ToastHelper
 import com.example.trialproject3.databinding.FragmentPostContentBinding
 import com.github.dhaval2404.imagepicker.ImagePicker
@@ -26,9 +30,12 @@ class PostContentFragment : Fragment(), MainActivity.OnBackPressedListener {
     private val TAG = "PostsFragment"
     private lateinit var binding: FragmentPostContentBinding
     private lateinit var toastHelper: ToastHelper
+    private lateinit var loadingSpinnerOverlay: LoadingSpinnerOverlay
     private lateinit var context: Context
     private var postImageUri: Uri? = null
     private var postImage: String = "none"
+    private var selectedCategory: String? = null
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -37,14 +44,44 @@ class PostContentFragment : Fragment(), MainActivity.OnBackPressedListener {
 
         context = requireContext()
         toastHelper = ToastHelper(context)
+        loadingSpinnerOverlay = LoadingSpinnerOverlay(context)
         binding.progressBar.visibility = View.GONE
 
-        binding.addImageView.setOnClickListener {
+        binding.postImageView.setOnClickListener {
             ImagePicker.with(this)
                 .crop()
                 .compress(1024)
                 .maxResultSize(1080, 1080)
                 .start()
+        }
+
+        val postCategorySpinner = binding.postCategorySpinner
+        val postCategories = resources.getStringArray(R.array.post_categories)
+        val adapter = object : ArrayAdapter<String>(
+            context,
+            R.layout.spinner_item,
+            postCategories
+        ) {
+            override fun isEnabled(position: Int): Boolean {
+                return position != 0
+            }
+        }
+        adapter.setDropDownViewResource(R.layout.spinner_item)
+        postCategorySpinner.adapter = adapter
+
+        postCategorySpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>,
+                view: View,
+                position: Int,
+                id: Long
+            ) {
+                selectedCategory = parent.getItemAtPosition(position) as String
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>) {
+                // Optionally do something when nothing is selected
+            }
         }
 
         binding.postBtn.setOnClickListener { postContent() }
@@ -75,7 +112,12 @@ class PostContentFragment : Fragment(), MainActivity.OnBackPressedListener {
         } else if (description.isEmpty()) {
             binding.descriptionEditText.requestFocus()
             binding.descriptionEditText.error = "Enter content"
+
+        } else if (selectedCategory != null) {
+            binding.postCategorySpinner.requestFocus()
+            toastHelper.showToast("Select a category", 1)
         } else {
+            loadingSpinnerOverlay.showLoading()
             binding.progressBar.visibility = View.VISIBLE
             binding.postBtn.visibility = View.GONE
 
@@ -96,6 +138,7 @@ class PostContentFragment : Fragment(), MainActivity.OnBackPressedListener {
             val currentDate = Date(currentTimeMillis)
             val formattedDateTime = sdf.format(currentDate)
 
+            //post content with image
             if (postImageUri != null) {
                 val storageRef = FirebaseStorage.getInstance().reference
                 val postImageRef = storageRef.child("/postsImages/${UUID.randomUUID()}")
@@ -107,26 +150,28 @@ class PostContentFragment : Fragment(), MainActivity.OnBackPressedListener {
                                 .addOnSuccessListener {
                                     postImage = it.toString()
 
-
-
-                                    val post = HashMap<Any, String>()
-                                    post["userID"] = FirebaseHelper.currentUserID()
-                                    post["fullName"] = fullName!!
-                                    post["userPostImage"] = profilePicture!!
-                                    post["userType"] = userType!!
-                                    post["email"] = FirebaseHelper.currentUser().email.toString()
-                                    post["phoneNumber"] = phoneNumber!!
-                                    post["title"] = title
-                                    post["description"] = description
-                                    post["postImage"] = postImage
-                                    post["storeName"] = MainActivity.storeName!!
-                                    post["storeLocation"] = MainActivity.storeLocation!!
-                                    post["timePosted"] = formattedDateTime
+                                    val postsModel = PostsModel(
+                                        userID = FirebaseHelper.currentUserID(),
+                                        fullName = fullName!!,
+                                        userType = userType!!,
+                                        userPostImage = profilePicture!!,
+                                        email = FirebaseHelper.currentUser().email.toString(),
+                                        phoneNumber = phoneNumber!!,
+                                        title = title,
+                                        titleLowerCase = title.toLowerCase(Locale.getDefault()),
+                                        category = selectedCategory!!,
+                                        description = description,
+                                        postImage = postImage,
+                                        storeLocation = MainActivity.storeLocation!!,
+                                        storeName = MainActivity.storeName!!,
+                                        timePosted = formattedDateTime
+                                    )
 
                                     FirebaseHelper.getFireStoreInstance()
                                         .collection(FirebaseHelper.KEY_COLLECTION_POSTS)
-                                        .document().set(post)
+                                        .document().set(postsModel)
                                         .addOnCompleteListener { task ->
+                                            loadingSpinnerOverlay.hideLoading()
                                             binding.progressBar.visibility = View.GONE
                                             binding.postBtn.visibility = View.VISIBLE
 
@@ -149,24 +194,28 @@ class PostContentFragment : Fragment(), MainActivity.OnBackPressedListener {
                         }
                     }
             } else {
-                val post = HashMap<Any, String>()
-                post["userID"] = FirebaseHelper.currentUserID()
-                post["fullName"] = fullName!!
-                post["userPostImage"] = profilePicture!!
-                post["userType"] = userType!!
-                post["email"] = FirebaseHelper.currentUser().email.toString()
-                post["phoneNumber"] = phoneNumber!!
-                post["title"] = title
-                post["description"] = description
-                post["postImage"] = postImage
-                post["storeName"] = MainActivity.storeName!!
-                post["storeLocation"] = MainActivity.storeLocation!!
-                post["timePosted"] = formattedDateTime
+                //post content without image
+                val postsModel = PostsModel(
+                    userID = FirebaseHelper.currentUserID(),
+                    fullName = fullName!!,
+                    userType = userType!!,
+                    userPostImage = profilePicture!!,
+                    email = FirebaseHelper.currentUser().email.toString(),
+                    phoneNumber = phoneNumber!!,
+                    title = title,
+                    titleLowerCase = title.toLowerCase(Locale.getDefault()),
+                    category = selectedCategory!!,
+                    description = description,
+                    storeLocation = MainActivity.storeLocation!!,
+                    storeName = MainActivity.storeName!!,
+                    timePosted = formattedDateTime
+                )
 
                 FirebaseHelper.getFireStoreInstance()
                     .collection(FirebaseHelper.KEY_COLLECTION_POSTS)
-                    .document().set(post)
+                    .document().set(postsModel)
                     .addOnCompleteListener { task ->
+                        loadingSpinnerOverlay.hideLoading()
                         binding.progressBar.visibility = View.GONE
                         binding.postBtn.visibility = View.VISIBLE
 

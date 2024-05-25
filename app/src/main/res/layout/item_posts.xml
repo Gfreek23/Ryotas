@@ -13,20 +13,11 @@
         android:layout_height="wrap_content"
         android:padding="10dp">
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/timePostedTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:text="Time Posted"
-            android:textColor="@color/black"
-            android:textSize="14sp" />
 
         <RelativeLayout
             android:id="@+id/postHeaderLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/timePostedTextView">
+            android:layout_height="wrap_content">
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/userImageView"
@@ -34,19 +25,19 @@
                 android:layout_height="50dp"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
-                android:layout_marginBottom="5dp"
-                android:src="@drawable/user_2" />
+                android:src="@drawable/ic_baseline_account_circle" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/userNameTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
+                android:layout_marginBottom="3dp"
                 android:layout_toEndOf="@+id/userImageView"
+                android:fontFamily="@font/gabarito_medium"
                 android:text="Name"
                 android:textColor="@color/black"
-                android:textSize="16sp"
-                android:textStyle="bold" />
+                android:textSize="16sp" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/emailTextView"
@@ -54,10 +45,24 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/userNameTextView"
                 android:layout_marginStart="10dp"
+                android:layout_marginBottom="3dp"
                 android:layout_toEndOf="@+id/userImageView"
+                android:fontFamily="@font/gabarito_regular"
                 android:text="Email"
                 android:textColor="@color/black"
                 android:textSize="15sp" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/timePostedTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/emailTextView"
+                android:layout_marginStart="10dp"
+                android:layout_toEndOf="@+id/userImageView"
+                android:fontFamily="@font/gabarito_regular"
+                android:text="Time Posted"
+                android:textColor="@color/dark_grey"
+                android:textSize="13sp" />
 
         </RelativeLayout>
 
@@ -67,17 +72,29 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/postHeaderLayout"
             android:layout_marginBottom="5dp"
+            android:fontFamily="@font/gabarito_semibold"
             android:text="Title"
             android:textColor="@color/black"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+            android:textSize="20sp" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/categoryTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/titleTextView"
+            android:layout_marginBottom="5dp"
+            android:fontFamily="@font/gabarito_regular"
+            android:text="Category"
+            android:textColor="@color/black"
+            android:textSize="15sp" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/descriptionTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/titleTextView"
-            android:layout_marginBottom="5dp"
+            android:layout_below="@id/categoryTextView"
+            android:layout_marginBottom="10dp"
+            android:fontFamily="@font/gabarito_medium"
             android:text="Description"
             android:textColor="@color/black"
             android:textSize="18sp" />

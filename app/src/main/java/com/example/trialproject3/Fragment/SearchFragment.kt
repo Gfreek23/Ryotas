@@ -1,6 +1,7 @@
 package com.example.trialproject3.Fragment
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -14,6 +15,7 @@ import android.view.inputmethod.EditorInfo
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.trialproject3.Activity.MainActivity
 import com.example.trialproject3.Adapter.ProductsAdapter
@@ -24,8 +26,9 @@ import com.example.trialproject3.databinding.FragmentSearchBinding
 import java.util.Locale
 
 class SearchFragment : Fragment(), MainActivity.OnBackPressedListener {
-    private lateinit var binding: FragmentSearchBinding
     private val TAG = "SearchFragment"
+    private lateinit var binding: FragmentSearchBinding
+    private lateinit var context: Context
     private var selectedCategory: String? = null
 
     companion object {
@@ -53,30 +56,24 @@ class SearchFragment : Fragment(), MainActivity.OnBackPressedListener {
 
         binding.searchBar.requestFocus()
 
+        context = requireContext()
+
         binding.backArrow.setOnClickListener { backToHomeFragment() }
 
-        binding.searchBtn.setOnClickListener {
-            if (binding.searchBar.text.toString().isNotEmpty())
-                if (selectedCategory != null)
-                    searchProductsByCategory(selectedCategory!!)
-                else
-                    searchProducts(binding.searchBar.text.toString())
-            else
-                return@setOnClickListener
-
-        }
-
         val productCategorySpinner = binding.productCategorySpinner
-        ArrayAdapter.createFromResource(
-            requireContext(),
-            R.array.product_categories,
-            android.R.layout.simple_spinner_item
-        ).also { adapter ->
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-            selectedCategory = productCategorySpinner.selectedItem?.toString()
-            productCategorySpinner.adapter = adapter
+        val postCategories = resources.getStringArray(R.array.product_categories)
+        val adapter = object : ArrayAdapter<String>(
+            context,
+            R.layout.spinner_item,
+            postCategories
+        ) {
+            override fun isEnabled(position: Int): Boolean {
+                return position != 0
+            }
         }
-        productCategorySpinner.setSelection(0)
+        adapter.setDropDownViewResource(R.layout.spinner_item)
+        productCategorySpinner.adapter = adapter
+
         productCategorySpinner.onItemSelectedListener =
             object : AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(
@@ -101,15 +98,21 @@ class SearchFragment : Fragment(), MainActivity.OnBackPressedListener {
                 (event?.action == KeyEvent.ACTION_DOWN && event.keyCode == KeyEvent.KEYCODE_ENTER)
             ) {
                 if (binding.searchBar.text.toString().isNotEmpty())
-                    if (selectedCategory != null)
+                    if (binding.searchBar.text.toString().startsWith("Category: "))
                         searchProductsByCategory(selectedCategory!!)
                     else
                         searchProducts(binding.searchBar.text.toString())
-                searchProducts(binding.searchBar.text.toString())
                 true
             } else
                 false
+        }
 
+        binding.searchBtn.setOnClickListener {
+            if (binding.searchBar.text.toString().isNotEmpty())
+                if (binding.searchBar.text.toString().startsWith("Category: "))
+                    searchProductsByCategory(selectedCategory!!)
+                else
+                    searchProducts(binding.searchBar.text.toString())
         }
 
         binding.searchBar.addTextChangedListener(object : TextWatcher {
@@ -182,6 +185,8 @@ class SearchFragment : Fragment(), MainActivity.OnBackPressedListener {
         val productReference = FirebaseHelper.getFireStoreInstance()
             .collection(FirebaseHelper.KEY_COLLECTION_PRODUCTS)
             .whereEqualTo("productCategory", query.toLowerCase(Locale.getDefault()))
+
+        Toast.makeText(context, "Searching for $query", Toast.LENGTH_SHORT).show()
 
         productReference.get()
             .addOnCompleteListener { task ->

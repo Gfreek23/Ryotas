@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="post_categories">
+        <item>Select category</item>
+        <item>Job Hiring</item>
+        <item>Nigga Hiring</item>
+        
+    </string-array>
+</resources>

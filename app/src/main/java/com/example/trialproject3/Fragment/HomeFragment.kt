@@ -65,24 +65,6 @@ class HomeFragment : Fragment(), OnBackPressedListener, ProductsAdapter.OnProduc
             }
             false
         }
-        binding.searchBar.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
-                // This method is called to notify you that, within s, the count characters
-                // beginning at start are about to be replaced by new text with length after.
-            }
-
-            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-                // This method is called to notify you that, within s, the count characters
-                // beginning at start have just replaced old text that had length before.
-            }
-
-            override fun afterTextChanged(s: Editable) {
-                // This method is called to notify you that, somewhere within s, the text has been changed.
-                if (s.toString().isEmpty())
-                    loadProducts()
-
-            }
-        })
 
         binding.swipeRefreshLayout.setOnRefreshListener {
             loadProducts()
@@ -97,7 +79,8 @@ class HomeFragment : Fragment(), OnBackPressedListener, ProductsAdapter.OnProduc
         if (isAdded) {
             fetchUserDetails()
 
-            val productsList = arguments?.getSerializable("productsList") as? ArrayList<ProductsModel>
+            val productsList =
+                arguments?.getSerializable("productsList") as? ArrayList<ProductsModel>
             Log.e(TAG, "productsList: " + productsList.toString())
             if (productsList != null) loadSearchedProducts(productsList)
             else loadProducts()
@@ -140,17 +123,19 @@ class HomeFragment : Fragment(), OnBackPressedListener, ProductsAdapter.OnProduc
     private fun loadSearchedProducts(productsList: ArrayList<ProductsModel>) {
         loadingSpinnerOverlay.showLoading()
         val productsAdapter = ProductsAdapter(context, productsList, this@HomeFragment)
-
-        if (productsList.isEmpty()) {
-            binding.noProductTextView.visibility = View.VISIBLE
-        }
-
         binding.productsRecyclerView.adapter = productsAdapter
+
+        if (productsList.isEmpty())
+            binding.noProductTextView.visibility = View.VISIBLE
+        else
+            binding.noProductTextView.visibility = View.GONE
+
         loadingSpinnerOverlay.hideLoading()
     }
 
     private fun loadProducts() {
         loadingSpinnerOverlay.showLoading()
+        binding.noProductTextView.visibility = View.GONE
         val productReference = FirebaseHelper.getFireStoreInstance()
             .collection(FirebaseHelper.KEY_COLLECTION_PRODUCTS)
 

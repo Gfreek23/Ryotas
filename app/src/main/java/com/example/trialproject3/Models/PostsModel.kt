@@ -1,5 +1,7 @@
 package com.example.trialproject3.Models
 
+import java.io.Serializable
+
 data class PostsModel(
     val userID: String = "",
     val fullName: String = "",
@@ -7,8 +9,12 @@ data class PostsModel(
     val email: String = "",
     val phoneNumber: String = "",
     val title: String = "",
+    val titleLowerCase: String = "",
     val description: String = "",
+    val category : String = "",
     val postImage: String = "",
     val userPostImage: String = "",
+    val storeName : String = "",
+    val storeLocation : String = "",
     val timePosted: String = ""
-)
+) : Serializable

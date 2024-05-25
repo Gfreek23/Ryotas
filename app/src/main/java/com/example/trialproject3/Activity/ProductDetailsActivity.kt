@@ -71,6 +71,7 @@ class ProductDetailsActivity : AppCompatActivity() {
         binding.priceTextView.text = "₱ ${productsModel.price}"
         binding.productDescriptionTextView.text = productsModel.productDescription
         binding.productCategoryTextView.text = productsModel.productCategory
+        binding.storeNameTextView.text = productsModel.storeName
         if (productsModel.productImage != "none") {
             Glide.with(this)
                 .load(productsModel.productImage)

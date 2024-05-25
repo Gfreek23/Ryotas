@@ -1,10 +1,12 @@
 package com.example.trialproject3.Fragment
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -25,6 +27,7 @@ class PostsFragment : Fragment(), PostsAdapter.OnPostItemClickListener,
     private lateinit var toastHelper: ToastHelper
     private lateinit var loadingSpinnerOverlay: LoadingSpinnerOverlay
 
+    @SuppressLint("ClickableViewAccessibility")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -35,17 +38,49 @@ class PostsFragment : Fragment(), PostsAdapter.OnPostItemClickListener,
         toastHelper = ToastHelper(context)
         loadingSpinnerOverlay = LoadingSpinnerOverlay(context)
 
+        binding.noPostsTextView.visibility = View.GONE
+
+        binding.searchBar.setOnTouchListener { v, event ->
+            if (event.action == MotionEvent.ACTION_UP) {
+                showSearchPostsFragment()
+            }
+            false
+        }
+
+        binding.swipeRefreshLayout.setOnRefreshListener {
+            loadPosts()
+            binding.swipeRefreshLayout.isRefreshing = false
+        }
+
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        if (isAdded)
-            loadPosts()
+        if (isAdded) {
+            val postsList = arguments?.getSerializable("postsList") as? ArrayList<PostsModel>
+            if (postsList != null)
+                loadSearchedPosts(postsList)
+            else
+                loadPosts()
+
+        }
 
     }
 
+    private fun loadSearchedPosts(postsLists: ArrayList<PostsModel>) {
+        loadingSpinnerOverlay.showLoading()
+        val postsAdapter = PostsAdapter(context, postsLists, this, this)
+        binding.postsRecyclerView.adapter = postsAdapter
+
+        if (postsLists.isEmpty()) binding.noPostsTextView.visibility = View.VISIBLE
+        else binding.noPostsTextView.visibility = View.GONE
+
+        loadingSpinnerOverlay.hideLoading()
+    }
+
     private fun loadPosts() {
+        binding.noPostsTextView.visibility = View.GONE
         loadingSpinnerOverlay.showLoading()
         val postsReference = FirebaseHelper.getFireStoreInstance()
             .collection(FirebaseHelper.KEY_COLLECTION_POSTS)
@@ -77,7 +112,7 @@ class PostsFragment : Fragment(), PostsAdapter.OnPostItemClickListener,
     }
 
     override fun onPostItemClick(postsModel: PostsModel) {
-        goToFragment(postsModel)
+        goToPostUserProfileFragment(postsModel)
     }
 
     override fun onPostRateClick(postsModel: PostsModel, rating: Float) {
@@ -103,14 +138,15 @@ class PostsFragment : Fragment(), PostsAdapter.OnPostItemClickListener,
 
     }
 
-    private fun goToFragment(postsModel: PostsModel) {
-//        val fragment = PostUserProfileFragment()
-//        val bundle = Bundle()
-//        bundle.putString(
-//            PostUserProfileFragment.POST_USER_ID_PARAMS,
-//            postsModel.userID
-//        )
-//        fragment.arguments = bundle
+    private fun showSearchPostsFragment() {
+        val fragmentManager = requireActivity().supportFragmentManager
+        val fragmentTransaction = fragmentManager.beginTransaction()
+        fragmentTransaction.replace(R.id.fragmentContainer, SearchPostsFragment())
+        fragmentTransaction.addToBackStack(null)
+        fragmentTransaction.commit()
+    }
+
+    private fun goToPostUserProfileFragment(postsModel: PostsModel) {
         val postUserProfileFragment = PostUserProfileFragment.newInstance(postsModel.userID)
         val fragmentManager = requireActivity().supportFragmentManager
         val fragmentTransaction = fragmentManager.beginTransaction()

@@ -1,5 +1,6 @@
 package com.example.trialproject3.Fragment
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -11,11 +12,14 @@ import com.bumptech.glide.Glide
 import com.example.trialproject3.Activity.MainActivity
 import com.example.trialproject3.Firebase.FirebaseHelper
 import com.example.trialproject3.R
+import com.example.trialproject3.Utility.LoadingSpinnerOverlay
 import com.example.trialproject3.databinding.FragmentPostUserProfileBinding
 
 
 class PostUserProfileFragment : Fragment(), MainActivity.OnBackPressedListener {
     private lateinit var binding: FragmentPostUserProfileBinding
+    private lateinit var loadingSpinnerOverlay: LoadingSpinnerOverlay
+    private lateinit var context: Context
 
     companion object {
         const val TAG: String = "PostUserProfileFragment"
@@ -35,6 +39,9 @@ class PostUserProfileFragment : Fragment(), MainActivity.OnBackPressedListener {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentPostUserProfileBinding.inflate(inflater, container, false)
+
+        context = requireContext()
+        loadingSpinnerOverlay = LoadingSpinnerOverlay(context)
 
         binding.backBtn.setOnClickListener { backToFragment() }
 
@@ -64,11 +71,13 @@ class PostUserProfileFragment : Fragment(), MainActivity.OnBackPressedListener {
     }
 
     private fun loadPostUserDetails(postUserID: String) {
+        loadingSpinnerOverlay.showLoading()
         FirebaseHelper.getFireStoreInstance()
             .collection(FirebaseHelper.KEY_COLLECTION_USERS)
             .document(postUserID)
             .get()
             .addOnCompleteListener { task ->
+                loadingSpinnerOverlay.hideLoading()
                 binding.profilePictureProgressBar.visibility = View.GONE
                 if (task.isSuccessful) {
                     val userSnapshot = task.result
