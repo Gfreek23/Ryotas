@@ -140,7 +140,7 @@ class SearchPostsFragment : Fragment(), MainActivity.OnBackPressedListener {
     private fun searchPosts(query: String) {
         val postsReference = FirebaseHelper.getFireStoreInstance()
             .collection(FirebaseHelper.KEY_COLLECTION_POSTS)
-            .whereEqualTo("productNameLowercase", query.toLowerCase(Locale.getDefault()))
+            .whereArrayContains("titleWords", query.toLowerCase(Locale.getDefault()))
 
         postsReference.get()
             .addOnCompleteListener { task ->

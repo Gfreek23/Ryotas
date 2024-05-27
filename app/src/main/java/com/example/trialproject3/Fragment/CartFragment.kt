@@ -9,6 +9,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.RadioButton
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -45,11 +46,14 @@ class CartFragment : Fragment(),
         private const val TAG = "CartFragment"
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentCartBinding.inflate(inflater, container, false)
+
+        binding.emptyTxt.visibility = View.GONE
 
         context = requireContext()
         builder = AlertDialog.Builder(context)
@@ -57,7 +61,15 @@ class CartFragment : Fragment(),
         loadingSpinnerOverlay = LoadingSpinnerOverlay(context)
         alertDialogHelper = AlertDialogHelper(context)
 
-        binding.emptyTxt.visibility = View.GONE
+        binding.backBtn.setOnClickListener { backToHomeFragment() }
+
+
+        binding.paymentMethodRadioGroup.setOnCheckedChangeListener { group, checkedId ->
+            val radioButton = group.findViewById<RadioButton>(checkedId)
+            val selectedPaymentMethod = radioButton.text.toString()
+            binding.paymentMethodTextView.text = "Payment Method: $selectedPaymentMethod"
+            // Now you can use the selectedPaymentMethod
+        }
 
         binding.orderNowBtn.setOnClickListener {
             builder.setTitle("Are you sure?")
@@ -68,8 +80,6 @@ class CartFragment : Fragment(),
                 .setNegativeButton("No") { dialog: DialogInterface, which: Int -> dialog.cancel() }
                 .show()
         }
-
-        binding.backBtn.setOnClickListener { backToHomeFragment() }
 
         binding.addAddressBtn.setOnClickListener {
             startActivity(
@@ -130,8 +140,11 @@ class CartFragment : Fragment(),
                     binding.cartRecyclerView.layoutManager = LinearLayoutManager(context)
                     binding.cartRecyclerView.adapter = cartAdapter
 
-                    val totalPrice = cartAdapter.calculateTotalPrice()
-                    binding.totalPriceTextView.text = "Total Price: $totalPrice"
+                    val subtotal = cartAdapter.calculateTotalPrice()
+                    binding.subTotalTextView.text = "Subtotal: ₱$subtotal"
+
+                    val totalPrice = subtotal
+                    binding.totalTextView.text = "Total Price: ₱$totalPrice"
                 } else {
                     binding.cartLayout.visibility = View.GONE
                     binding.emptyTxt.visibility = View.VISIBLE

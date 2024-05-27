@@ -38,6 +38,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
+            android:background="@drawable/outlined_shape"
+            android:backgroundTint="@color/white"
             android:elevation="5dp" />
 
         <com.mapbox.navigation.ui.maps.camera.view.MapboxRouteOverviewButton
@@ -45,6 +47,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
+            android:background="@drawable/outlined_shape"
+            android:backgroundTint="@color/white"
             android:elevation="5dp" />
 
         <com.mapbox.navigation.ui.maps.camera.view.MapboxRecenterButton
@@ -52,7 +56,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            android:elevation="10dp" />
+            android:background="@drawable/outlined_shape"
+            android:backgroundTint="@color/white"
+            android:elevation="5dp" />
 
         <androidx.appcompat.widget.AppCompatImageButton
             android:id="@+id/minimizeScreenImgBtn"
@@ -70,7 +76,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            android:elevation="10dp"
+            android:background="@drawable/outlined_shape"
+            android:backgroundTint="@color/white"
+            android:elevation="5dp"
             android:padding="10dp"
             android:scaleType="centerCrop"
             android:src="@drawable/fullscreen_32" />
@@ -80,7 +88,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            android:elevation="10dp"
+            android:background="@drawable/outlined_shape"
+            android:backgroundTint="@color/white"
+            android:elevation="5dp"
             android:padding="10dp"
             android:scaleType="centerCrop"
 
@@ -95,6 +105,8 @@
             android:padding="10dp"
             android:scaleType="centerCrop"
             android:src="@drawable/zoom_out_32"
+            android:background="@drawable/outlined_shape"
+            android:backgroundTint="@color/white"
             android:visibility="gone" />
 
     </androidx.appcompat.widget.LinearLayoutCompat>
@@ -114,8 +126,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
+            android:background="@drawable/outlined_shape"
+            android:backgroundTint="@color/white"
             android:checked="false"
-            android:elevation="10dp"
+            android:elevation="5dp"
             android:padding="10dp"
             android:scaleType="centerCrop"
             android:src="@drawable/calendar" />
@@ -130,6 +144,8 @@
             android:layout_marginTop="5dp"
             android:layout_marginEnd="5dp"
             android:layout_marginBottom="5dp"
+            android:background="@drawable/outlined_shape"
+            android:backgroundTint="@color/white"
             android:elevation="5dp"
             android:padding="10dp"
             android:scaleType="centerCrop"
@@ -145,6 +161,8 @@
             android:layout_marginTop="5dp"
             android:layout_marginEnd="5dp"
             android:layout_marginBottom="5dp"
+            android:background="@drawable/outlined_shape"
+            android:backgroundTint="@color/white"
             android:elevation="5dp"
             android:padding="10dp"
             android:scaleType="centerCrop"
@@ -183,8 +201,10 @@
                     android:layout_marginTop="5dp"
                     android:layout_marginEnd="5dp"
                     android:layout_marginBottom="5dp"
+                    android:background="@drawable/outlined_shape"
+                    android:backgroundTint="@color/white"
                     android:elevation="5dp"
-                    android:padding="10dp"
+                    android:padding="5dp"
                     android:scaleType="centerCrop"
                     android:src="@drawable/location_32" />
 
@@ -208,6 +228,8 @@
                     android:layout_marginTop="5dp"
                     android:layout_marginEnd="5dp"
                     android:layout_marginBottom="5dp"
+                    android:background="@drawable/outlined_shape"
+                    android:backgroundTint="@color/white"
                     android:elevation="5dp"
                     android:padding="10dp"
                     android:scaleType="centerCrop"
@@ -244,26 +266,26 @@
 
     </androidx.cardview.widget.CardView>
 
-<!--    <androidx.cardview.widget.CardView-->
-<!--        android:id="@+id/bottomContainer"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_alignParentBottom="true"-->
-<!--        android:layout_marginStart="20dp"-->
-<!--        android:layout_marginEnd="20dp"-->
-<!--        android:layout_marginBottom="10dp"-->
-<!--        app:cardCornerRadius="20dp"-->
-<!--        app:cardElevation="5dp">-->
+    <!--    <androidx.cardview.widget.CardView-->
+    <!--        android:id="@+id/bottomContainer"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_alignParentBottom="true"-->
+    <!--        android:layout_marginStart="20dp"-->
+    <!--        android:layout_marginEnd="20dp"-->
+    <!--        android:layout_marginBottom="10dp"-->
+    <!--        app:cardCornerRadius="20dp"-->
+    <!--        app:cardElevation="5dp">-->
 
-<!--        <com.google.android.material.bottomnavigation.BottomNavigationView-->
-<!--            android:id="@+id/bottomNavigationView"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_alignParentBottom="true"-->
-<!--            app:itemIconSize="30dp"-->
-<!--            app:labelVisibilityMode="labeled"-->
-<!--            app:menu="@menu/menu_map_bottom_nav_driver" />-->
+    <!--        <com.google.android.material.bottomnavigation.BottomNavigationView-->
+    <!--            android:id="@+id/bottomNavigationView"-->
+    <!--            android:layout_width="match_parent"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:layout_alignParentBottom="true"-->
+    <!--            app:itemIconSize="30dp"-->
+    <!--            app:labelVisibilityMode="labeled"-->
+    <!--            app:menu="@menu/menu_map_bottom_nav_driver" />-->
 
-<!--    </androidx.cardview.widget.CardView>-->
+    <!--    </androidx.cardview.widget.CardView>-->
 
 </RelativeLayout>

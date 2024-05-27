@@ -149,7 +149,7 @@ class SearchProductsFragment : Fragment(), MainActivity.OnBackPressedListener {
     private fun searchProducts(query: String) {
         val productReference = FirebaseHelper.getFireStoreInstance()
             .collection(FirebaseHelper.KEY_COLLECTION_PRODUCTS)
-            .whereEqualTo("productNameLowercase", query.toLowerCase(Locale.getDefault()))
+            .whereArrayContains("productNameWords", query.toLowerCase(Locale.getDefault()))
 
         productReference.get()
             .addOnCompleteListener { task ->
