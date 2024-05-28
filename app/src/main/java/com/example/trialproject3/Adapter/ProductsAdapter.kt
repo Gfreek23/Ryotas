@@ -17,13 +17,8 @@ import com.example.trialproject3.databinding.ItemProductsBinding
 class ProductsAdapter(
     private val context: Context,
     private val productsModelList: List<ProductsModel>,
-    private val onProductItemClickListener: OnProductItemClickListener
 ) :
     RecyclerView.Adapter<ProductsAdapter.ProductViewHolder>() {
-
-    interface OnProductItemClickListener {
-        fun onProductItemClick(productsModel: ProductsModel)
-    }
 
     class ProductViewHolder(val binding: ItemProductsBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -31,7 +26,6 @@ class ProductsAdapter(
         fun bind(
             context: Context,
             productsModel: ProductsModel,
-            onProductItemClickListener: OnProductItemClickListener
         ) {
             binding.productNameTextView.text = productsModel.productName
             binding.priceTextView.text = "₱ ${productsModel.price}"
@@ -73,7 +67,7 @@ class ProductsAdapter(
     }
 
     override fun onBindViewHolder(holder: ProductViewHolder, position: Int) {
-        holder.bind(context, productsModelList[position], onProductItemClickListener)
+        holder.bind(context, productsModelList[position])
     }
 
     override fun getItemCount(): Int {

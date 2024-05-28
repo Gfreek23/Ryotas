@@ -26,7 +26,8 @@ import com.google.android.gms.tasks.Task
 import com.google.firebase.firestore.DocumentSnapshot
 import java.util.ArrayList
 
-class HomeFragment : Fragment(), OnBackPressedListener, ProductsAdapter.OnProductItemClickListener {
+class HomeFragment : Fragment(),
+    OnBackPressedListener{
     private val TAG = "HomeFragment"
     private lateinit var binding: FragmentHomeBinding
     private lateinit var context: Context
@@ -41,7 +42,12 @@ class HomeFragment : Fragment(), OnBackPressedListener, ProductsAdapter.OnProduc
             requireActivity().finish()
         }
     }
-
+    override fun onDestroy() {
+        super.onDestroy()
+        if (loadingSpinnerOverlay.isShowing) {
+            loadingSpinnerOverlay.dismiss()
+        }
+    }
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -56,7 +62,6 @@ class HomeFragment : Fragment(), OnBackPressedListener, ProductsAdapter.OnProduc
 
         binding.noProductTextView.visibility = View.GONE
         binding.productsRecyclerView.layoutManager = GridLayoutManager(context, 2)
-
 
         val sharedPreferences = context.getSharedPreferences("currentUserPrefs", Context.MODE_PRIVATE)
         val fullName = sharedPreferences.getString("fullName", null)
@@ -80,7 +85,6 @@ class HomeFragment : Fragment(), OnBackPressedListener, ProductsAdapter.OnProduc
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         if (isAdded) {
-//            fetchUserDetails()
             val productsList =
                 arguments?.getSerializable("productsList") as? ArrayList<ProductsModel>
             Log.e(TAG, "productsList: " + productsList.toString())
@@ -94,10 +98,6 @@ class HomeFragment : Fragment(), OnBackPressedListener, ProductsAdapter.OnProduc
         return true
     }
 
-    override fun onProductItemClick(productsModel: ProductsModel) {
-
-    }
-
     private fun showSearchFragment() {
         val fragmentManager = requireActivity().supportFragmentManager
         val fragmentTransaction = fragmentManager.beginTransaction()
@@ -105,26 +105,9 @@ class HomeFragment : Fragment(), OnBackPressedListener, ProductsAdapter.OnProduc
         fragmentTransaction.addToBackStack(null)
         fragmentTransaction.commit()
     }
-
-    private fun fetchUserDetails() {
-        if (FirebaseHelper.currentUser() != null) {
-            FirebaseHelper.currentUserDetails().get()
-                .addOnCompleteListener { task: Task<DocumentSnapshot> ->
-                    if (task.isSuccessful) {
-                        val documentSnapshot = task.result
-                        val getFullName = documentSnapshot.getString("Fname")
-                        val getUserType = documentSnapshot.getString("UserType")
-                        binding.fullNameTextView.text = getFullName
-                    } else
-                        Log.e(TAG, "getUserDetails: " + task.exception)
-
-                }
-        }
-    }
-
     private fun loadSearchedProducts(productsList: ArrayList<ProductsModel>) {
         loadingSpinnerOverlay.showLoading()
-        val productsAdapter = ProductsAdapter(context, productsList, this@HomeFragment)
+        val productsAdapter = ProductsAdapter(context, productsList)
         binding.productsRecyclerView.adapter = productsAdapter
 
         if (productsList.isEmpty()) binding.noProductTextView.visibility = View.VISIBLE
@@ -155,7 +138,7 @@ class HomeFragment : Fragment(), OnBackPressedListener, ProductsAdapter.OnProduc
                             productsList.add(product)
                         }
                     }
-                    val productsAdapter = ProductsAdapter(context, productsList, this@HomeFragment)
+                    val productsAdapter = ProductsAdapter(context, productsList)
                     binding.productsRecyclerView.adapter = productsAdapter
                 }
                 loadingSpinnerOverlay.hideLoading()

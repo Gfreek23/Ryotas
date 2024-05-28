@@ -21,40 +21,37 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
+                android:fontFamily="@font/gabarito_black"
                 android:text="E-Home"
                 android:textColor="#fb8b24"
-                android:textSize="25sp"
-                android:textStyle="bold|italic"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:textSize="25sp" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/textView21"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/gabarito_medium"
                 android:text="An Online Home Service Assistant \nand \nEssentials Store"
                 android:textAlignment="center"
                 android:textColor="#ffffff"
-                android:textSize="20sp"
-                android:textStyle="bold" />
+                android:textSize="20sp" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
+                android:fontFamily="@font/gabarito_bold"
                 android:text="Sign In"
                 android:textColor="@color/white"
-                android:textSize="25sp"
-                android:textStyle="bold" />
+                android:textSize="25sp" />
 
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="100dp"
-                android:padding="10dp"
                 android:gravity="center"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:padding="10dp">
 
                 <androidx.appcompat.widget.AppCompatEditText
                     android:id="@+id/emailEditText"
@@ -65,8 +62,11 @@
                     android:drawableLeft="@drawable/ic_baseline_account_circle"
                     android:drawablePadding="10dp"
                     android:elevation="3dp"
+                    android:fontFamily="@font/gabarito_medium"
                     android:hint="Email"
-                    android:padding="15dp" />
+                    android:padding="15dp"
+                    android:textColor="@color/black"
+                    android:textSize="18sp" />
 
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="match_parent"
@@ -83,9 +83,12 @@
                         android:drawableLeft="@drawable/ic_baseline_vpn_key_24"
                         android:drawablePadding="10dp"
                         android:elevation="3dp"
+                        android:fontFamily="@font/gabarito_medium"
                         android:hint="Password"
                         android:inputType="textPassword"
-                        android:padding="15dp" />
+                        android:padding="15dp"
+                        android:textColor="@color/black"
+                        android:textSize="18sp" />
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/imageview_show_hide"
@@ -105,14 +108,15 @@
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/loginBtn"
-                style="@android:style/Widget.Button"
-                android:layout_width="100dp"
-                android:layout_height="50dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:background="@drawable/red_banner"
                 android:text="Login"
-                android:textColor="#ffffff"
-                android:textSize="20sp"
-                android:textStyle="bold" />
+                android:paddingHorizontal="30dp"
+                android:textColor="@color/white"
+                android:textSize="17sp"
+                android:fontFamily="@font/gabarito_semibold"
+                />
 
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="wrap_content"
@@ -125,6 +129,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="5dp"
+                    android:fontFamily="@font/gabarito_regular"
                     android:text="Don't Have An Account?"
                     android:textColor="@color/white"
                     android:textSize="16sp" />
@@ -133,6 +138,7 @@
                     android:id="@+id/signUpTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/gabarito_regular"
                     android:text="Sign Up"
                     android:textColor="@color/red"
                     android:textSize="17sp" />
@@ -143,10 +149,10 @@
                 android:id="@+id/forgotPasswordTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/gabarito_regular"
                 android:text="Forgot Password?"
                 android:textColor="@color/white"
-                android:textSize="16sp"
-                android:textStyle="bold" />
+                android:textSize="16sp" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 
