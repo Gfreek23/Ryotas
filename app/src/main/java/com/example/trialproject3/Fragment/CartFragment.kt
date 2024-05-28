@@ -5,6 +5,8 @@ import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -61,8 +63,7 @@ class CartFragment : Fragment(),
         loadingSpinnerOverlay = LoadingSpinnerOverlay(context)
         alertDialogHelper = AlertDialogHelper(context)
 
-        binding.backBtn.setOnClickListener { backToHomeFragment() }
-
+        binding.backBtn.setOnClickListener { goToFragment(HomeFragment()) }
 
         binding.paymentMethodRadioGroup.setOnCheckedChangeListener { group, checkedId ->
             val radioButton = group.findViewById<RadioButton>(checkedId)
@@ -76,6 +77,11 @@ class CartFragment : Fragment(),
                 .setMessage("Do you want to purchase these items?")
                 .setCancelable(true)
                 .setPositiveButton("Yes") { dialog: DialogInterface?, which: Int ->
+                    loadingSpinnerOverlay.showLoading()
+                    Handler(Looper.getMainLooper()).postDelayed({
+                        goToFragment(OrderOnTheWayFragment())
+                        loadingSpinnerOverlay.hideLoading()
+                    }, 2500)
                 }
                 .setNegativeButton("No") { dialog: DialogInterface, which: Int -> dialog.cancel() }
                 .show()
@@ -101,7 +107,7 @@ class CartFragment : Fragment(),
     }
 
     override fun onBackPressed(): Boolean {
-        backToHomeFragment()
+        goToFragment(HomeFragment())
         return true
     }
 
@@ -157,10 +163,10 @@ class CartFragment : Fragment(),
         }
     }
 
-    private fun backToHomeFragment() {
+    private fun goToFragment(fragment: Fragment) {
         val fragmentManager = requireActivity().supportFragmentManager
         val fragmentTransaction = fragmentManager.beginTransaction()
-        fragmentTransaction.replace(R.id.fragmentContainer, HomeFragment())
+        fragmentTransaction.replace(R.id.fragmentContainer, fragment)
         fragmentTransaction.addToBackStack(null)
         fragmentTransaction.commit()
     }

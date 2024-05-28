@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:padding="10dp"
+    tools:context=".Fragment.OrderOnTheWayFragment">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_marginBottom="5dp"
+        android:src="@drawable/transit_96" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/imageView"
+        android:layout_centerHorizontal="true"
+        android:fontFamily="@font/gabarito_bold"
+        android:text="Your Order in is the way"
+        android:textColor="@color/black"
+        android:textSize="25sp" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/backToHomeBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/red_button_background"
+        android:fontFamily="@font/gabarito_semibold"
+        android:text="Back to Home"
+        android:textColor="@color/white"
+        android:textSize="17sp" />
+
+</RelativeLayout>

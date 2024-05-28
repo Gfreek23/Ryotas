@@ -199,7 +199,6 @@
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/orderNowBtn"
-                style="@android:style/Widget.Button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/red_button_background"
