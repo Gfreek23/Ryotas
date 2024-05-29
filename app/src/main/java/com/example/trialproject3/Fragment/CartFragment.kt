@@ -101,9 +101,7 @@ class CartFragment : Fragment(),
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        if (isAdded)
-            loadCart()
-
+        if (isAdded) loadCart()
     }
 
     override fun onBackPressed(): Boolean {

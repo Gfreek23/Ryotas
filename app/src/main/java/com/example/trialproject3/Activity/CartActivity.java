@@ -175,8 +175,6 @@ public class CartActivity extends AppCompatActivity {
                 finish();
             } else if (item.getItemId() == R.id.navCart) {
 //                showFragment(new CartFragment());
-            } else if (item.getItemId() == R.id.navProfile) {
-//                showFragment(new ProfileFragment());
             }
 
             return true;

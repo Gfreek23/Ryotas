@@ -12,6 +12,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
+import com.bumptech.glide.Glide
 import com.example.trialproject3.Activity.LoginActivity
 import com.example.trialproject3.Activity.MainActivity.OnBackPressedListener
 import com.example.trialproject3.Adapter.ProductsAdapter
@@ -22,12 +23,10 @@ import com.example.trialproject3.R
 import com.example.trialproject3.Utility.LoadingSpinnerOverlay
 import com.example.trialproject3.Utility.ToastHelper
 import com.example.trialproject3.databinding.FragmentHomeBinding
-import com.google.android.gms.tasks.Task
-import com.google.firebase.firestore.DocumentSnapshot
 import java.util.ArrayList
 
 class HomeFragment : Fragment(),
-    OnBackPressedListener{
+    OnBackPressedListener {
     private val TAG = "HomeFragment"
     private lateinit var binding: FragmentHomeBinding
     private lateinit var context: Context
@@ -42,12 +41,14 @@ class HomeFragment : Fragment(),
             requireActivity().finish()
         }
     }
+
     override fun onDestroy() {
         super.onDestroy()
         if (loadingSpinnerOverlay.isShowing) {
             loadingSpinnerOverlay.dismiss()
         }
     }
+
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -63,13 +64,24 @@ class HomeFragment : Fragment(),
         binding.noProductTextView.visibility = View.GONE
         binding.productsRecyclerView.layoutManager = GridLayoutManager(context, 2)
 
-        val sharedPreferences = context.getSharedPreferences("currentUserPrefs", Context.MODE_PRIVATE)
+        val sharedPreferences =
+            context.getSharedPreferences("currentUserPrefs", Context.MODE_PRIVATE)
         val fullName = sharedPreferences.getString("fullName", null)
+        val profilePicture = sharedPreferences.getString("profilePicture", null)
         binding.fullNameTextView.text = fullName
+
+        if (profilePicture != "none") {
+            Glide.with(context)
+                .load(profilePicture)
+                .placeholder(R.drawable.loading_gif)
+                .into(binding.userProfilePicture)
+        }
+
+        binding.upperLayout.setOnClickListener { goToFragment(ProfileFragment()) }
 
         binding.searchBar.setOnTouchListener { v, event ->
             if (event.action == MotionEvent.ACTION_UP) {
-                showSearchFragment()
+                goToFragment(SearchProductsFragment())
             }
             false
         }
@@ -98,13 +110,14 @@ class HomeFragment : Fragment(),
         return true
     }
 
-    private fun showSearchFragment() {
+    private fun goToFragment(fragment: Fragment) {
         val fragmentManager = requireActivity().supportFragmentManager
         val fragmentTransaction = fragmentManager.beginTransaction()
-        fragmentTransaction.replace(R.id.fragmentContainer, SearchProductsFragment())
+        fragmentTransaction.replace(R.id.fragmentContainer, fragment)
         fragmentTransaction.addToBackStack(null)
         fragmentTransaction.commit()
     }
+
     private fun loadSearchedProducts(productsList: ArrayList<ProductsModel>) {
         loadingSpinnerOverlay.showLoading()
         val productsAdapter = ProductsAdapter(context, productsList)

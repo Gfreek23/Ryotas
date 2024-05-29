@@ -20,17 +20,15 @@
         android:title="Shop" />
 
     <item
+        android:id="@+id/navChat"
+        android:enabled="true"
+        android:icon="@drawable/baseline_chat_24"
+        android:title="Chat" />
+
+    <item
         android:id="@+id/navCart"
         android:enabled="true"
         android:icon="@drawable/btn_3"
         android:title="Cart" />
-
-    <item
-        android:id="@+id/navProfile"
-        android:enabled="true"
-        android:icon="@drawable/btn_4"
-        android:title="Profile" />
-
-
 
 </menu>

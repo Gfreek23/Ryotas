@@ -15,7 +15,16 @@
             android:id="@+id/upperLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingHorizontal="10dp">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/userProfilePicture"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginEnd="5dp"
+                android:src="@drawable/ic_baseline_account_circle" />
 
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
@@ -27,8 +36,8 @@
                     android:id="@+id/textView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Welcome"
                     android:fontFamily="@font/gabarito_regular"
+                    android:text="Welcome"
                     android:textColor="@color/black"
                     android:textSize="17sp" />
 
@@ -36,11 +45,10 @@
                     android:id="@+id/fullNameTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Name"
                     android:fontFamily="@font/gabarito_semibold"
+                    android:text="Name"
                     android:textColor="@color/black"
-                    android:textSize="16sp"
-                    />
+                    android:textSize="16sp" />
 
             </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -64,9 +72,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@null"
+                android:fontFamily="@font/gabarito_regular"
                 android:hint="Search products..."
                 android:padding="5dp"
-                android:fontFamily="@font/gabarito_regular"
                 android:textColor="@color/black"
                 android:textColorHint="@color/dark_grey"
                 android:textSize="16sp" />
@@ -85,15 +93,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:textSize="17sp"
-            android:fontFamily="@font/gabarito_medium"
-            android:text="Sorry, We can't find the product you searched"
-            android:padding="10dp"
             android:layout_margin="10dp"
             android:background="@drawable/edit_text_shape"
             android:elevation="5dp"
+            android:fontFamily="@font/gabarito_medium"
+            android:padding="10dp"
+            android:text="Sorry, We can't find the product you searched"
             android:textAlignment="center"
-            android:textColor="@color/black" />
+            android:textColor="@color/black"
+            android:textSize="17sp" />
 
     </RelativeLayout>
 

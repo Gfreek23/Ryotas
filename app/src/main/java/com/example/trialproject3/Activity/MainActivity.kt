@@ -15,6 +15,7 @@ import com.example.trialproject3.Fragment.HomeFragment
 import com.example.trialproject3.Fragment.PostContentFragment
 import com.example.trialproject3.Fragment.PostsFragment
 import com.example.trialproject3.Fragment.ProfileFragment
+import com.example.trialproject3.Fragment.RecentChatFragment
 import com.example.trialproject3.Map.MapboxMapActivity
 import com.example.trialproject3.Models.StoreDetailsModel
 import com.example.trialproject3.R
@@ -173,8 +174,8 @@ class MainActivity : AppCompatActivity() {
                     showFragment(CartFragment())
                 }
 
-                R.id.navProfile -> {
-                    showFragment(ProfileFragment())
+                R.id.navChat -> {
+                    showFragment(RecentChatFragment())
                 }
             }
             true
