@@ -11,6 +11,7 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import com.bumptech.glide.Glide
 import com.example.trialproject3.Activity.LoginActivity
@@ -20,10 +21,10 @@ import com.example.trialproject3.Firebase.FirebaseHelper
 import com.example.trialproject3.Helper.AlertDialogHelper
 import com.example.trialproject3.Models.ProductsModel
 import com.example.trialproject3.R
+import com.example.trialproject3.Utility.FragmentManagerHelper
 import com.example.trialproject3.Utility.LoadingSpinnerOverlay
 import com.example.trialproject3.Utility.ToastHelper
 import com.example.trialproject3.databinding.FragmentHomeBinding
-import java.util.ArrayList
 
 class HomeFragment : Fragment(),
     OnBackPressedListener {
@@ -33,6 +34,7 @@ class HomeFragment : Fragment(),
     private lateinit var alertDialogHelper: AlertDialogHelper
     private lateinit var toastHelper: ToastHelper
     private lateinit var loadingSpinnerOverlay: LoadingSpinnerOverlay
+    private lateinit var fragmentManagerHelper: FragmentManagerHelper
     override fun onStart() {
         super.onStart()
         if (FirebaseHelper.currentUser() == null) {
@@ -60,6 +62,7 @@ class HomeFragment : Fragment(),
         alertDialogHelper = AlertDialogHelper(context)
         toastHelper = ToastHelper(context)
         loadingSpinnerOverlay = LoadingSpinnerOverlay(context)
+        fragmentManagerHelper = FragmentManagerHelper(activity as FragmentActivity)
 
         binding.noProductTextView.visibility = View.GONE
         binding.productsRecyclerView.layoutManager = GridLayoutManager(context, 2)
@@ -77,11 +80,11 @@ class HomeFragment : Fragment(),
                 .into(binding.userProfilePicture)
         }
 
-        binding.upperLayout.setOnClickListener { goToFragment(ProfileFragment()) }
+        binding.upperLayout.setOnClickListener { fragmentManagerHelper.showFragment(ProfileFragment()) }
 
         binding.searchBar.setOnTouchListener { v, event ->
             if (event.action == MotionEvent.ACTION_UP) {
-                goToFragment(SearchProductsFragment())
+                fragmentManagerHelper.showFragment(SearchProductsFragment())
             }
             false
         }
@@ -108,14 +111,6 @@ class HomeFragment : Fragment(),
     override fun onBackPressed(): Boolean {
         exitApp()
         return true
-    }
-
-    private fun goToFragment(fragment: Fragment) {
-        val fragmentManager = requireActivity().supportFragmentManager
-        val fragmentTransaction = fragmentManager.beginTransaction()
-        fragmentTransaction.replace(R.id.fragmentContainer, fragment)
-        fragmentTransaction.addToBackStack(null)
-        fragmentTransaction.commit()
     }
 
     private fun loadSearchedProducts(productsList: ArrayList<ProductsModel>) {

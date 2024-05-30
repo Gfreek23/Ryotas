@@ -13,7 +13,7 @@ import com.bumptech.glide.Glide
 import com.example.trialproject3.Activity.MainActivity
 import com.example.trialproject3.Activity.MessageActivity
 import com.example.trialproject3.Firebase.FirebaseHelper
-import com.example.trialproject3.Models.PostsModel
+import com.example.trialproject3.Models.RecentChatUserModel
 import com.example.trialproject3.Utility.FragmentManagerHelper
 import com.example.trialproject3.Utility.LoadingSpinnerOverlay
 import com.example.trialproject3.databinding.FragmentPostUserProfileBinding
@@ -100,19 +100,15 @@ class PostUserProfileFragment : Fragment(),
                             .into(binding.profilePicImageView)
                     }
 
-                    val postsModel = PostsModel(
-                        postID = postID,
-                        userID = userSnapshot.getString("userID")!!,
-                        fullName = getFullName!!,
-                        email = getEmail!!,
-                        phoneNumber = getPhone!!,
-                        userPostImage = getProfilePicture!!,
-                        storeName = getStoreName!!,
-                        storeLocation = getStoreLocation!!
+                    val recentChatUserModel = RecentChatUserModel(
+                        chatUserID = userSnapshot.getString("userID")!!,
+                        chatUserName = getFullName!!,
+                        chatUserProfilePicture = getProfilePicture!!
                     )
+
                     binding.chatBtn.setOnClickListener {
                         val intent = Intent(context, MessageActivity::class.java)
-                        intent.putExtra("postModel", postsModel)
+                        intent.putExtra("chatUserData", recentChatUserModel)
                         startActivity(intent)
                     }
                 } else {

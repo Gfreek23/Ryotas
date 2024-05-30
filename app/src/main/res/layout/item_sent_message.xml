@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="10dp"
+    android:padding="5dp">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/sentMessageTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:background="@drawable/background_sent_message"
+        android:fontFamily="@font/gabarito_medium"
+        android:padding="10dp"
+        android:text="Sent message"
+        android:textColor="@color/black"
+        android:textSize="18sp" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/timeAndDateTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/sentMessageTextView"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="5dp"
+        android:fontFamily="@font/gabarito_regular"
+        android:text="Time and date"
+        android:textColor="@color/black"
+        android:textSize="15sp" />
+
+</RelativeLayout>

@@ -7,16 +7,12 @@ import android.util.Log
 import android.view.View
 import android.widget.RatingBar
 import androidx.activity.OnBackPressedCallback
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import com.bumptech.glide.Glide
 import com.example.trialproject3.Firebase.FirebaseHelper
-import com.example.trialproject3.Map.MapboxMapActivity
 import com.example.trialproject3.Models.CartModel
 import com.example.trialproject3.Models.ProductsModel
-import com.example.trialproject3.R
+import com.example.trialproject3.Models.RecentChatUserModel
 import com.example.trialproject3.Utility.LoadingSpinnerOverlay
 import com.example.trialproject3.Utility.ToastHelper
 import com.example.trialproject3.databinding.ActivityProductDetailsBinding
@@ -48,6 +44,7 @@ class ProductDetailsActivity : AppCompatActivity() {
             if (productsModel != null) {
                 Log.d(TAG, "productDetails: $productsModel")
                 loadProductDetails(productsModel)
+                fetchSellerDetails(productsModel.sellerUserID)
 
                 binding.addToCartBtn.setOnClickListener {
                     addToCart(
@@ -85,9 +82,18 @@ class ProductDetailsActivity : AppCompatActivity() {
     @SuppressLint("SetTextI18n")
     private fun loadProductDetails(productsModel: ProductsModel) {
         loadingSpinnerOverlay.showLoading()
+
+        val sharedPreferences = getSharedPreferences("currentUserPrefs", MODE_PRIVATE)
+        val userType = sharedPreferences.getString("userType", null)
+
+        if (userType == "Seller" && productsModel.sellerUserID == FirebaseHelper.currentUserID()) {
+            binding.addToCartBtn.visibility = View.GONE
+            binding.productRatings.setIsIndicator(true)
+        }
+
         binding.productNameTextView.text = productsModel.productName
         binding.priceTextView.text = "₱ ${productsModel.price}"
-        binding.productRatings.rating = productsModel.productRatings.toFloat()
+        binding.productRatings.rating = productsModel.productRatings
         binding.productDescriptionTextView.text = productsModel.productDescription
         binding.productCategoryTextView.text = productsModel.productCategory
         binding.storeNameTextView.text = productsModel.storeName
@@ -98,6 +104,32 @@ class ProductDetailsActivity : AppCompatActivity() {
                 .into(binding.productImageView)
         }
         loadingSpinnerOverlay.hideLoading()
+    }
+
+    private fun fetchSellerDetails(sellerUserID: String) {
+        FirebaseHelper.getFireStoreInstance()
+            .collection(FirebaseHelper.KEY_COLLECTION_USERS)
+            .document(sellerUserID)
+            .get().addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    val sellerDocument = task.result
+                    val recentChatUserModel = RecentChatUserModel(
+                        chatUserID = sellerUserID,
+                        chatUserName = sellerDocument?.getString("Fname") ?: "",
+                        chatUserProfilePicture = sellerDocument.getString("ProfilePicture")
+                            ?: "none"
+                    )
+
+                    binding.chatBtn.setOnClickListener {
+                        val intent =
+                            Intent(this@ProductDetailsActivity, MessageActivity::class.java)
+                        intent.putExtra("chatUserData", recentChatUserModel)
+                        startActivity(intent)
+                    }
+                }
+            }
+
+
     }
 
     private fun rateProduct(productID: String, rating: Float) {

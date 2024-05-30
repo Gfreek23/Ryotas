@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="10dp"
+    android:padding="5dp">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/chatDriverImageView"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:src="@drawable/ic_baseline_account_circle" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/receivedMessageTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_toEndOf="@id/chatDriverImageView"
+        android:background="@drawable/background_received_message"
+        android:fontFamily="@font/gabarito_medium"
+        android:padding="10dp"
+        android:text="Received message"
+        android:textColor="@color/black"
+        android:textSize="17sp" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/timeAndDateTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/receivedMessageTextView"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="5dp"
+        android:fontFamily="@font/gabarito_regular"
+        android:text="Time and date"
+        android:textColor="@color/dark_grey"
+        android:textSize="15sp" />
+
+</RelativeLayout>

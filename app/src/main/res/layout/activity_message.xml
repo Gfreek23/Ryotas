@@ -59,7 +59,14 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:padding="10dp"
-            tools:listitem="@layout/item_chat_right" />
+            tools:listitem="@layout/item_sent_message" />
+
+        <pl.droidsonroids.gif.GifImageView
+            android:id="@+id/loadingGif"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:src="@drawable/loading_gif" />
 
     </RelativeLayout>
 
@@ -71,6 +78,7 @@
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
         android:layout_marginBottom="10dp"
+        app:cardBackgroundColor="@color/white"
         app:cardCornerRadius="10dp"
         app:cardElevation="5dp">
 

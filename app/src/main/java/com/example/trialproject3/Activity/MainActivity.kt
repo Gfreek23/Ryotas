@@ -7,18 +7,18 @@ import android.view.MenuItem
 import android.view.View
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
 import com.example.trialproject3.Firebase.FirebaseHelper
 import com.example.trialproject3.Fragment.AddProductFragment
 import com.example.trialproject3.Fragment.CartFragment
 import com.example.trialproject3.Fragment.HomeFragment
 import com.example.trialproject3.Fragment.PostContentFragment
 import com.example.trialproject3.Fragment.PostsFragment
-import com.example.trialproject3.Fragment.ProfileFragment
 import com.example.trialproject3.Fragment.RecentChatFragment
 import com.example.trialproject3.Map.MapboxMapActivity
 import com.example.trialproject3.Models.StoreDetailsModel
 import com.example.trialproject3.R
+import com.example.trialproject3.Utility.FragmentManagerHelper
 import com.example.trialproject3.databinding.ActivityMainBinding
 import com.google.android.gms.tasks.Task
 import com.google.firebase.firestore.DocumentSnapshot
@@ -28,6 +28,7 @@ import com.google.firebase.firestore.QuerySnapshot
 class MainActivity : AppCompatActivity() {
     private val TAG = "MainActivity"
     private lateinit var binding: ActivityMainBinding
+    private lateinit var fragmentManagerHelper: FragmentManagerHelper
 
     companion object {
         var fullName: String? = null
@@ -49,12 +50,13 @@ class MainActivity : AppCompatActivity() {
 
         binding.postContentFAB.visibility = View.GONE
         binding.addProductFAB.visibility = View.GONE
+        fragmentManagerHelper = FragmentManagerHelper(this as FragmentActivity)
 
         initializeBottomNavBar()
         fetchUserDetails()
 
-        if (intent.hasExtra("isAddedToCart")) showFragment(CartFragment())
-        else showFragment(HomeFragment())
+        if (intent.hasExtra("isAddedToCart")) fragmentManagerHelper.showFragment(CartFragment())
+        else fragmentManagerHelper.showFragment(HomeFragment())
 
         onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
@@ -88,26 +90,19 @@ class MainActivity : AppCompatActivity() {
                         editor.putString("phoneNumber", getPhoneNumber)
                         editor.apply()
 
-                        fullName = getFullName
-                        userType = getUserType
-                        profilePicture = getProfilePicture
-                        phoneNumber = getPhoneNumber
-
                         if (getUserType == "Seller") {
                             val menu = binding.bottomNavBar.menu
-                            val menuItem1 = menu.getItem(1)
-                            val menuItem2 = menu.getItem(3)
-                            //                                menuItem1.setVisible(false);
-                            menuItem2.isVisible = false
+                            val cartMenuItem = menu.getItem(4)
+                            cartMenuItem.isVisible = false
                             binding.postContentFAB.visibility = View.VISIBLE
                             binding.addProductFAB.visibility = View.VISIBLE
                             binding.postContentFAB.setOnClickListener {
-                                showFragment(
+                                fragmentManagerHelper.showFragment(
                                     PostContentFragment()
                                 )
                             }
                             binding.addProductFAB.setOnClickListener {
-                                showFragment(
+                                fragmentManagerHelper.showFragment(
                                     AddProductFragment()
                                 )
                             }
@@ -145,19 +140,12 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    private fun showFragment(fragment: Fragment) {
-        val fragmentManager = supportFragmentManager
-        val fragmentTransaction = fragmentManager.beginTransaction()
-        fragmentTransaction.replace(R.id.fragmentContainer, fragment)
-        fragmentTransaction.commit()
-    }
-
     private fun initializeBottomNavBar() {
         binding.bottomNavBar.selectedItemId = R.id.navShop
         binding.bottomNavBar.setOnItemSelectedListener { item: MenuItem ->
             when (item.itemId) {
                 R.id.navShop -> {
-                    showFragment(HomeFragment())
+                    fragmentManagerHelper.showFragment(HomeFragment())
                 }
 
                 R.id.navExplore -> {
@@ -167,15 +155,15 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 R.id.navPosts -> {
-                    showFragment(PostsFragment())
+                    fragmentManagerHelper.showFragment(PostsFragment())
                 }
 
                 R.id.navCart -> {
-                    showFragment(CartFragment())
+                    fragmentManagerHelper.showFragment(CartFragment())
                 }
 
                 R.id.navChat -> {
-                    showFragment(RecentChatFragment())
+                    fragmentManagerHelper.showFragment(RecentChatFragment())
                 }
             }
             true

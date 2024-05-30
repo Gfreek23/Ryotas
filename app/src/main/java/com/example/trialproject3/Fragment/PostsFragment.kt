@@ -11,9 +11,11 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
 import com.example.trialproject3.Adapter.PostsAdapter
 import com.example.trialproject3.Firebase.FirebaseHelper
 import com.example.trialproject3.Models.PostsModel
+import com.example.trialproject3.R
 import com.example.trialproject3.Utility.FragmentManagerHelper
 import com.example.trialproject3.Utility.LoadingSpinnerOverlay
 import com.example.trialproject3.Utility.ToastHelper
@@ -44,12 +46,27 @@ class PostsFragment : Fragment(),
 
         binding.noPostsTextView.visibility = View.GONE
 
+        val sharedPreferences =
+            context.getSharedPreferences("currentUserPrefs", Context.MODE_PRIVATE)
+        val fullName = sharedPreferences.getString("fullName", null)
+        val profilePicture = sharedPreferences.getString("profilePicture", null)
+        binding.fullNameTextView.text = fullName
+
+        if (profilePicture != "none") {
+            Glide.with(context)
+                .load(profilePicture)
+                .placeholder(R.drawable.loading_gif)
+                .into(binding.userProfilePicture)
+        }
+
         binding.searchBar.setOnTouchListener { v, event ->
             if (event.action == MotionEvent.ACTION_UP) {
                 fragmentManagerHelper.showFragment(SearchPostsFragment())
             }
             false
         }
+
+        binding.topBarLayout.setOnClickListener { fragmentManagerHelper.showFragment(ProfileFragment()) }
 
         binding.swipeRefreshLayout.setOnRefreshListener {
             loadPosts()
