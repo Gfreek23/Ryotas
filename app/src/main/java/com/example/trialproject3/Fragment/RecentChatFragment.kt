@@ -1,15 +1,14 @@
 package com.example.trialproject3.Fragment
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.trialproject3.Adapter.ChatAdapter
 import com.example.trialproject3.Firebase.FirebaseHelper
 import com.example.trialproject3.Models.RecentChatUsersModel
-import com.example.trialproject3.R
 import com.example.trialproject3.databinding.FragmentRecentChatBinding
 
 class RecentChatFragment : Fragment() {
@@ -63,11 +62,6 @@ class RecentChatFragment : Fragment() {
                             userID = document.id,
                             userName = document.data["Fname"].toString(),
                             userImage = document.data["ProfilePicture"].toString(),
-                            recentMessage = document.data["recentMessage"].toString(),
-                            recentMessageTime = document.data["recentMessageTime"].toString()
-                                .toLong(),
-                            unreadMessageCount = document.data["unreadMessageCount"].toString()
-                                .toInt()
                         )
                         recentChatUsersList.add(recentChatUsersModel)
                     }

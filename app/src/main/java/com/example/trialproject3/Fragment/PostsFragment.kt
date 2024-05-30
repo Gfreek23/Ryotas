@@ -4,16 +4,17 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.trialproject3.Adapter.PostsAdapter
 import com.example.trialproject3.Firebase.FirebaseHelper
 import com.example.trialproject3.Models.PostsModel
-import com.example.trialproject3.R
+import com.example.trialproject3.Utility.FragmentManagerHelper
 import com.example.trialproject3.Utility.LoadingSpinnerOverlay
 import com.example.trialproject3.Utility.ToastHelper
 import com.example.trialproject3.databinding.FragmentPostsBinding
@@ -27,6 +28,7 @@ class PostsFragment : Fragment(),
     private lateinit var context: Context
     private lateinit var toastHelper: ToastHelper
     private lateinit var loadingSpinnerOverlay: LoadingSpinnerOverlay
+    private lateinit var fragmentManagerHelper: FragmentManagerHelper
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreateView(
@@ -38,12 +40,13 @@ class PostsFragment : Fragment(),
         context = requireContext()
         toastHelper = ToastHelper(context)
         loadingSpinnerOverlay = LoadingSpinnerOverlay(context)
+        fragmentManagerHelper = FragmentManagerHelper(activity as FragmentActivity)
 
         binding.noPostsTextView.visibility = View.GONE
 
         binding.searchBar.setOnTouchListener { v, event ->
             if (event.action == MotionEvent.ACTION_UP) {
-                showSearchPostsFragment()
+                fragmentManagerHelper.showFragment(SearchPostsFragment())
             }
             false
         }
@@ -113,7 +116,7 @@ class PostsFragment : Fragment(),
     }
 
     override fun onPostItemClick(postsModel: PostsModel) {
-        goToPostUserProfileFragment(postsModel)
+        fragmentManagerHelper.showFragment(PostUserProfileFragment.newInstance(postsModel.postID))
     }
 
     override fun onPostRateClick(postsModel: PostsModel, rating: Float) {
@@ -137,22 +140,5 @@ class PostsFragment : Fragment(),
                 }
             }
 
-    }
-
-    private fun showSearchPostsFragment() {
-        val fragmentManager = requireActivity().supportFragmentManager
-        val fragmentTransaction = fragmentManager.beginTransaction()
-        fragmentTransaction.replace(R.id.fragmentContainer, SearchPostsFragment())
-        fragmentTransaction.addToBackStack(null)
-        fragmentTransaction.commit()
-    }
-
-    private fun goToPostUserProfileFragment(postsModel: PostsModel) {
-        val postUserProfileFragment = PostUserProfileFragment.newInstance(postsModel.postID)
-        val fragmentManager = requireActivity().supportFragmentManager
-        val fragmentTransaction = fragmentManager.beginTransaction()
-        fragmentTransaction.replace(R.id.fragmentContainer, postUserProfileFragment)
-        fragmentTransaction.addToBackStack(null)
-        fragmentTransaction.commit()
     }
 }

@@ -1,25 +1,30 @@
 package com.example.trialproject3.Fragment
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentActivity
 import com.bumptech.glide.Glide
 import com.example.trialproject3.Activity.MainActivity
+import com.example.trialproject3.Activity.MessageActivity
 import com.example.trialproject3.Firebase.FirebaseHelper
-import com.example.trialproject3.R
+import com.example.trialproject3.Models.PostsModel
+import com.example.trialproject3.Utility.FragmentManagerHelper
 import com.example.trialproject3.Utility.LoadingSpinnerOverlay
 import com.example.trialproject3.databinding.FragmentPostUserProfileBinding
 
 
-class PostUserProfileFragment : Fragment(), MainActivity.OnBackPressedListener {
+class PostUserProfileFragment : Fragment(),
+    MainActivity.OnBackPressedListener {
     private lateinit var binding: FragmentPostUserProfileBinding
-    private lateinit var loadingSpinnerOverlay: LoadingSpinnerOverlay
     private lateinit var context: Context
+    private lateinit var loadingSpinnerOverlay: LoadingSpinnerOverlay
+    private lateinit var fragmentManagerHelper: FragmentManagerHelper
 
     companion object {
         const val TAG: String = "PostUserProfileFragment"
@@ -42,8 +47,9 @@ class PostUserProfileFragment : Fragment(), MainActivity.OnBackPressedListener {
 
         context = requireContext()
         loadingSpinnerOverlay = LoadingSpinnerOverlay(context)
+        fragmentManagerHelper = FragmentManagerHelper(activity as FragmentActivity)
 
-        binding.backBtn.setOnClickListener { backToFragment() }
+        binding.backBtn.setOnClickListener { fragmentManagerHelper.showFragment(HomeFragment()) }
 
         return binding.root
     }
@@ -58,17 +64,10 @@ class PostUserProfileFragment : Fragment(), MainActivity.OnBackPressedListener {
     }
 
     override fun onBackPressed(): Boolean {
-        backToFragment()
-
+        fragmentManagerHelper.showFragment(HomeFragment())
         return true
     }
 
-    private fun backToFragment() {
-        val fragmentManager = requireActivity().supportFragmentManager
-        val fragmentTransaction = fragmentManager.beginTransaction()
-        fragmentTransaction.replace(R.id.fragmentContainer, PostsFragment())
-        fragmentTransaction.commit()
-    }
 
     private fun loadPostUserDetails(postID: String) {
         loadingSpinnerOverlay.showLoading()
@@ -99,6 +98,22 @@ class PostUserProfileFragment : Fragment(), MainActivity.OnBackPressedListener {
                         Glide.with(requireContext())
                             .load(getProfilePicture)
                             .into(binding.profilePicImageView)
+                    }
+
+                    val postsModel = PostsModel(
+                        postID = postID,
+                        userID = userSnapshot.getString("userID")!!,
+                        fullName = getFullName!!,
+                        email = getEmail!!,
+                        phoneNumber = getPhone!!,
+                        userPostImage = getProfilePicture!!,
+                        storeName = getStoreName!!,
+                        storeLocation = getStoreLocation!!
+                    )
+                    binding.chatBtn.setOnClickListener {
+                        val intent = Intent(context, MessageActivity::class.java)
+                        intent.putExtra("postModel", postsModel)
+                        startActivity(intent)
                     }
                 } else {
                     Log.e(TAG, "loadPostUserDetails: " + task.exception)

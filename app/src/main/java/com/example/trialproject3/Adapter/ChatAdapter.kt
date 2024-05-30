@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.trialproject3.Models.ChatModel
 import com.example.trialproject3.Models.RecentChatUsersModel
 import com.example.trialproject3.R
 import com.example.trialproject3.databinding.ItemChatBinding

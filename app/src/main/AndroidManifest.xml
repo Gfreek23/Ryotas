@@ -24,6 +24,9 @@
         android:theme="@style/Theme.TrialProject3"
         tools:targetApi="33">
         <activity
+            android:name=".Activity.MessageActivity"
+            android:exported="false" />
+        <activity
             android:name=".Activity.ShoppingContainerActivity"
             android:exported="false"
             android:theme="@style/Theme.TrialProject3" />

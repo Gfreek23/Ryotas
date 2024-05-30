@@ -13,7 +13,6 @@
         android:layout_height="wrap_content"
         android:padding="10dp">
 
-
         <RelativeLayout
             android:id="@+id/postHeaderLayout"
             android:layout_width="match_parent"

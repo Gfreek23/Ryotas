@@ -14,15 +14,12 @@ import retrofit2.Retrofit;
 public class FirebaseHelper {
 
     public static final String KEY_COLLECTION_USERS = "users";
-    public static final String KEY_COLLECTION_BOOKINGS = "bookings";
     public static final String KEY_COLLECTION_PRODUCTS = "products";
     public static final String KEY_COLLECTION_CHATS = "chats";
     public static final String KEY_COLLECTION_POSTS = "posts";
     public static final String KEY_COLLECTION_STORES = "stores";
     public static final String KEY_COLLECTION_CARTS = "carts";
-    public static final String KEY_COLLECTION_FEEDBACKS = "feedbacks";
-    public static final String KEY_COLLECTION_TRIP_FEEDBACKS = "tripFeedbacks";
-    public static final String KEY_COLLECTION_FAVORITES = "favorites";
+    public static final String KEY_COLLECTION_MESSAGES = "messages";
     private static FirebaseFirestore firebaseFirestore;
     public static DatabaseReference databaseReference;
     private static FirebaseAuth auth;
