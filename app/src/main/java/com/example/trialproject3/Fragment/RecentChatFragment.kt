@@ -3,7 +3,6 @@ package com.example.trialproject3.Fragment
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,17 +11,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.trialproject3.Activity.MessageActivity
 import com.example.trialproject3.Adapter.RecentChatUserAdapter
 import com.example.trialproject3.Firebase.FirebaseHelper
-import com.example.trialproject3.Models.MessageModel
 import com.example.trialproject3.Models.RecentChatUserModel
 import com.example.trialproject3.Utility.LoadingSpinnerOverlay
 import com.example.trialproject3.databinding.FragmentRecentChatBinding
-import com.google.firebase.Firebase
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.ValueEventListener
-import com.google.firebase.database.database
 
-class RecentChatFragment : Fragment(), RecentChatUserAdapter.OnRecentChatUserClickListener {
+class RecentChatFragment : Fragment(),
+    RecentChatUserAdapter.OnRecentChatUserClickListener {
     private val TAG = "RecentChatFragment"
     private lateinit var binding: FragmentRecentChatBinding
     private lateinit var context: Context
@@ -75,68 +69,35 @@ class RecentChatFragment : Fragment(), RecentChatUserAdapter.OnRecentChatUserCli
         startActivity(intent)
     }
 
-    //TODO: Implement the logic to load recent chat users
     private fun loadRecentChatUsers() {
         loadingSpinnerOverlay.showLoading()
-        val recentChatUsersList = ArrayList<RecentChatUserModel>()
-        val addedUserIDs = HashSet<String>()
-        val currentUserID = FirebaseHelper.currentUserID()
-
-        val database = Firebase.database
-        val messageReference = database.getReference(FirebaseHelper.KEY_COLLECTION_MESSAGES)
-
-        messageReference.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                loadingSpinnerOverlay.hideLoading()
-                if (snapshot.exists()) {
-                    for (messageSnapshot in snapshot.children) {
-                        val messageModel = messageSnapshot.getValue(MessageModel::class.java)
-                        if (messageModel != null) {
-                            if (messageModel.senderID == currentUserID || messageModel.receiverID == currentUserID) {
-                                val chatUserID =
-                                    if (messageModel.senderID == currentUserID) messageModel.receiverID
-                                    else messageModel.senderID
-
-                                if (chatUserID.isNotEmpty() && !addedUserIDs.contains(chatUserID)) {
-                                    FirebaseHelper.getFireStoreInstance()
-                                        .collection(FirebaseHelper.KEY_COLLECTION_USERS)
-                                        .document(chatUserID)
-                                        .get()
-                                        .addOnSuccessListener { userDocument ->
-                                            val recentChatUserModel = RecentChatUserModel(
-                                                chatUserID = userDocument.id,
-                                                chatUserName = userDocument.data?.get("Fname")
-                                                    ?.toString() ?: "",
-                                                chatUserProfilePicture = userDocument.data?.get("ProfilePicture")
-                                                    ?.toString() ?: "",
-                                            )
-                                            recentChatUsersList.add(recentChatUserModel)
-                                            addedUserIDs.add(chatUserID)
-                                            binding.recentChatUsersRecyclerView.layoutManager =
-                                                LinearLayoutManager(context)
-                                            binding.recentChatUsersRecyclerView.adapter =
-                                                RecentChatUserAdapter(
-                                                    context,
-                                                    recentChatUsersList,
-                                                    this@RecentChatFragment
-                                                )
-                                            if (recentChatUsersList.isEmpty()) {
-                                                binding.noChatTextView.visibility = View.VISIBLE
-                                            }
-                                        }
-                                }
-                            }
-                        }
+        FirebaseHelper.getFireStoreInstance()
+            .collection(FirebaseHelper.KEY_COLLECTION_USERS)
+            .get()
+            .addOnCompleteListener {
+                if (it.isSuccessful) {
+                    val recentChatUserModelList = ArrayList<RecentChatUserModel>()
+                    for (document in it.result) {
+                        val recentChatUserModel = RecentChatUserModel(
+                            chatUserID = document.id,
+                            chatUserName = document.getString("Fname").toString(),
+                            chatUserProfilePicture = document.getString("ProfilePicture").toString(),
+                            chatUserType = document.getString("userType").toString(),
+                        )
+                        recentChatUserModelList.add(recentChatUserModel)
                     }
-                } else {
-                    binding.noChatTextView.visibility = View.VISIBLE
-                }
+                    if (recentChatUserModelList.isNotEmpty()) {
+                        binding.noChatTextView.visibility = View.GONE
+                        binding.recentChatUsersRecyclerView.layoutManager =
+                            LinearLayoutManager(context)
+                        binding.recentChatUsersRecyclerView.adapter = RecentChatUserAdapter(
+                            context,
+                            recentChatUserModelList,
+                            this
+                        )
+                    } else binding.noChatTextView.visibility = View.VISIBLE
+                    loadingSpinnerOverlay.hideLoading()
+                } else loadingSpinnerOverlay.hideLoading()
             }
-
-            override fun onCancelled(error: DatabaseError) {
-                loadingSpinnerOverlay.hideLoading()
-                Log.e(TAG, "loadRecentChatUsers: " + error.message)
-            }
-        })
     }
 }

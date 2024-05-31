@@ -4,7 +4,6 @@ import android.app.Activity
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
-import android.media.Image
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
@@ -15,8 +14,6 @@ import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.example.trialproject3.Activity.LoginActivity
 import com.example.trialproject3.Activity.MainActivity.OnBackPressedListener
-import com.example.trialproject3.Activity.RegisterSellerStoreActivity
-import com.example.trialproject3.Activity.ToCancelActivity
 import com.example.trialproject3.Activity.ToReceiveActivity
 import com.example.trialproject3.Activity.ToShipActivity
 import com.example.trialproject3.Firebase.FirebaseHelper
@@ -30,8 +27,6 @@ import com.example.trialproject3.databinding.FragmentProfileBinding
 import com.github.dhaval2404.imagepicker.ImagePicker
 import com.google.android.gms.tasks.Task
 import com.google.firebase.firestore.DocumentSnapshot
-import com.google.firebase.firestore.EventListener
-import com.google.firebase.firestore.toObject
 import com.google.firebase.storage.FirebaseStorage
 
 class ProfileFragment : Fragment(), OnBackPressedListener {
@@ -122,7 +117,6 @@ class ProfileFragment : Fragment(), OnBackPressedListener {
                         binding.userTypeTextView.text = getUserType
                         binding.emailTextView.text = FirebaseHelper.currentUser().email
                         binding.phoneTextView.text = getPhone
-                        binding.addressTextView.text = "House"
 
                         if (getProfilePicture != "none") {
                             Glide.with(context)
@@ -132,7 +126,6 @@ class ProfileFragment : Fragment(), OnBackPressedListener {
                         }
 
                         if (getUserType == "Seller") {
-                            binding.addressTextView.visibility = View.GONE
                             binding.storeInfoLayout.visibility = View.VISIBLE
                             val storeReference = FirebaseHelper.getFireStoreInstance()
                                 .collection(FirebaseHelper.KEY_COLLECTION_STORES)

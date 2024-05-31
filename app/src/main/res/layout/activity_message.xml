@@ -68,6 +68,20 @@
             android:layout_centerInParent="true"
             android:src="@drawable/loading_gif" />
 
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/startConversationTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:background="@drawable/edit_text_bg"
+            android:backgroundTint="@color/white"
+            android:elevation="5dp"
+            android:fontFamily="@font/gabarito_medium"
+            android:padding="5dp"
+            android:text="Start a conversation with"
+            android:textColor="@color/black"
+            android:textSize="17sp" />
+
     </RelativeLayout>
 
     <androidx.cardview.widget.CardView
@@ -98,7 +112,7 @@
                 android:fontFamily="@font/gabarito_medium"
                 android:hint="Type a message..."
                 android:inputType="textMultiLine"
-                android:padding="5dp"
+                android:padding="10dp"
                 android:textColor="@color/black"
                 android:textColorHint="@color/dark_grey"
                 android:textSize="17sp" />
@@ -110,6 +124,12 @@
                 android:layout_weight="1"
                 android:padding="5dp"
                 android:src="@drawable/baseline_send_24" />
+
+            <ProgressBar
+                android:id="@+id/sendingMessageProgressBar"
+                android:layout_width="0dp"
+                android:layout_height="30dp"
+                android:layout_weight="1" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 

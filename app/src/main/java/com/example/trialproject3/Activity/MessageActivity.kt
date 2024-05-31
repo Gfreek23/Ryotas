@@ -2,6 +2,7 @@ package com.example.trialproject3.Activity
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
@@ -39,9 +40,12 @@ class MessageActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         loadingSpinnerOverlay = LoadingSpinnerOverlay(this)
+        binding.sendingMessageProgressBar.visibility = View.GONE
+        binding.startConversationTextView.visibility = View.GONE
 
         if (intent.hasExtra("chatUserData")) {
-            val recentChatUserModel = intent.getSerializableExtra("chatUserData") as RecentChatUserModel
+            val recentChatUserModel =
+                intent.getSerializableExtra("chatUserData") as RecentChatUserModel
             loadChatUserDetails(recentChatUserModel)
             displayMessages(recentChatUserModel)
 
@@ -76,6 +80,7 @@ class MessageActivity : AppCompatActivity() {
     }
 
     private fun sendMessage(message: String, recentChatUserModel: RecentChatUserModel) {
+        binding.sendingMessageProgressBar.visibility = View.VISIBLE
         val messageModel = MessageModel(
             senderID = FirebaseHelper.currentUserID(),
             receiverID = recentChatUserModel.chatUserID,
@@ -88,26 +93,35 @@ class MessageActivity : AppCompatActivity() {
         val messageReference = database.getReference(FirebaseHelper.KEY_COLLECTION_MESSAGES)
         messageReference.push().setValue(messageModel)
             .addOnCompleteListener { task ->
+                binding.sendingMessageProgressBar.visibility = View.GONE
                 if (task.isSuccessful) {
+                    binding.startConversationTextView.visibility = View.GONE
                     binding.messageEditText.setText("")
                 } else {
                     Toast.makeText(this, "Failed to send message", Toast.LENGTH_SHORT).show()
+                    Log.e(TAG, "sendMessage: " + task.exception)
                 }
             }
     }
 
     private fun displayMessages(recentChatUserModel: RecentChatUserModel) {
-        binding.loadingGif.visibility = View.GONE
+        binding.loadingGif.visibility = View.VISIBLE
         val messagesModelList = ArrayList<MessageModel>()
-        val messageAdapter = MessageAdapter(messagesModelList, FirebaseHelper.currentUserID())
+        val messageAdapter = MessageAdapter(
+            this,
+            messagesModelList,
+            FirebaseHelper.currentUserID(),
+            recentChatUserModel.chatUserProfilePicture
+        )
         binding.messagesRecyclerView.adapter = messageAdapter
 
         val database = Firebase.database
         val messageReference = database.getReference(FirebaseHelper.KEY_COLLECTION_MESSAGES)
 
         messageReference.addValueEventListener(object : ValueEventListener {
-            @SuppressLint("NotifyDataSetChanged")
+            @SuppressLint("NotifyDataSetChanged", "SetTextI18n")
             override fun onDataChange(snapshot: DataSnapshot) {
+                binding.loadingGif.visibility = View.GONE
                 if (snapshot.exists()) {
                     messagesModelList.clear()
                     for (messageSnapshot in snapshot.children) {
@@ -119,12 +133,21 @@ class MessageActivity : AppCompatActivity() {
                                 messageModel.receiverID == FirebaseHelper.currentUserID()
                             ) {
                                 messagesModelList.add(messageModel)
+                                binding.startConversationTextView.visibility = View.GONE
+                            }else {
+                                binding.startConversationTextView.visibility = View.VISIBLE
+                                binding.startConversationTextView.text =
+                                    "Start a conversation with ${recentChatUserModel.chatUserName}"
                             }
                         }
                     }
                     messageAdapter.notifyDataSetChanged()
                     messageAdapter.notifyItemInserted(messagesModelList.size - 1)
                     binding.messagesRecyclerView.scrollToPosition(messagesModelList.size - 1)
+                } else {
+                    binding.startConversationTextView.visibility = View.VISIBLE
+                    binding.startConversationTextView.text =
+                        "Start a conversation with ${recentChatUserModel.chatUserName}"
                 }
             }
 

@@ -9,7 +9,7 @@ data class RecentChatUserModel(
     val chatUserType: String = "",
     val chatStoreName: String = "",
     val chatStoreLocation: String = "",
-    val recentMessage: String = "",
-    val recentMessageTime: Long = 0L,
+    var recentMessage: String = "",
+    var recentMessageTime: Long = 0L,
     val unreadMessageCount: Int = 0
 ) : Serializable

@@ -118,38 +118,64 @@
                 android:textColor="@color/black"
                 android:textSize="19sp" />
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/emailTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp"
-                android:fontFamily="@font/gabarito_regular"
-                android:text="email@example.com"
-                android:textAlignment="center"
-                android:textColor="@color/black"
-                android:textSize="15sp" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/addressTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp"
-                android:fontFamily="@font/gabarito_regular"
-                android:text="Address"
-                android:textAlignment="center"
-                android:textColor="@color/black"
-                android:textSize="15sp" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/phoneTextView"
+            <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
-                android:fontFamily="@font/gabarito_regular"
-                android:text="Phone Number"
-                android:textAlignment="center"
-                android:textColor="@color/black"
-                android:textSize="15sp" />
+                android:gravity="start"
+                android:orientation="vertical">
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_marginEnd="5dp"
+                        app:srcCompat="@drawable/email_24" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/emailTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/gabarito_regular"
+                        android:text="email@example.com"
+                        android:textAlignment="center"
+                        android:textColor="@color/black"
+                        android:textSize="15sp" />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_marginEnd="5dp"
+                        app:srcCompat="@drawable/baseline_phone_24" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/phoneTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/gabarito_regular"
+                        android:text="Phone Number"
+                        android:textAlignment="center"
+                        android:textColor="@color/black"
+                        android:textSize="15sp" />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
 
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:id="@+id/storeInfoLayout"

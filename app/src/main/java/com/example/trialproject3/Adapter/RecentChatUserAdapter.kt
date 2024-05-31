@@ -3,6 +3,7 @@ package com.example.trialproject3.Adapter
 import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -29,10 +30,16 @@ class RecentChatUserAdapter(
             recentChatUserModel: RecentChatUserModel,
             onRecentChatUserClickListener: OnRecentChatUserClickListener
         ) {
+            binding.recentMessageTimeTextView.visibility = View.GONE
             binding.chatNameTextView.text = recentChatUserModel.chatUserName
             binding.recentMessageTextView.text = recentChatUserModel.recentMessage
-            binding.recentMessageTimeTextView.text =
-                recentChatUserModel.recentMessageTime.toString()
+
+            if (recentChatUserModel.recentMessageTime != 0L){
+                binding.recentMessageTimeTextView.visibility = View.VISIBLE
+                binding.recentMessageTimeTextView.text =
+                    recentChatUserModel.recentMessageTime.toString()
+            }
+
 
             if (recentChatUserModel.chatUserProfilePicture != "none") {
                 Glide.with(context)
