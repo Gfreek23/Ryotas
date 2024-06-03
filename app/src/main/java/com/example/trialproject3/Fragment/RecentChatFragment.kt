@@ -81,10 +81,13 @@ class RecentChatFragment : Fragment(),
                         val recentChatUserModel = RecentChatUserModel(
                             chatUserID = document.id,
                             chatUserName = document.getString("Fname").toString(),
-                            chatUserProfilePicture = document.getString("ProfilePicture").toString(),
-                            chatUserType = document.getString("userType").toString(),
+                            chatUserProfilePicture = document.getString("ProfilePicture")
+                                .toString(),
+                            chatUserType = document.getString("UserType").toString(),
                         )
-                        recentChatUserModelList.add(recentChatUserModel)
+                        if (recentChatUserModel.chatUserType == "Seller" &&
+                            recentChatUserModel.chatUserID != FirebaseHelper.currentUserID())
+                            recentChatUserModelList.add(recentChatUserModel)
                     }
                     if (recentChatUserModelList.isNotEmpty()) {
                         binding.noChatTextView.visibility = View.GONE

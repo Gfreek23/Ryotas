@@ -143,6 +143,7 @@ class HomeFragment : Fragment(),
                     for (products in value.documents) {
                         val product = products.toObject(ProductsModel::class.java)
                         if (product != null) {
+                            binding.productErrorTextView.visibility = View.GONE
                             productsList.add(product)
                         }
                     }

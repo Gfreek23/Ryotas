@@ -78,11 +78,35 @@
                     android:layout_height="match_parent"
                     android:layout_gravity="start"
                     android:layout_marginStart="16dp"
-                    android:layout_marginBottom="10dp"
+                    android:layout_marginBottom="5dp"
                     android:fontFamily="@font/gabarito_regular"
                     android:text="Product Category"
                     android:textColor="@color/black"
                     android:textSize="15sp" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/stockTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="start"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginBottom="5dp"
+                    android:fontFamily="@font/gabarito_medium"
+                    android:text="Stock: 420"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/outofStockTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="start"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginBottom="10dp"
+                    android:fontFamily="@font/gabarito_medium"
+                    android:text="Out of Stock"
+                    android:textColor="@color/crimson_red"
+                    android:textSize="16sp" />
 
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="wrap_content"

@@ -19,6 +19,7 @@ import com.example.trialproject3.Map.MapboxMapActivity
 import com.example.trialproject3.Models.StoreDetailsModel
 import com.example.trialproject3.R
 import com.example.trialproject3.Utility.FragmentManagerHelper
+import com.example.trialproject3.Utility.InternetConnectionChecker
 import com.example.trialproject3.databinding.ActivityMainBinding
 import com.google.android.gms.tasks.Task
 import com.google.firebase.firestore.DocumentSnapshot
@@ -29,6 +30,7 @@ class MainActivity : AppCompatActivity() {
     private val TAG = "MainActivity"
     private lateinit var binding: ActivityMainBinding
     private lateinit var fragmentManagerHelper: FragmentManagerHelper
+    private lateinit var internetConnectionChecker: InternetConnectionChecker
 
     companion object {
         var fullName: String? = null
@@ -41,6 +43,15 @@ class MainActivity : AppCompatActivity() {
 
     interface OnBackPressedListener {
         fun onBackPressed(): Boolean
+    }
+
+    override fun onStart() {
+        super.onStart()
+
+        internetConnectionChecker = InternetConnectionChecker(this)
+        if (!internetConnectionChecker.isInternetAvailable()) {
+            internetConnectionChecker.showNoInternetDialog(this)
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

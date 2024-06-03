@@ -18,6 +18,7 @@ data class ProductsModel(
     val price: Double = 0.0,
     val productImage: String = "",
     val productRatings: Float = 0.0F,
+    val stock : Int = 0,
     val storeName: String = "",
     val storeLocation: String = "",
     val timePosted: String = ""

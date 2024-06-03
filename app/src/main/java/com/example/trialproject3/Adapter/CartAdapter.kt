@@ -11,10 +11,10 @@ import com.example.trialproject3.databinding.ItemCartBinding
 
 class CartAdapter(
     private val context: Context,
-    private val cartModelList: List<CartModel>,
+    val cartModelList: List<CartModel>,
     private val onIncreaseCartClickListener: OnIncreaseCartClickListener,
     private val onDecreaseCartClickListener: OnDecreaseCartClickListener,
-    private val onRemoveCartItemClickListener: OnRemoveCartItemClickListener
+    private val onRemoveCartItemClickListener: OnRemoveCartItemClickListener,
 ) :
     RecyclerView.Adapter<CartAdapter.CartViewHolder>() {
 
@@ -51,6 +51,7 @@ class CartAdapter(
             binding.descriptionTextView.text = cartModel.productDescription
             binding.priceTextView.text = "₱ ${cartModel.price}"
             binding.quantityTextView.text = cartModel.quantity.toString()
+            binding.stockTextView.text = "Stock: ${cartModel.stock}"
             Glide.with(context).load(cartModel.productImage).into(binding.productImageView)
 
             binding.increaseQuantityBtn.setOnClickListener {

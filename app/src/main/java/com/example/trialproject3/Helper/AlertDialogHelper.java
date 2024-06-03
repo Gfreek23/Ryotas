@@ -19,7 +19,8 @@ public class AlertDialogHelper {
     public void showAlertDialog(String title, String message,
                                 String positiveButtonText, DialogInterface.OnClickListener positiveButtonListener,
                                 String negativeButtonText, DialogInterface.OnClickListener negativeButtonListener) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(context, R.style.AlertDialogCustom);        builder.setTitle(title);
+        AlertDialog.Builder builder = new AlertDialog.Builder(context, R.style.AlertDialogCustom);
+        builder.setTitle(title);
         builder.setMessage(message);
 
         if (positiveButtonText != null) {

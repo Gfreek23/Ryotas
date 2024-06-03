@@ -113,6 +113,7 @@ class PostsFragment : Fragment(),
             }
 
             if (value != null && !value.isEmpty) {
+                binding.postsErrorTextView.visibility = View.GONE
                 val postsList = mutableListOf<PostsModel>()
                 for (posts in value.documents) {
                     val post = posts.toObject(PostsModel::class.java)

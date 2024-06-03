@@ -33,6 +33,7 @@ class ProductDetailsActivity : AppCompatActivity() {
 
         binding.checkBtn.visibility = View.GONE
         binding.progressBar.visibility = View.GONE
+        binding.outofStockTextView.visibility = View.GONE
 
         toastHelper = ToastHelper(this@ProductDetailsActivity)
         loadingSpinnerOverlay = LoadingSpinnerOverlay(this@ProductDetailsActivity)
@@ -42,7 +43,7 @@ class ProductDetailsActivity : AppCompatActivity() {
         if (intent.hasExtra("productDetails")) {
             val productsModel = intent.getSerializableExtra("productDetails") as? ProductsModel
             if (productsModel != null) {
-                Log.d(TAG, "productDetails: $productsModel")
+//                Log.d(TAG, "productDetails: $productsModel")
                 loadProductDetails(productsModel)
                 fetchSellerDetails(productsModel.sellerUserID)
 
@@ -91,11 +92,19 @@ class ProductDetailsActivity : AppCompatActivity() {
             binding.productRatings.setIsIndicator(true)
         }
 
+        if (productsModel.stock == 0) {
+            binding.addToCartBtn.visibility = View.GONE
+            binding.outofStockTextView.visibility = View.VISIBLE
+            binding.stockTextView.visibility = View.GONE
+            binding.productRatings.setIsIndicator(true)
+        }
+
         binding.productNameTextView.text = productsModel.productName
         binding.priceTextView.text = "₱ ${productsModel.price}"
         binding.productRatings.rating = productsModel.productRatings
         binding.productDescriptionTextView.text = productsModel.productDescription
         binding.productCategoryTextView.text = productsModel.productCategory
+        binding.stockTextView.text = "Stock: ${productsModel.stock}"
         binding.storeNameTextView.text = productsModel.storeName
 
         if (productsModel.productImage != "none") {
@@ -168,6 +177,7 @@ class ProductDetailsActivity : AppCompatActivity() {
         val formattedDateTime = sdf.format(currentDate)
 
         val cartModel = CartModel(
+            productID = productsModel.productID,
             cartID = cartID,
             cartUserID = FirebaseHelper.currentUserID(),
             productName = productsModel.productName,
@@ -176,6 +186,7 @@ class ProductDetailsActivity : AppCompatActivity() {
             price = productsModel.price,
             productImage = productsModel.productImage,
             quantity = 1,
+            stock = productsModel.stock,
             storeName = productsModel.storeName,
             storeLocation = productsModel.storeLocation,
             timeAdded = formattedDateTime,

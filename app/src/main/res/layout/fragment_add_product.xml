@@ -94,6 +94,20 @@
                         android:textColorHint="@color/dark_grey"
                         android:textSize="17sp" />
 
+                    <androidx.appcompat.widget.AppCompatEditText
+                        android:id="@+id/stockEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:background="@drawable/outlined_shape"
+                        android:fontFamily="@font/gabarito_semibold"
+                        android:hint="Stock..."
+                        android:inputType="number"
+                        android:padding="10dp"
+                        android:textAllCaps="false"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/dark_grey"
+                        android:textSize="17sp" />
 
                     <androidx.appcompat.widget.AppCompatEditText
                         android:id="@+id/descriptionEditText"
