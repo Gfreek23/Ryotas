@@ -3,7 +3,6 @@ package com.example.trialproject3.Fragment
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.DialogInterface
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -14,7 +13,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import com.bumptech.glide.Glide
-import com.example.trialproject3.Activity.LoginActivity
 import com.example.trialproject3.Activity.MainActivity.OnBackPressedListener
 import com.example.trialproject3.Adapter.ProductsAdapter
 import com.example.trialproject3.Firebase.FirebaseHelper
@@ -35,14 +33,6 @@ class HomeFragment : Fragment(),
     private lateinit var toastHelper: ToastHelper
     private lateinit var loadingSpinnerOverlay: LoadingSpinnerOverlay
     private lateinit var fragmentManagerHelper: FragmentManagerHelper
-    override fun onStart() {
-        super.onStart()
-        if (FirebaseHelper.currentUser() == null) {
-            val intent = Intent(context, LoginActivity::class.java)
-            startActivity(intent)
-            requireActivity().finish()
-        }
-    }
 
     override fun onDestroy() {
         super.onDestroy()
@@ -118,8 +108,13 @@ class HomeFragment : Fragment(),
         val productsAdapter = ProductsAdapter(context, productsList)
         binding.productsRecyclerView.adapter = productsAdapter
 
-        if (productsList.isEmpty()) binding.noProductTextView.visibility = View.VISIBLE
-        else binding.noProductTextView.visibility = View.GONE
+        if (productsList.isEmpty()) {
+            binding.productErrorTextView.visibility = View.GONE
+            binding.noProductTextView.visibility = View.VISIBLE
+        } else {
+            binding.productErrorTextView.visibility = View.GONE
+            binding.noProductTextView.visibility = View.GONE
+        }
 
         loadingSpinnerOverlay.hideLoading()
     }

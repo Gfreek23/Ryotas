@@ -16,6 +16,7 @@ import com.example.trialproject3.Activity.MainActivity
 import com.example.trialproject3.Firebase.FirebaseHelper
 import com.example.trialproject3.Models.ProductsModel
 import com.example.trialproject3.R
+import com.example.trialproject3.Utility.LoadingSpinnerOverlay
 import com.example.trialproject3.Utility.ToastHelper
 import com.example.trialproject3.databinding.FragmentAddProductBinding
 import com.github.dhaval2404.imagepicker.ImagePicker
@@ -32,6 +33,7 @@ class AddProductFragment : Fragment(), MainActivity.OnBackPressedListener {
     private var productImageUri: Uri? = null
     private lateinit var productImage: String
     private lateinit var toastHelper: ToastHelper
+    private lateinit var loadingSpinnerOverlay: LoadingSpinnerOverlay
     private lateinit var context: Context
     private var selectedCategory: String? = null
 
@@ -54,6 +56,7 @@ class AddProductFragment : Fragment(), MainActivity.OnBackPressedListener {
         binding.progressBar.visibility = View.GONE
         context = requireContext()
         toastHelper = ToastHelper(context)
+        loadingSpinnerOverlay = LoadingSpinnerOverlay(context)
 
         binding.productImageView.setOnClickListener {
             ImagePicker.with(this)
@@ -126,7 +129,10 @@ class AddProductFragment : Fragment(), MainActivity.OnBackPressedListener {
         } else if (selectedCategory == null || selectedCategory == "Select product category") {
             binding.productCategorySpinner.requestFocus()
             toastHelper.showToast("Select product category", 1)
+        } else if (MainActivity.storeLocation == null || MainActivity.storeName == null) {
+            toastHelper.showToast("Your Store is not registered", 1)
         } else {
+            loadingSpinnerOverlay.showLoading()
             binding.progressBar.visibility = View.VISIBLE
             binding.addBtn.visibility = View.GONE
 
@@ -186,6 +192,7 @@ class AddProductFragment : Fragment(), MainActivity.OnBackPressedListener {
                                         .document(product.productID)
                                         .set(product)
                                         .addOnCompleteListener { task ->
+                                            loadingSpinnerOverlay.hideLoading()
                                             binding.progressBar.visibility = View.GONE
                                             binding.addBtn.visibility = View.VISIBLE
 
@@ -201,6 +208,7 @@ class AddProductFragment : Fragment(), MainActivity.OnBackPressedListener {
                                         }
                                 }
                                 .addOnFailureListener {
+                                    loadingSpinnerOverlay.hideLoading()
                                     binding.progressBar.visibility = View.GONE
                                     binding.addBtn.visibility = View.VISIBLE
                                     Log.e(TAG, "addProduct: " + it.message)

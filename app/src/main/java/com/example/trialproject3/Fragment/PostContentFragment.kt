@@ -12,10 +12,12 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
 import com.example.trialproject3.Activity.MainActivity
 import com.example.trialproject3.Firebase.FirebaseHelper
 import com.example.trialproject3.Models.PostsModel
 import com.example.trialproject3.R
+import com.example.trialproject3.Utility.FragmentManagerHelper
 import com.example.trialproject3.Utility.LoadingSpinnerOverlay
 import com.example.trialproject3.Utility.ToastHelper
 import com.example.trialproject3.databinding.FragmentPostContentBinding
@@ -35,6 +37,7 @@ class PostContentFragment : Fragment(), MainActivity.OnBackPressedListener {
     private var postImageUri: Uri? = null
     private var postImage: String = "none"
     private var selectedCategory: String? = null
+    private lateinit var fragmentManagerHelper: FragmentManagerHelper
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -45,6 +48,7 @@ class PostContentFragment : Fragment(), MainActivity.OnBackPressedListener {
         context = requireContext()
         toastHelper = ToastHelper(context)
         loadingSpinnerOverlay = LoadingSpinnerOverlay(context)
+        fragmentManagerHelper = FragmentManagerHelper(activity as FragmentActivity)
         binding.progressBar.visibility = View.GONE
 
         binding.postImageView.setOnClickListener {
@@ -90,17 +94,10 @@ class PostContentFragment : Fragment(), MainActivity.OnBackPressedListener {
     }
 
     override fun onBackPressed(): Boolean {
-        goToFragment(HomeFragment())
+        fragmentManagerHelper.showFragment(HomeFragment())
         return true
     }
 
-    private fun goToFragment(fragment: Fragment) {
-        val fragmentManager = requireActivity().supportFragmentManager
-        val fragmentTransaction = fragmentManager.beginTransaction()
-        fragmentTransaction.replace(R.id.fragmentContainer, fragment)
-        fragmentTransaction.addToBackStack(null)
-        fragmentTransaction.commit()
-    }
 
     private fun postContent() {
         val title = binding.titleEditText.text.toString()
@@ -182,7 +179,7 @@ class PostContentFragment : Fragment(), MainActivity.OnBackPressedListener {
                                             if (task.isSuccessful) {
                                                 binding.titleEditText.setText("")
                                                 binding.descriptionEditText.setText("")
-                                                goToFragment(PostsFragment())
+                                                fragmentManagerHelper.showFragment(PostsFragment())
                                                 toastHelper.showToast("Content posted", 0)
                                             } else {
                                                 toastHelper.showToast("Content failed to post", 1)
@@ -191,9 +188,15 @@ class PostContentFragment : Fragment(), MainActivity.OnBackPressedListener {
                                         }
                                 }
                                 .addOnFailureListener {
+                                    loadingSpinnerOverlay.hideLoading()
+                                    binding.progressBar.visibility = View.GONE
+                                    binding.postBtn.visibility = View.VISIBLE
                                     Log.e(TAG, "postContent: " + it.message)
                                 }
                         } else {
+                            loadingSpinnerOverlay.hideLoading()
+                            binding.progressBar.visibility = View.GONE
+                            binding.postBtn.visibility = View.VISIBLE
                             Log.e(TAG, "postContent: " + uploadTask.exception)
                         }
                     }
@@ -229,7 +232,7 @@ class PostContentFragment : Fragment(), MainActivity.OnBackPressedListener {
                         if (task.isSuccessful) {
                             binding.titleEditText.setText("")
                             binding.descriptionEditText.setText("")
-                            goToFragment(PostsFragment())
+                            fragmentManagerHelper.showFragment(PostsFragment())
                             toastHelper.showToast("Content posted", 0)
                         } else {
                             toastHelper.showToast("Content failed to post", 1)

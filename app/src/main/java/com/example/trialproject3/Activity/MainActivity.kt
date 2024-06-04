@@ -52,6 +52,12 @@ class MainActivity : AppCompatActivity() {
         if (!internetConnectionChecker.isInternetAvailable()) {
             internetConnectionChecker.showNoInternetDialog(this)
         }
+
+        if (FirebaseHelper.currentUser() == null) {
+            val intent = Intent(this, LoginActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -94,8 +94,13 @@ class PostsFragment : Fragment(),
             reverseLayout = true
             stackFromEnd = true
         }
-        if (postsLists.isEmpty()) binding.noPostsTextView.visibility = View.VISIBLE
-        else binding.noPostsTextView.visibility = View.GONE
+        if (postsLists.isEmpty()) {
+            binding.postsErrorTextView.visibility = View.GONE
+            binding.noPostsTextView.visibility = View.VISIBLE
+        } else {
+            binding.postsErrorTextView.visibility = View.GONE
+            binding.noPostsTextView.visibility = View.GONE
+        }
 
         loadingSpinnerOverlay.hideLoading()
     }
